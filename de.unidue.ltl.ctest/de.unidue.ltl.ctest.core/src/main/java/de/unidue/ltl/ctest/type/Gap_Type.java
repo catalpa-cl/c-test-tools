@@ -1,0 +1,260 @@
+
+/* First created by JCasGen Fri Aug 10 22:08:29 CEST 2018 */
+package de.unidue.ltl.ctest.type;
+
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.cas.impl.CASImpl;
+import org.apache.uima.cas.impl.FSGenerator;
+import org.apache.uima.cas.FeatureStructure;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.FeatureImpl;
+import org.apache.uima.cas.Feature;
+import org.apache.uima.jcas.tcas.Annotation_Type;
+
+/** 
+ * Updated by JCasGen Fri Aug 10 22:08:29 CEST 2018
+ * @generated */
+public class Gap_Type extends Annotation_Type {
+  /** @generated 
+   * @return the generator for this type
+   */
+  @Override
+  protected FSGenerator getFSGenerator() {return fsGenerator;}
+  /** @generated */
+  private final FSGenerator fsGenerator = 
+    new FSGenerator() {
+      public FeatureStructure createFS(int addr, CASImpl cas) {
+  			 if (Gap_Type.this.useExistingInstance) {
+  			   // Return eq fs instance if already created
+  		     FeatureStructure fs = Gap_Type.this.jcas.getJfsFromCaddr(addr);
+  		     if (null == fs) {
+  		       fs = new Gap(addr, Gap_Type.this);
+  			   Gap_Type.this.jcas.putJfsFromCaddr(addr, fs);
+  			   return fs;
+  		     }
+  		     return fs;
+        } else return new Gap(addr, Gap_Type.this);
+  	  }
+    };
+  /** @generated */
+  @SuppressWarnings ("hiding")
+  public final static int typeIndexID = Gap.typeIndexID;
+  /** @generated 
+     @modifiable */
+  @SuppressWarnings ("hiding")
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.unidue.ltl.ctest.type.Gap");
+ 
+  /** @generated */
+  final Feature casFeat_difficulty;
+  /** @generated */
+  final int     casFeatCode_difficulty;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public double getDifficulty(int addr) {
+        if (featOkTst && casFeat_difficulty == null)
+      jcas.throwFeatMissing("difficulty", "de.unidue.ltl.ctest.type.Gap");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_difficulty);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setDifficulty(int addr, double v) {
+        if (featOkTst && casFeat_difficulty == null)
+      jcas.throwFeatMissing("difficulty", "de.unidue.ltl.ctest.type.Gap");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_difficulty, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_errorRate;
+  /** @generated */
+  final int     casFeatCode_errorRate;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public double getErrorRate(int addr) {
+        if (featOkTst && casFeat_errorRate == null)
+      jcas.throwFeatMissing("errorRate", "de.unidue.ltl.ctest.type.Gap");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_errorRate);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setErrorRate(int addr, double v) {
+        if (featOkTst && casFeat_errorRate == null)
+      jcas.throwFeatMissing("errorRate", "de.unidue.ltl.ctest.type.Gap");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_errorRate, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_id;
+  /** @generated */
+  final int     casFeatCode_id;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getId(int addr) {
+        if (featOkTst && casFeat_id == null)
+      jcas.throwFeatMissing("id", "de.unidue.ltl.ctest.type.Gap");
+    return ll_cas.ll_getIntValue(addr, casFeatCode_id);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setId(int addr, int v) {
+        if (featOkTst && casFeat_id == null)
+      jcas.throwFeatMissing("id", "de.unidue.ltl.ctest.type.Gap");
+    ll_cas.ll_setIntValue(addr, casFeatCode_id, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_solutions;
+  /** @generated */
+  final int     casFeatCode_solutions;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getSolutions(int addr) {
+        if (featOkTst && casFeat_solutions == null)
+      jcas.throwFeatMissing("solutions", "de.unidue.ltl.ctest.type.Gap");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_solutions);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setSolutions(int addr, int v) {
+        if (featOkTst && casFeat_solutions == null)
+      jcas.throwFeatMissing("solutions", "de.unidue.ltl.ctest.type.Gap");
+    ll_cas.ll_setRefValue(addr, casFeatCode_solutions, v);}
+    
+   /** @generated
+   * @param addr low level Feature Structure reference
+   * @param i index of item in the array
+   * @return value at index i in the array 
+   */
+  public String getSolutions(int addr, int i) {
+        if (featOkTst && casFeat_solutions == null)
+      jcas.throwFeatMissing("solutions", "de.unidue.ltl.ctest.type.Gap");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_solutions), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_solutions), i);
+	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_solutions), i);
+  }
+   
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param i index of item in the array
+   * @param v value to set
+   */ 
+  public void setSolutions(int addr, int i, String v) {
+        if (featOkTst && casFeat_solutions == null)
+      jcas.throwFeatMissing("solutions", "de.unidue.ltl.ctest.type.Gap");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_solutions), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_solutions), i);
+    ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_solutions), i, v);
+  }
+ 
+ 
+  /** @generated */
+  final Feature casFeat_prefix;
+  /** @generated */
+  final int     casFeatCode_prefix;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getPrefix(int addr) {
+        if (featOkTst && casFeat_prefix == null)
+      jcas.throwFeatMissing("prefix", "de.unidue.ltl.ctest.type.Gap");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_prefix);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setPrefix(int addr, String v) {
+        if (featOkTst && casFeat_prefix == null)
+      jcas.throwFeatMissing("prefix", "de.unidue.ltl.ctest.type.Gap");
+    ll_cas.ll_setStringValue(addr, casFeatCode_prefix, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_postfix;
+  /** @generated */
+  final int     casFeatCode_postfix;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getPostfix(int addr) {
+        if (featOkTst && casFeat_postfix == null)
+      jcas.throwFeatMissing("postfix", "de.unidue.ltl.ctest.type.Gap");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_postfix);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setPostfix(int addr, String v) {
+        if (featOkTst && casFeat_postfix == null)
+      jcas.throwFeatMissing("postfix", "de.unidue.ltl.ctest.type.Gap");
+    ll_cas.ll_setStringValue(addr, casFeatCode_postfix, v);}
+    
+  
+
+
+
+  /** initialize variables to correspond with Cas Type and Features
+	 * @generated
+	 * @param jcas JCas
+	 * @param casType Type 
+	 */
+  public Gap_Type(JCas jcas, Type casType) {
+    super(jcas, casType);
+    casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
+
+ 
+    casFeat_difficulty = jcas.getRequiredFeatureDE(casType, "difficulty", "uima.cas.Double", featOkTst);
+    casFeatCode_difficulty  = (null == casFeat_difficulty) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_difficulty).getCode();
+
+ 
+    casFeat_errorRate = jcas.getRequiredFeatureDE(casType, "errorRate", "uima.cas.Double", featOkTst);
+    casFeatCode_errorRate  = (null == casFeat_errorRate) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_errorRate).getCode();
+
+ 
+    casFeat_id = jcas.getRequiredFeatureDE(casType, "id", "uima.cas.Integer", featOkTst);
+    casFeatCode_id  = (null == casFeat_id) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_id).getCode();
+
+ 
+    casFeat_solutions = jcas.getRequiredFeatureDE(casType, "solutions", "uima.cas.StringArray", featOkTst);
+    casFeatCode_solutions  = (null == casFeat_solutions) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_solutions).getCode();
+
+ 
+    casFeat_prefix = jcas.getRequiredFeatureDE(casType, "prefix", "uima.cas.String", featOkTst);
+    casFeatCode_prefix  = (null == casFeat_prefix) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_prefix).getCode();
+
+ 
+    casFeat_postfix = jcas.getRequiredFeatureDE(casType, "postfix", "uima.cas.String", featOkTst);
+    casFeatCode_postfix  = (null == casFeat_postfix) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_postfix).getCode();
+
+  }
+}
+
+
+
+    
