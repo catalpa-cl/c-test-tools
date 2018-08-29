@@ -89,7 +89,6 @@ public class CTestToken {
 	public void setGapIndex(int index) {
 		if (index > -1 && index < this.text.length()) {
 			this.gapIndex = index;
-			this.gap = true;
 		}
 		else
 			this.gapIndex = -1;
