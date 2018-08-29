@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Rule;
@@ -15,7 +14,9 @@ public class CTestTest {
 	
 	@Rule
 	public TemporaryFolder folder= new TemporaryFolder();
-		      
+	
+	//FIXME: Failing
+	//TODO: Move to gapscheme.io
 	@Test
     public void roundtripTest()
         throws Exception
@@ -24,8 +25,8 @@ public class CTestTest {
 		CTestObject ctest = new CTestObject("en");
 		ctest.initializeFromFile(inputFile);
 
-	    File outputFile = folder.newFile("enTest.txt");
-	    FileUtils.writeStringToFile(outputFile, ctest.toString(), Charset.forName("UTF-8"));
+	    File outputFile = folder.newFile("output.txt");
+	    FileUtils.writeStringToFile(outputFile, ctest.toString());
 	    
 	    // try to read in the created file
 	    CTestObject ctestRoundtrip = new CTestObject("en");

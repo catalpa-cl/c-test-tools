@@ -2,7 +2,6 @@ package de.unidue.ltl.ctest.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class CTestObject {
 	public static final String SENT_BOUNDARY = "----";
 	public static final String COMMENT = "%%";
 	
-	// TODO this cutoffs should not be defined here
 	public static final double EASY_CUTOFF = 0.3;
 	public static final double MEDIUM_CUTOFF = 0.6;
 	
@@ -44,7 +42,7 @@ public class CTestObject {
 		StringBuilder sb = new StringBuilder();
 		sb.append(COMMENT + " " + language + "\t" + nrOfGaps + "\n");
 		if (id != null) {
-			sb.append(COMMENT + " " + id + "\n");			
+			sb.append(COMMENT + " " + id);			
 		}
 		
 		for (CTestToken token : tokens) {
@@ -107,12 +105,13 @@ public class CTestObject {
 		return arr;
 	}
 	
+	//TODO: move to gapscheme.io
 	public void initializeFromFile(File inputFile) 
 			throws IOException
 	{
 		this.setId(inputFile.getName());
 		
-	    for (String line : FileUtils.readLines(inputFile, Charset.forName("UTF-8"))) {   
+	    for (String line : FileUtils.readLines(inputFile)) {   
 	    	String[] split = line.split("\t");
 	    	
 	    	if (line.equals(SENT_BOUNDARY)) {

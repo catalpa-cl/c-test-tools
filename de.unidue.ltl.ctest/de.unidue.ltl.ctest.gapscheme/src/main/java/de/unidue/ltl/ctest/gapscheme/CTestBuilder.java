@@ -13,9 +13,9 @@ import org.apache.uima.jcas.JCas;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import de.unidue.ltl.ctest.core.CTestObject;
+import de.unidue.ltl.ctest.core.CTestToken;
 import de.unidue.ltl.ctest.gapscheme.preprocessing.GapIndexFinder;
-import testDifficulty.core.CTestObject;
-import testDifficulty.core.CTestToken;
 
 /**
  * Builder class for {@link difficultyPrediction.core.CTestObject} objects.
@@ -75,7 +75,7 @@ public class CTestBuilder {
 	 * @throws UIMAException if UIMA preprocessing resources could not be initialised.
 	 * 
 	 * @see CTestResourceProvider#getSupportedLanguages()
-	 * @see testDifficulty.core.CTestObject
+	 * @see de.unidue.ltl.ctest.core.CTestObject
 	 */
 	public CTestObject generateCTest(String text, String language) throws UIMAException {
 		initialise(text, language);

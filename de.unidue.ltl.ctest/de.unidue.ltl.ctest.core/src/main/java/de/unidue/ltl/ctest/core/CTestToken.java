@@ -12,10 +12,11 @@ import org.apache.commons.lang.StringUtils;
  * A token can either have a gap or not.
  */
 public class CTestToken {
-
 	private String text;
 	private String id;
 	private boolean gap;
+	private GapType gapType = GapType.POSTFIX;
+	private int gapIndex = -1;
 	private String prompt;
 	private List<String> otherSolutions;
 	private Double errorRate;
@@ -52,6 +53,10 @@ public class CTestToken {
 			sb.append("\t");
 			sb.append(errorRate);
 			sb.append("\t");
+			sb.append(gapType);
+			sb.append("\t");
+			sb.append(gapIndex);
+			sb.append("\t");
 			sb.append(StringUtils.join(otherSolutions, "/"));
 			
 			return sb.toString();			
@@ -76,7 +81,40 @@ public class CTestToken {
 	public void setGap(boolean gap) {
 		this.gap = gap;
 	}
-
+	
+	public int getGapIndex() {
+		return this.gapIndex;
+	}
+	
+	public void setGapIndex(int index) {
+		if (index > -1 && index < this.text.length()) {
+			this.gapIndex = index;
+			this.gap = true;
+		}
+		else
+			this.gapIndex = -1;
+	}
+	
+	public GapType getGapType() {
+		return this.gapType;
+	}
+	
+	public void setGapType(String type) {
+		if (type.equals(GapType.POSTFIX.toString())) {
+			this.gapType = GapType.POSTFIX; 
+			return;
+		}
+		
+		if (type.equals(GapType.PREFIX.toString())) {
+			this.gapType = GapType.PREFIX; 
+			return;
+		}
+	}
+	
+	public void setGapType(GapType type) {
+			this.gapType = type;
+	}
+	
 	public String getPrompt() {
 		return prompt;
 	}
