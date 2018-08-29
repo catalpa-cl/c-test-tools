@@ -2,10 +2,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>de.unidue.ltl.ctest</groupId>
 	<artifactId>de.unidue.ltl.ctest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
 	<properties>
 		<dkpro.core.version>1.9.3</dkpro.core.version>
 		<dkpro.tc.version>1.0.1</dkpro.tc.version>
@@ -18,12 +20,13 @@
 
 		<maven.compiler.parameters>true</maven.compiler.parameters>
 	</properties>
+	
 	<modules>
 		<module>de.unidue.ltl.ctest.core</module>
 	</modules>
+	
 	<dependencyManagement>
-		<dependencies>
-			
+		<dependencies>	
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.core-asl</artifactId>
@@ -31,7 +34,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.core-gpl</artifactId>
@@ -39,7 +41,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
@@ -47,7 +48,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.core.decompounding-asl</artifactId>
@@ -55,8 +55,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
-			
 			<dependency>
 				<groupId>org.dkpro.tc</groupId>
 				<artifactId>dkpro-tc</artifactId>
@@ -64,9 +62,9 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
 		</dependencies>
 	</dependencyManagement>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -76,14 +74,15 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
+	
 	<repositories>
-
 		<repository>
 			<id>ukp-oss-releases</id>
 			<url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-releases/</url>
@@ -96,7 +95,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
 		<repository>
 			<id>ukp-oss-snapshots</id>
 			<url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots/</url>
@@ -107,6 +105,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-
 	</repositories>
+	
 </project>
