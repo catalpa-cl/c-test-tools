@@ -9,7 +9,10 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Represents a token in a ctest.
- * A token can either have a gap or not.
+ * A token can either have a gap or not. The token's gap index marks the start of the gap. The gap type determines the kind of gap.
+ * 
+ * @see CTestObject
+ * @see GapType
  */
 public class CTestToken {
 	private String text;
