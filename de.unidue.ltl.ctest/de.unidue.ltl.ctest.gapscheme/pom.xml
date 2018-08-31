@@ -9,7 +9,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>de.unidue.ltl.ctest.gapscheme</groupId>
 	<artifactId>de.unidue.ltl.ctest.gapscheme</artifactId>
 	
 	<dependencies>
@@ -93,9 +92,9 @@
 			<version>20100908.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.dkpro</groupId>
-			<artifactId>difficultyPrediction</artifactId>
-			<version>1</version>
+			<groupId>de.unidue.ltl.ctest</groupId>
+			<artifactId>de.unidue.ltl.ctest.core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	

@@ -33,8 +33,6 @@ public class CompoundGapFinder implements GapIndexFinder {
 	 * Creates a new {@code CompoundGapFinder}, using the specified {@code JCas}.
 	 * The {@code JCas} should contain {@code Compound} and {@code Token} Annotations.
 	 * 
-	 * @return The created {@code CompoundGapFinder}.
-	 * 
 	 * @see org.apache.uima.jcas.JCas
 	 * @see org.apache.uima.jcas.tcas.Annotation
 	 * @see de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token

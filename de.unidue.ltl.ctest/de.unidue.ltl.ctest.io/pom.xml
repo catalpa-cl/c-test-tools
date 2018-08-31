@@ -9,7 +9,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>de.unidue.ltl.ctest.io</groupId>
 	<artifactId>de.unidue.ltl.ctest.io</artifactId>
 
 	<dependencies>

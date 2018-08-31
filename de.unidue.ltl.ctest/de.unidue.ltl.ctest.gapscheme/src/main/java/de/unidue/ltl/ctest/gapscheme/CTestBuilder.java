@@ -1,7 +1,6 @@
 package de.unidue.ltl.ctest.gapscheme;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -18,7 +17,7 @@ import de.unidue.ltl.ctest.core.CTestToken;
 import de.unidue.ltl.ctest.gapscheme.preprocessing.GapIndexFinder;
 
 /**
- * Builder class for {@link difficultyPrediction.core.CTestObject} objects.
+ * Builder class for {@link CTestObject} objects.
  */
 public class CTestBuilder {	
 	private List<Predicate<Token>> exclusionRules;
@@ -75,7 +74,7 @@ public class CTestBuilder {
 	 * @throws UIMAException if UIMA preprocessing resources could not be initialised.
 	 * 
 	 * @see CTestResourceProvider#getSupportedLanguages()
-	 * @see de.unidue.ltl.ctest.core.CTestObject
+	 * @see CTestObject
 	 */
 	public CTestObject generateCTest(String text, String language) throws UIMAException {
 		initialise(text, language);

@@ -23,6 +23,8 @@
 	
 	<modules>
 		<module>de.unidue.ltl.ctest.core</module>
+		<module>de.unidue.ltl.ctest.gapscheme</module>
+		<module>de.unidue.ltl.ctest.io</module>
 	</modules>
 	
 	<dependencyManagement>
