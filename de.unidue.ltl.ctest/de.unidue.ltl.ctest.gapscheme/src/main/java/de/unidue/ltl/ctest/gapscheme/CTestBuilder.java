@@ -42,7 +42,7 @@ public class CTestBuilder {
 	/**
 	 * Creates a new {@code CTestBuilder}.
 	 * <p>
-	 * By default, a c-test will have 20 gaps and every second word will receive a gap.
+	 * By default, a c-test will contain 20 gaps, every second being gapped.
 	 */
 	public CTestBuilder() {
 		gapInterval = 2;
@@ -84,14 +84,14 @@ public class CTestBuilder {
 	}
 	
 	/**
-	 * Returns the last <b><i>successfully</i></b> created {@code CTestObject}.
+	 * Returns the last <b><i>successfully</i></b> generated {@code CTestObject}.
 	 */	
 	public CTestObject getCTest() {
 		return ctest;
 	}
 	
 	/**
-	 * Returns the number of gaps in the last <b><i>successfully</i></b> created {@code CTestObject}.
+	 * Returns the number of gaps in the last <b><i>successfully</i></b> generated {@code CTestObject}.
 	 */	
 	public int getGapCount() {
 		//TODO: Implement in CTestObject

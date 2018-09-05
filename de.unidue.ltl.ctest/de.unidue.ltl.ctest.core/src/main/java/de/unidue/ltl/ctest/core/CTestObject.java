@@ -13,7 +13,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.type.Gap;
 
 public class CTestObject {
-	
 	public static final String SENT_BOUNDARY = "----";
 	public static final String COMMENT = "%%";
 	
@@ -56,6 +55,7 @@ public class CTestObject {
 		return sb.toString();
 	}
 
+	//TODO: Rename to 'getAverageTokenDifficulty'?
 	public double getOverallDifficulty() {
 		double sumOfPredictions = 0.0;
 		for (CTestToken token : tokens) {
@@ -66,6 +66,7 @@ public class CTestObject {
 		return sumOfPredictions / nrOfGaps;
 	}
 	
+	//TODO: Create Transformer class?
 	public void initializeJCas(JCas jcas) 
 	{
 		int offset = 0;
@@ -105,7 +106,7 @@ public class CTestObject {
 		return arr;
 	}
 	
-	//TODO: move to gapscheme.io
+	//TODO: Remove and update References with CTestFileReader.read(inputFile).
 	public void initializeFromFile(File inputFile) 
 			throws IOException
 	{
@@ -119,16 +120,18 @@ public class CTestObject {
 	    	}
 	    	else if (!line.startsWith(COMMENT)) {
 		    	CTestToken token = new CTestToken(split[0]);
-	    		if (split.length >=3) {
+	    		if (split.length >=5) {
 	    			nrOfGaps++;
 	    			
 		    		token.setGap(true);
 		    		token.setId(split[1]);
 		    		token.setPrompt(split[2]);
 			    	token.setErrorRate(Double.parseDouble(split[3]));
+			    	token.setGapType(split[4]);
+			    	token.setGapIndex(Integer.parseInt(split[5]));
 		    		
 		    		List<String> solutions = new ArrayList<>();
-		    		for (int i=4; i<split.length; i++) {
+		    		for (int i=6; i<split.length; i++) {
 		    			solutions.add(split[i]);
 		    		}
 		    		token.setOtherSolutions(solutions);
@@ -146,6 +149,12 @@ public class CTestObject {
 			nrOfGaps++;
 		}
 		tokens.add(token);
+	}
+	
+	public void addTokens(Iterable<CTestToken> tokens) {
+		for (CTestToken token: tokens) {
+			addToken(token);
+		}
 	}
 
 	public List<Double> getPredictions() {

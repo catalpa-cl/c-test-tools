@@ -14,8 +14,10 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
  * then "lanation" is the area, where a gap could be placed.
  * "exp" should not receive any gap.
  * <p>
- * Note that this does <i>not</i> mean that the gap should start at the letter "l", rather that the gappable area starts at "l".
- * Finding the start index of a gap is not the responsibility of a {@code GapIndexFinder}.
+ * Note that this does <i>not</i> mean that the gap should start at the letter "l", 
+ * rather that the <i>gappable</i> area starts at "l".
+ * Finding the start index of a gap is not the responsibility of a {@code GapIndexFinder}, 
+ * since different rules exist to find the actual start point of a gap.
  * <p>
  * The previous explanation assumed that the desired gap is a <i>postfix gap</i>,
  * meaning that the gap should be placed at the end of the word.
