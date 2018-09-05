@@ -51,10 +51,12 @@ public class CTestFileReader implements CTestReader {
 	}
 	
 	private String extractLanguage() {
-		return this.lines[0]
-				.substring(CTestObject.COMMENT.length())
-				.split("\\t")[0]
-				.trim();
+		if (lines[1].startsWith(CTestObject.COMMENT))
+			return this.lines[0]
+					.substring(CTestObject.COMMENT.length())
+					.split("\\t")[0]
+					.trim();
+		return "UNKNOWN";
 	}
 	
 	private String extractId() {
@@ -81,14 +83,14 @@ public class CTestFileReader implements CTestReader {
 				continue;
 
 			if (line.startsWith(CTestObject.SENT_BOUNDARY)) {
-				tokens.get(i-1).setLastTokenInSentence(true);
+				tokens.get(tokens.size() - 1).setLastTokenInSentence(true);
 				continue;
 			}
 			
 			//TODO: TokenInfo Transformer?
 			tokenInfo = line.split("\t");
 			token = new CTestToken(tokenInfo[0]);
-			if (tokenInfo.length >= 5) {
+			if (tokenInfo.length >= 6) {
 				token.setGap(true);
 				token.setId(tokenInfo[1].trim());
 				token.setPrompt(tokenInfo[2].trim());
@@ -96,10 +98,10 @@ public class CTestFileReader implements CTestReader {
 				token.setGapType(tokenInfo[4].trim());
 				token.setGapIndex(Integer.parseInt(tokenInfo[5].trim()));
 			}
-			if (tokenInfo.length >= 6) {
+			if (tokenInfo.length >= 7) {
 				solutions = new ArrayList<>();
-				for (int j = 4; j < tokenInfo.length; j++) {
-					solutions.add(tokenInfo[i].trim());
+				for (String solution : tokenInfo[6].split("/")) {
+					solutions.add(solution.trim());
 				}
 				token.setOtherSolutions(solutions);
 			}
