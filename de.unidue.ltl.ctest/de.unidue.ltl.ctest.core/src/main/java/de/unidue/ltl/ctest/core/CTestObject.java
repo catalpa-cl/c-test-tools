@@ -2,6 +2,7 @@ package de.unidue.ltl.ctest.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,15 @@ import org.apache.uima.jcas.cas.StringArray;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.type.Gap;
 
-public class CTestObject {
+//TODO: Implement equals
+public class CTestObject implements Serializable {	
 	public static final String SENT_BOUNDARY = "----";
 	public static final String COMMENT = "%%";
 	
 	public static final double EASY_CUTOFF = 0.3;
 	public static final double MEDIUM_CUTOFF = 0.6;
+	
+	private static final long serialVersionUID = 1L;
 	
 	private List<CTestToken> tokens;
 	private String language;

@@ -27,7 +27,7 @@ import de.unidue.ltl.ctest.core.CTestToken;
  * <li> The file may contain any number of <i>Token Lines</i>, one for Token in the CTest. <br>
  * A <i>Token Line</i> must be equal to the {@code CTestToken#toString()} method.
  * That is, it must contain the token's text.
- * If the token is gapped, it must contain the token's id, prompt, error rate, gap type, gap index and other solutions,
+ * If the token is gapped, it must also contain the token's id, prompt, error rate, gap type, gap index and other solutions,
  * in this order, separated by tabs. Other solutions are separated by a forward slash.
  * <li> A <i>Token Line</i> may be followed by another <i>Token Line</i> or a <i>Sentence Boundary Line</i>. <br>
  * A <i>Sentence Boundary Line</i> must start with the {@code CTestObject#SENT_BOUNDARY} marker.
@@ -47,6 +47,7 @@ import de.unidue.ltl.ctest.core.CTestToken;
  * 
  * @see CTestFileObject
  * @see CTestToken
+ * @see CTestFileReader
  */
 public class CTestFileWriter implements CTestWriter {
 	

@@ -1,20 +1,23 @@
 package de.unidue.ltl.ctest.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-
+//TODO: Implement equals
 /**
- * Represents a token in a ctest.
+ * Represents a token in a c-Test.
  * A token can either have a gap or not. The token's gap index marks the start of the gap. The gap type determines the kind of gap.
  * 
  * @see CTestObject
  * @see GapType
  */
-public class CTestToken {
+public class CTestToken implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String text;
 	private String id;
 	private boolean gap;
