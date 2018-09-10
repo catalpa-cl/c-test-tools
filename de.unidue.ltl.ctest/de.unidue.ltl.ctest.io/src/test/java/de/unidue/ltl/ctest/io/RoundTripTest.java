@@ -60,7 +60,23 @@ public class RoundTripTest extends TestCase {
 		original = reader.read(outputFile);
 		
 		assertEquals(original.toString(), copy.toString());
+	}
+	
+	@Test
+	public void testCTestIOSRoundTrip() throws IOException {
+		File inputFile = new File("src/test/resources/texts/ios/de/test.ctest.ios.txt");
+		File outputFile = new File("src/test/resources/temp/ios/de/test.ctest.ios.txt");
 		
-		System.out.println(original);
+		CTestWriter writer = new CTestIOSWriter();
+		CTestReader reader = new CTestIOSReader();
+		
+		CTestObject original = reader.read(inputFile);
+		
+		writer.write(original, outputFile);
+		
+		CTestObject copy = reader.read(outputFile);
+		
+		assertEquals(original.getTokens().size(), copy.getTokens().size());
+		assertEquals(original.toString(), copy.toString());
 	}
 }

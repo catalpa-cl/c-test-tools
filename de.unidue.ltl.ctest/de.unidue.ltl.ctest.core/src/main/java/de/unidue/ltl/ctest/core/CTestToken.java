@@ -132,6 +132,10 @@ public class CTestToken implements Serializable {
 		return otherSolutions;
 	}
 
+	public boolean hasOtherSolutions() {
+		return !getOtherSolutions().isEmpty();
+	}
+	
 	public void setOtherSolutions(List<String> otherSolutions) {
 		this.otherSolutions = otherSolutions;
 	}
