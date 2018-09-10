@@ -29,6 +29,11 @@ public class CTestBinaryWriter implements CTestWriter {
 
 	@Override
 	public void write(CTestObject object, File file) throws IOException {
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			file.createNewFile();
+		}
+		
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 		out.writeObject(object);
 		out.close();

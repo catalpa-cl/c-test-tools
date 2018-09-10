@@ -58,6 +58,11 @@ public class CTestDocWriter {
             i++;
         }
         
+		if (!outputFile.exists()) {
+			outputFile.getParentFile().mkdirs();
+			outputFile.createNewFile();
+		}
+        
         FileOutputStream out = new FileOutputStream(outputFile);
         document.write(out);
         out.close();

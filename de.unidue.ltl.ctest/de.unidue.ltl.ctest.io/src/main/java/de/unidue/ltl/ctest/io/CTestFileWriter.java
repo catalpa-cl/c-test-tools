@@ -57,6 +57,12 @@ public class CTestFileWriter implements CTestWriter {
 		if (filePath.toFile().isDirectory())
 			throw new IOException("Input path is a directory, not a file.");
 		
+		File outFile = filePath.toFile();
+		if (!outFile.exists()) {
+			outFile.getParentFile().mkdirs();
+			outFile.createNewFile();
+		}
+		
 		Files.write(filePath, object.toString().getBytes());
 	}
 	
