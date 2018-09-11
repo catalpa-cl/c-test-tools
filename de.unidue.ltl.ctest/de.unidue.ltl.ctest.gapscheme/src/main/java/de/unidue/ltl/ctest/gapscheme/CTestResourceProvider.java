@@ -167,7 +167,7 @@ public class CTestResourceProvider {
 		return SUPPORTED_LANGUAGES;
 	}
 	
-	/*
+	/**
 	 * Returns AnalysisEnginges for the given language. 
 	 * Engines are first created and then added to the AnalysisEngine Store.
 	 * In this way, engines only need to be created once, reducing processing times on following runs.
@@ -217,7 +217,7 @@ public class CTestResourceProvider {
 		return engines;
 	}
 	
-	/*
+	/**
 	 * Returns the list of abbreviations for the given language. 
 	 * Abbreviations are read from file and then stored for future use.
 	 * In this way, the abbreviations only need to be read once.

@@ -18,24 +18,27 @@ import de.unidue.ltl.ctest.core.CTestObject;
 public class CTestBinaryWriter implements CTestWriter {
 
 	@Override
-	public void write(CTestObject object, Path filePath) throws IOException {
-		this.write(object, filePath.toFile());
+	public void write(CTestObject ctest, Path filePath) throws IOException {
+		this.write(ctest, filePath.toFile());
 	}
 
 	@Override
-	public void write(CTestObject object, String filePath) throws IOException {
-		this.write(object, new File(filePath));
+	public void write(CTestObject ctest, String filePath) throws IOException {
+		this.write(ctest, new File(filePath));
 	}
 
 	@Override
-	public void write(CTestObject object, File file) throws IOException {
+	public void write(CTestObject ctest, File file) throws IOException {
+		if (file.isDirectory())
+			throw new IOException("Input path is a directory, not a file.");
+		
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
 			file.createNewFile();
 		}
 		
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-		out.writeObject(object);
+		out.writeObject(ctest);
 		out.close();
 	}
 

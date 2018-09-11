@@ -13,7 +13,7 @@ import de.unidue.ltl.ctest.core.CTestToken;
 public class CTestIOSWriter implements CTestWriter {
 	
 	@Override
-	public void write(CTestObject object, Path filePath) throws IOException {
+	public void write(CTestObject ctest, Path filePath) throws IOException {
 		if (filePath.toFile().isDirectory())
 			throw new IOException("Input path is a directory, not a file.");
 		
@@ -23,7 +23,7 @@ public class CTestIOSWriter implements CTestWriter {
 			outFile.createNewFile();
 		}
 		
-		String docText = object.getTokens().stream()
+		String docText = ctest.getTokens().stream()
 				.map(this::toIOSFormat)
 				.collect(Collectors.joining("\n"));
 		
@@ -31,14 +31,14 @@ public class CTestIOSWriter implements CTestWriter {
 	}
 
 	@Override
-	public void write(CTestObject object, String filePath) throws IOException {
-		this.write(object, Paths.get(filePath));
+	public void write(CTestObject ctest, String filePath) throws IOException {
+		this.write(ctest, Paths.get(filePath));
 
 	}
 
 	@Override
-	public void write(CTestObject object, File file) throws IOException {
-		this.write(object, file.getAbsolutePath());
+	public void write(CTestObject ctest, File file) throws IOException {
+		this.write(ctest, file.getAbsolutePath());
 
 	}
 	

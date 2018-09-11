@@ -50,10 +50,8 @@ import de.unidue.ltl.ctest.core.CTestToken;
  * @see CTestFileReader
  */
 public class CTestFileWriter implements CTestWriter {
-	
-	public CTestFileWriter() {}
 		
-	public void write(CTestObject object, Path filePath) throws IOException {
+	public void write(CTestObject ctest, Path filePath) throws IOException {
 		if (filePath.toFile().isDirectory())
 			throw new IOException("Input path is a directory, not a file.");
 		
@@ -63,14 +61,14 @@ public class CTestFileWriter implements CTestWriter {
 			outFile.createNewFile();
 		}
 		
-		Files.write(filePath, object.toString().getBytes());
+		Files.write(filePath, ctest.toString().getBytes());
 	}
 	
-	public void write(CTestObject object, String filePath) throws IOException {
-		this.write(object, Paths.get(filePath));
+	public void write(CTestObject ctest, String filePath) throws IOException {
+		this.write(ctest, Paths.get(filePath));
 	}
 
-	public void write(CTestObject object, File file) throws IOException {
-		this.write(object, file.getAbsolutePath());
+	public void write(CTestObject ctest, File file) throws IOException {
+		this.write(ctest, file.getAbsolutePath());
 	}
 }
