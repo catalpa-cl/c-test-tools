@@ -77,17 +77,20 @@ public class CTestIOSReader implements CTestReader {
 	}
 
 	private String extractLanguage(Path path) {
-		path = path.toAbsolutePath();
-		if (path.getNameCount() < 2)
+		// Has no parent.
+		if (path.getNameCount() < 2) 
 			return "UNKNOWN";
 
 		// TODO: Validate language.
-		return path.subpath(path.getNameCount() - 2, path.getNameCount() - 1).toString();
+		// Extracts language from folder structure. Parent folder is language.
+		return path.getParent().getFileName().toString();
 	}
 
 	// TODO: Implement in a cleaner fashion.
 	private List<CTestToken> extractTokens(Path path) throws IOException {
 		List<CTestToken> tokens = new ArrayList<>();
+		
+		// Reads file.
 		String[] words = Files.lines(path)
 				.map(line -> line.trim())
 				.collect(Collectors.joining(" "))
@@ -103,7 +106,7 @@ public class CTestIOSReader implements CTestReader {
 			String pre = "";
 			String post = "";
 			
-			// Checks whether word is clean. 
+			// Checks whether word is clean or contains junk. 
 			junkMatcher.reset(word);
 			if(junkMatcher.find() && word.length() > 1) {
 				pre = junkMatcher.group("pre");
