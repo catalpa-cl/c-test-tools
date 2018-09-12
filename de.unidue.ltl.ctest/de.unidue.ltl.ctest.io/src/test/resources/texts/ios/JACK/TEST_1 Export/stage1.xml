@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<exercise type="fillIn">
+
+<input> </input>
+
+<task> &lt;span style="font-size:120%">Wenn das Smartphone im Fluss landet&lt;/span>
+
+Alles begann an dem Tag vor zwei Jahren, an dem mein Smartphone im Fluss abtauchte. Ich ha[fillIn groesse="5" parser="none"] mir ger[fillIn groesse="5" parser="none"] den Ruck[fillIn groesse="5" parser="none"] auf d[fillIn groesse="5" parser="none"] Rücken gesch[fillIn groesse="5" parser="none"], da hö[fillIn groesse="5" parser="none"] ich n[fillIn groesse="5" parser="none"] noch e[fillIn groesse="5" parser="none"] "Plopp". Kle[fillIn groesse="5" parser="none"] kreisförmige Wel[fillIn groesse="5" parser="none"] bildeten si[fillIn groesse="5" parser="none"] in Ufernä[fillIn groesse="5" parser="none"] und i[fillIn groesse="5" parser="none"] betete, da[fillIn groesse="5" parser="none"] das ni[fillIn groesse="5" parser="none"] mein Ha[fillIn groesse="5" parser="none"] war. Na[fillIn groesse="5" parser="none"] intensivem Durchsuc[fillIn groesse="5" parser="none"] meiner Tas[fillIn groesse="5" parser="none"] war kl[fillIn groesse="5" parser="none"]: Es war mein Handy! Ich war verzweifelt und sauer auf mich selbst: Mein Gehirn, mein Sprachrohr, mein einziges Fotoalbum – alles versenkt.</task>
+
+<advice> </advice>
+
+
+<correctanswer>
+
+<option result="false"/>
+
+<message/>
+
+</correctanswer>
+
+
+<feedback>
+
+<option result="equals('[pos=1]','tte')" points="5"/>
+
+<option result="equals('[pos=2]','ade')" points="5"/>
+
+<option result="equals('[pos=3]','sack')" points="5"/>
+
+<option result="equals('[pos=4]','en')" points="5"/>
+
+<option result="equals('[pos=5]','wungen')" points="5"/>
+
+<option result="equals('[pos=5]','nallt')" points="5"/>
+
+<option result="equals('[pos=6]','rte')" points="5"/>
+
+<option result="equals('[pos=7]','ur')" points="5"/>
+
+<option result="equals('[pos=8]','in')" points="5"/>
+
+<option result="equals('[pos=9]','ine')" points="5"/>
+
+<option result="equals('[pos=10]','len')" points="5"/>
+
+<option result="equals('[pos=11]','ch')" points="5"/>
+
+<option result="equals('[pos=12]','he')" points="5"/>
+
+<option result="equals('[pos=13]','ch')" points="5"/>
+
+<option result="equals('[pos=14]','ss')" points="5"/>
+
+<option result="equals('[pos=15]','cht')" points="5"/>
+
+<option result="equals('[pos=16]','ndy')" points="5"/>
+
+<option result="equals('[pos=17]','ch')" points="5"/>
+
+<option result="equals('[pos=18]','hen')" points="5"/>
+
+<option result="equals('[pos=19]','che')" points="5"/>
+
+<option result="equals('[pos=20]','ar')" points="5"/>
+
+</feedback>
+
+<output> </output>
+
+<skipmessage>Schade, dass Sie diesen Text übersprungen haben.</skipmessage>
+
+</exercise>

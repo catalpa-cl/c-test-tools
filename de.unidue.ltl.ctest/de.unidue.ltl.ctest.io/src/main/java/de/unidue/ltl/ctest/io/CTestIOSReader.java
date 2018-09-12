@@ -21,14 +21,14 @@ public class CTestIOSReader implements CTestReader {
 	 * <p>
 	 * The constitutents are identified in different capture groups:
 	 * <ul>
-	 * <li> {@code wordBase} captures the part of the token that is not gapped.
+	 * <li> {@code base} captures the part of the token that is not gapped.
 	 * <li> {@code solutions} captures the solutions to the token.
 	 * </ul>
 	 *   
 	 * @see Matcher
 	 */
 	public static final Pattern TOKEN = Pattern.compile(""
-			+ "(?<wordBase>\\p{L}*?)"
+			+ "(?<base>\\p{L}*?)"
 			+ "\\{(?<solutions>.*?)\\}");
 	
 	/**
@@ -43,7 +43,7 @@ public class CTestIOSReader implements CTestReader {
 	 */
 	public static final Pattern JUNK = Pattern.compile(""
 			+ "(?<pre>[^\\p{L}]*)"
-			+ "(?<text>[\\p{L}\\{,\\}]*)"
+			+ "(?<token>[\\p{L}\\{,\\}]*)"
 			+ "(?<post>[^\\p{L}]*)");
 	
 	/**
@@ -103,6 +103,7 @@ public class CTestIOSReader implements CTestReader {
 		int currentID = 0;
 		
 		for (String word : words) {			
+			
 			String pre = "";
 			String post = "";
 			
@@ -110,7 +111,7 @@ public class CTestIOSReader implements CTestReader {
 			junkMatcher.reset(word);
 			if(junkMatcher.find() && word.length() > 1) {
 				pre = junkMatcher.group("pre");
-				word = junkMatcher.group("text");
+				word = junkMatcher.group("token");
 				post = junkMatcher.group("post");
 			}
 			
@@ -119,16 +120,16 @@ public class CTestIOSReader implements CTestReader {
 			
 			// Adds additional information, if word is a gapped token.
 			if (tokenMatcher.find()) {
-				String wordBase = tokenMatcher.group("wordBase");
 				String[] solutions = tokenMatcher.group("solutions").split(",");
-				String text = wordBase + solutions[0];
+				String base = tokenMatcher.group("base");
+				String text = base + solutions[0];
 				List<String> otherSolutions = Arrays.asList(solutions).subList(1, solutions.length);
 				int gapIndex = word.indexOf("{");
 				
 				token.setText(text);
 				token.setGap(true);
 				token.setGapIndex(gapIndex);
-				token.setPrompt(wordBase);
+				token.setPrompt(base);
 				token.setOtherSolutions(otherSolutions);
 				token.setId(Integer.toString(currentID));			
 				currentID++;

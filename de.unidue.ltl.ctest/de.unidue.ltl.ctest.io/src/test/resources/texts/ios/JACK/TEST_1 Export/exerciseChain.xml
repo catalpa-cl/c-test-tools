@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Bitte achten Sie beim Speichern der Datei darauf, dass das Encoding
+	ISO-8859-1 (auch als Latin1 bezeichnet) ausgewählt ist, damit auch
+	Sonderzeichen korrekt dargestellt werden.
+-->
+
+<exercisechain>
+
+	<!--
+		Im Tag <variables> können Sie die Variablen anlegen, die sie in dieser
+		Aufgabe verwenden wollen. Das Tag <variables> ist optional und kann
+		als weggelassen werden.
+
+		Bitte legen Sie für jede Variable, die Sie verwenden möchten, ein
+		<option> Tag an und geben Sie im Attribut "name" ihren Namen an. Sie
+		haben drei Möglichkeiten die Variablen zu initialisieren:
+
+		Zufällig aus einem Intervall:
+			Geben Sie dazu die beiden Attribute "min" und "max" an, die den
+			minimalen (inklusive), bzw. maximalen (inklsuive) Wert der Variablen
+			angeben. Das folgende Beispiel legt eine Variable namens foo an,
+			die den Wert 3, 4 oder 5 haben kann.
+
+				<option name="foo" min="3" max="5"/>
+
+		Zufällig aus einer Menge:
+			Geben Sie dazu das Attribut "set" an und geben Sie in geschweiften
+			Klammern alle Werte der Menge durch Kommata getrennt an. Das
+			folgende Beispiel legt eine Variable namens foo an und setzt ihren
+			Anfangswert zufällig auf 23, 42 oder 1337.
+
+				<option name="foo" set="{23,42,1337}"/>
+
+		Mittels eines Ausdrucks:
+			Geben Sie dazu das Attribut "value" an und setzen Sie dessen Wert
+			auf einen Ausdruck, der vom JACK Evaluator ausgerechnet werden kann.
+			Das folgende Beispiel legt eine Variable namens foo an und setzt
+			ihren Wert auf 1337.
+
+				<option name="foo" value="13 * 100 + 37"/>
+		
+		Sie können sich das <variables> Tag von hier aus dem Kommentarblock
+		herauskopieren:
+
+			<variables>
+				<option name="MeineVariable" min="23" max="42"/>
+			</variables>
+	-->
+
+
+	<!--
+		Geben Sie bitte für jede Teilaufgabe ihrer Aufgabe ein <step> Tag an.
+		Das "id" Attribut muss einen eindeutigen Namen für die Stufe enthalten.
+		Wir empfehlen die Stufen zu nummerieren. "displayName" gibt den
+		angezeigten Namen der Stufe an. Das Attribut "file" gibt den Namen der
+		Stufendefinitionsdatei an.
+	-->
+
+	<step id="1" displayName="Stage 1" file="stage1.xml" >
+	
+	<!--
+		Bitte legen Sie hier für jeden Parameter, den die Stufe benötigt, ein
+		<input> Tag an und geben Sie im "value" Attribut ein vom JACK Evaluator
+		auswertbaren Ausdruck an. Das folgende Beispiel übergibt der Stufe die
+		Summe aus einer Variable namens foo und 23:
+		
+			<input value="[var=foo] + 23"/>
+	-->
+	
+	<!--
+		Bitte legen Sie hier für jede Variable, die die Stufe zurückgeben soll,
+		ein <output> Tag an und geben Sie im Attribut "name" den Namen an, unter
+		dem dieser Wert gespeichert werden soll. Ist bereits eine Variable mit
+		diesem Namen vorhanden, wird ihr aktueller Inhalt durch den neuen
+		ersetzt. Das folgende Beispiel erwartet von der Stufendatei einen
+		Rückgabewert und legt diesen unter dem Namen bar ab.
+		
+			<output name="bar"/>
+	-->
+	
+
+	<!--
+			Das <next> Tag definiert mit welcher Stufe beim Abschließen der
+		aktuellen Stufe fortgefahren werden soll. Mit dem Attribut "default"
+		legen Sie fest, welche Stufe standardmäßig auf die aktuelle folgen soll.
+		hier können Sie entweder den Namen einer anderen Stufe eintragen oder
+		die folgen Werte:
+
+			end			Markiert das Ende der Aufgabe und zeigt keine weitere
+						Stufe an.
+			repeat		Wiederholt die aktuelle Stufe.
+
+		Im Attribut "message" können Sie eine Nachricht hinterlegen, die in
+		diesem Fall angezeigt wird.
+	-->
+
+		<next default="repeat" message="Bitte versuchen Sie es noch mal.">
+
+	<!--
+		Für jeden vom Standardfall abweichenden Pfad legen Sie bitte im <next>
+		Tag ein <path> Tag an. Das Attribut "target" ist hier analog zum
+		"default" Attribut des <step> Tags zu verwenden. Das "message" Attribut
+		verhält sich genau gleich. Im "result" Attribut können Sie eine minimale
+		Punktzahl angeben, die erreicht werden muss, um diesen Pfad zu
+		aktivieren. Im Attribut "condition" können Sie zudem beliebige
+		Bedingungen für das Aktivieren des Pfads angeben. Das folgende Beispiel
+		definiert einen Pfad, der aktiviert wird, wenn mindestens 75 Punkte in
+		der aktuellen Stufe erreicht wurden und die Aufgabe beendet:
+
+			<path target="end" result="75"/>
+
+		Das folgende Beispiel wiederholt die aktuelle Stufe, wenn eine Variable
+		namens "foo" 23 enthält.
+
+			<path target="repeat" condition="[var=foo]==23"/>
+	-->
+
+			<path target="end" result="100" />
+
+		</next>
+
+	</step>
+
+	<!--
+		Hier können Sie beliebig viele weitere Stufendefinitionen mit den <step>
+		Tags anlegen.
+	-->
+	
+</exercisechain>
