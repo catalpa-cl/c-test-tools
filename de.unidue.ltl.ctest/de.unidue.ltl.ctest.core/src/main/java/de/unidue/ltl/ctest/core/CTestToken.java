@@ -127,7 +127,8 @@ public class CTestToken implements Serializable {
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
 	}
-
+	
+	//TODO: Add "getSolutions"?
 	public List<String> getOtherSolutions() {
 		return otherSolutions;
 	}

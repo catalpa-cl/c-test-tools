@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.jcas.JCas;
@@ -31,19 +32,15 @@ public class CTestObject implements Serializable {
 	public CTestObject(String language) 
 	{	
 		this.language = language;
-		this.nrOfGaps = 0;
 		this.tokens = new ArrayList<>();
+		this.nrOfGaps = 0;
 		this.id = null;
-	}
-	
-	public List<CTestToken> getTokens() {
-		return tokens;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(COMMENT + " " + language + "\t" + nrOfGaps + "\n");
+		sb.append(COMMENT + " " + language + "\t" + getGapCount() + "\n");
 		if (id != null) {
 			sb.append(COMMENT + " " + id);			
 		}
@@ -57,6 +54,33 @@ public class CTestObject implements Serializable {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+	
+	
+	public List<CTestToken> getTokens() {
+		return tokens; //TODO: Return copy? Mutation could invalidate CTestObject state.
+	}
+	
+	public List<CTestToken> getGappedToken() {
+		return this.tokens.stream()
+				.filter(token -> token.isGap())
+				.collect(Collectors.toList());
+	}
+	
+	public int getGapCount() {
+		return getGappedToken().size(); //TODO: simplify, once getTokens is fixed.
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	//TODO: Rename to 'getAverageTokenDifficulty'?
@@ -111,6 +135,7 @@ public class CTestObject implements Serializable {
 	}
 	
 	//TODO: Remove and update References with CTestFileReader.read(inputFile).
+	@Deprecated
 	public void initializeFromFile(File inputFile) 
 			throws IOException
 	{
@@ -184,13 +209,5 @@ public class CTestObject implements Serializable {
 			}
 		}
 		return false;
-	}
-	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 }
