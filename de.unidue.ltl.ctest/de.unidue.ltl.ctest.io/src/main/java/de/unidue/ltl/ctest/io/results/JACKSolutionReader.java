@@ -12,7 +12,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
-public class JackSolutionReader implements CTestSolutionReader {
+public class JACKSolutionReader implements CTestSolutionReader {
 	
 	private static final String MISSING_ANSWER = "ANSWER_MISSING";
 	
@@ -24,6 +24,10 @@ public class JackSolutionReader implements CTestSolutionReader {
 	 */
 	@Override
 	public List<String> read(File solutionFile) throws IOException {
+		if(solutionFile.isDirectory()) 
+			solutionFile = findSolutionFile(solutionFile);
+			
+		
 		// readDocument
 		Document document = readXMLDocument(solutionFile);
 		
@@ -95,17 +99,17 @@ public class JackSolutionReader implements CTestSolutionReader {
 	 * @return  a list containing all answers. Element i corresponds to the answer list of the ith file under the directory.
 	 * @throws IOException if the file does not exist or could not be processed.
 	 * 
-	 * @see JackSolutionReader#read
+	 * @see JACKSolutionReader#read
 	 */
-	public List<List<String>> readDirectory(Path directory) throws IOException {
+	public List<List<String>> readAll(File directory) throws IOException {
 		List<List<String>> results = new ArrayList<>();		
 		
-		if(directory.toFile().isFile()) {
-			results.add(read(directory.toFile()));
+		if(directory.isFile()) {
+			results.add(read(directory));
 			return results;
 		}
 		
-		File[] solutionDirectories = directory.toFile().listFiles();
+		File[] solutionDirectories = directory.listFiles();
 		for (File solutionDirectory : solutionDirectories) {
 			try {
 				File solutionFile = findSolutionFile(solutionDirectory);
@@ -116,6 +120,14 @@ public class JackSolutionReader implements CTestSolutionReader {
 		}
 		
 		return results;
+	}
+	
+	public List<List<String>> readAll(Path directory) throws IOException {
+		return this.readAll(directory.toFile());
+	}
+	
+	public List<List<String>> readAll(String directory) throws IOException {
+		return this.readAll(new File(directory));
 	}
 	
 	/**

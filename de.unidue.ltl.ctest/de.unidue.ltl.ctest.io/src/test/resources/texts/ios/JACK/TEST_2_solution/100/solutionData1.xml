@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<solutiondata xmlns:ns2="http://www.openmath.org/OpenMath" timeStamp="Wed Apr 12 20:41:41 CEST 2017" stepID="1">
+    <input>
+        <pos id="1">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>r</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="2">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>nd</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="3">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>che</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="4">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>ne</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="5">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>orderung</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="6">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>lichen</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="7">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>her</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="8">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>kste</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="9"/>
+        <pos id="10">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>ten</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="11">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>n</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="12">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>ten</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="13">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>m</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="14">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>te</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="15">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>er</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="16">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>or</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="17">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>mer</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="18">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>nem</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="19">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>luss</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+        <pos id="20">
+            <ns2:OMOBJ cdbase="http://www.openmath.org/cd" version="2.0">
+                <ns2:OMSTR>at</ns2:OMSTR>
+            </ns2:OMOBJ>
+        </pos>
+    </input>
+    <advicecounter>0</advicecounter>
+</solutiondata>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<solutionlog>
+    <variables/>
+    <stage attempts="1" skip="false" timestamp="1491293909237" file="solutionData1.xml" type="fillIn" id="1">
+        <variables/>
+    </stage>
+    <stage attempts="0" skip="false" timestamp="1491293909533" file="solutionData2.xml" type="fillIn" id="1">
+        <variables/>
+    </stage>
+    <stage attempts="-1" skip="false" timestamp="1491295047463" file="solutionData2.xml" type="fillIn" id="1">
+        <variables/>
+    </stage>
+    <end>false</end>
+</solutionlog>

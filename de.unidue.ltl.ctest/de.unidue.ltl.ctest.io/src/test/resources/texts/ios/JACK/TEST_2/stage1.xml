@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<exercise type="fillIn">
+
+<input> </input>
+
+<task> &lt;span style="font-size:120%">Abenteuer Ausland&lt;/span>
+
+Viele Deutsche zog und zieht es ins Ausland. Dabei wa[fillIn groesse="5" parser="none"] Abwechslung u[fillIn groesse="5" parser="none"] die Su[fillIn groesse="5" parser="none"] nach ei[fillIn groesse="5" parser="none"] interessanten Herausf[fillIn groesse="5" parser="none"] im beruf[fillIn groesse="5" parser="none"] Bereich frü[fillIn groesse="5" parser="none"] die stär[fillIn groesse="5" parser="none"] Motive. Ab[fillIn groesse="5" parser="none"] die bes[fillIn groesse="5" parser="none"] Chancen a[fillIn groesse="5" parser="none"] einen gu[fillIn groesse="5" parser="none"] Job i[fillIn groesse="5" parser="none"] Ausland hat[fillIn groesse="5" parser="none"] in d[fillIn groesse="5" parser="none"] Vergangenheit v[fillIn groesse="5" parser="none"] allem Arbeitneh[fillIn groesse="5" parser="none"] mit ei[fillIn groesse="5" parser="none"] akademischen Absc[fillIn groesse="5" parser="none"]. Das h[fillIn groesse="5" parser="none"] sich im 21. Jahrhundert verändert. Deutsche Facharbeiter werden wegen ihrer guten Ausbildung sowohl im praktischen als auch im theoretischen Bereich immer mehr geschätzt.</task>
+
+<advice> </advice>
+
+
+<correctanswer>
+
+<option result="false"/>
+
+<message/>
+
+</correctanswer>
+
+
+<feedback>
+
+<option result="equals('[pos=1]','ren')" points="5"/>
+
+<option result="equals('[pos=2]','nd')" points="5"/>
+
+<option result="equals('[pos=3]','che')" points="5"/>
+
+<option result="equals('[pos=4]','ner')" points="5"/>
+
+<option result="equals('[pos=5]','orderung')" points="5"/>
+
+<option result="equals('[pos=6]','lichen')" points="5"/>
+
+<option result="equals('[pos=7]','her')" points="5"/>
+
+<option result="equals('[pos=8]','ksten')" points="5"/>
+
+<option result="equals('[pos=9]','er')" points="5"/>
+
+<option result="equals('[pos=10]','ten')" points="5"/>
+
+<option result="equals('[pos=11]','uf')" points="5"/>
+
+<option result="equals('[pos=12]','ten')" points="5"/>
+
+<option result="equals('[pos=13]','m')" points="5"/>
+
+<option result="equals('[pos=14]','ten')" points="5"/>
+
+<option result="equals('[pos=15]','er')" points="5"/>
+
+<option result="equals('[pos=16]','or')" points="5"/>
+
+<option result="equals('[pos=17]','mer')" points="5"/>
+
+<option result="equals('[pos=17]','merinnen')" points="5"/>
+
+<option result="equals('[pos=18]','nem')" points="5"/>
+
+<option result="equals('[pos=19]','hluss')" points="5"/>
+
+<option result="equals('[pos=20]','at')" points="5"/>
+
+</feedback>
+
+<output> </output>
+
+<skipmessage>Schade, dass Sie diesen Text übersprungen haben.</skipmessage>
+
+</exercise>

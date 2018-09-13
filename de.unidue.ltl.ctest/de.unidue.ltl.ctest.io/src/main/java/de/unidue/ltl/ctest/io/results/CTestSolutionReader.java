@@ -48,4 +48,43 @@ public interface CTestSolutionReader {
 	 * @throws IOException if file does not exist or reading fails otherwise.
 	 */
 	public List<String> read(File file) throws IOException;
+	
+	/**
+	 * Reads all files under the given directory which contain a person's solutions to a C-Test.
+	 * 
+	 * @param path the directory containing the solutions.
+	 * @return  a two-dimensional list of strings, representing the solutions. <br>
+	 * The jth element in the outer list contains all solutions by person j. <br>
+	 * The ith element in the inner list represents the person's solution for the ith gap token.
+	 * 
+	 * @throws IOException if directory does not exist, contains no solution files or reading fails otherwise.
+	 */
+	public List<List<String>> readAll(Path path) throws IOException;
+	
+
+	/**
+	 * Reads all files under the given directory which contain a person's solutions to a C-Test.
+	 * 
+	 * @param file the directory containing the solutions.
+	 * @return  a two-dimensional list of strings, representing the solutions. <br>
+	 * The jth element in the outer list contains all solutions by person j. <br>
+	 * The ith element in the inner list represents the person's solution for the ith gap token.
+	 * 
+	 * @throws IOException if directory does not exist, contains no solution files or reading fails otherwise.
+	 */
+	public List<List<String>> readAll(File file) throws IOException;
+	
+
+	/**
+	 * Reads all files under the given directory which contain a person's solutions to a C-Test.
+	 * 
+	 * @param filePath the directory containing the solutions.
+	 * @return  a two-dimensional list of strings, representing the solutions. <br>
+	 * The jth element in the outer list contains all solutions by person j. <br>
+	 * The ith element in the inner list represents the person's solution for the ith gap token.
+	 * 
+	 * @throws IOException if directory does not exist, contains no solution files or reading fails otherwise.
+	 */
+	public List<List<String>> readAll(String filePath) throws IOException;
+	
 }
