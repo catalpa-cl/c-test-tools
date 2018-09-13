@@ -16,6 +16,9 @@ public class TokenTestResult {
 	}
 	
 	public double getSolveRate() {
+		if (total == 0)
+			return 0.0;
+		
 		return (double) solved / (double) total;
 	}	
 	

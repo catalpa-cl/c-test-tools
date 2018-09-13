@@ -56,6 +56,7 @@ public class CTestObject implements Serializable {
 		return sb.toString();
 	}
 	
+	//TODO: Add setter with validation.
 	public String getLanguage() {
 		return language;
 	}
@@ -65,14 +66,14 @@ public class CTestObject implements Serializable {
 		return tokens; //TODO: Return copy? Mutation could invalidate CTestObject state.
 	}
 	
-	public List<CTestToken> getGappedToken() {
+	public List<CTestToken> getGappedTokens() {
 		return this.tokens.stream()
 				.filter(token -> token.isGap())
 				.collect(Collectors.toList());
 	}
 	
 	public int getGapCount() {
-		return getGappedToken().size(); //TODO: simplify, once getTokens is fixed.
+		return getGappedTokens().size(); //TODO: simplify, once getTokens is fixed.
 	}
 	
 	public String getId() {
