@@ -29,8 +29,7 @@ public class CTestObject implements Serializable {
 	private int nrOfGaps;
 	private String id;
 	
-	public CTestObject(String language) 
-	{	
+	public CTestObject(String language) {	
 		this.language = language;
 		this.tokens = new ArrayList<>();
 		this.nrOfGaps = 0;

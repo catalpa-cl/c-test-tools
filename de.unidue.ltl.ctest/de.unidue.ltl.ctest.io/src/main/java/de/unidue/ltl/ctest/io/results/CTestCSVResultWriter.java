@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
@@ -29,9 +28,7 @@ public class CTestCSVResultWriter implements CTestResultWriter {
 		
 		String title = ctest.getId() != null ? ctest.getId() : path.getFileName().toString();
 		List<String> csvLines = new ArrayList<String>();
-		List<CTestToken> gappedTokens = ctest.getTokens().stream()
-				.filter(token -> token.isGap())
-				.collect(Collectors.toList());
+		List<CTestToken> gappedTokens = ctest.getGappedTokens();
 		
 		if (gappedTokens.size() != results.size())
 			throw new IllegalArgumentException();
