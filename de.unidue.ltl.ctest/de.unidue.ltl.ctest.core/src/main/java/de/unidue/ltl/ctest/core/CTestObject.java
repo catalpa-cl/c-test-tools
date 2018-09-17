@@ -55,14 +55,55 @@ public class CTestObject implements Serializable {
 		return sb.toString();
 	}
 	
-	//TODO: Add setter with validation.
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getLanguage() {
 		return language;
 	}
 	
+	//TODO: add language validation.
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	
+	public void addToken(CTestToken token) {
+		if (token.isGap()) {
+			nrOfGaps++;
+		}
+		tokens.add(token);
+	}
+	
+	public void addTokens(Iterable<CTestToken> tokens) {
+		for (CTestToken token: tokens) {
+			addToken(token);
+		}
+	}
 	
 	public List<CTestToken> getTokens() {
 		return tokens; //TODO: Return copy? Mutation could invalidate CTestObject state.
+	}
+	
+	public void setTokens(Iterable<CTestToken> tokens) {
+		this.nrOfGaps = 0;
+		this.tokens = new ArrayList<>();
+		this.addTokens(tokens);
+	}
+	
+	public CTestToken getGappedToken(int gapIndex) {
+		if (gapIndex < 0)
+			return null;
+		
+		List<CTestToken> gappedTokens = getGappedTokens();
+		if (gapIndex >= gappedTokens.size())
+			return null;
+		
+		return gappedTokens.get(gapIndex);
 	}
 	
 	public List<CTestToken> getGappedTokens() {
@@ -72,26 +113,7 @@ public class CTestObject implements Serializable {
 	}
 	
 	public int getGapCount() {
-		return getGappedTokens().size(); //TODO: simplify, once getTokens is fixed.
-	}
-	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	//TODO: Rename to 'getAverageTokenDifficulty'?
-	public double getOverallDifficulty() {
-		double sumOfPredictions = 0.0;
-		for (CTestToken token : tokens) {
-			if (token.isGap()) {
-				sumOfPredictions += token.getPrediction();				
-			}
-		}
-		return sumOfPredictions / nrOfGaps;
+		return getGappedTokens().size();
 	}
 	
 	//TODO: Create Transformer class?
@@ -173,41 +195,25 @@ public class CTestObject implements Serializable {
 	    }
 	}
 	
-	public void addToken(CTestToken token) {
-		if (token.isGap()) {
-			nrOfGaps++;
-		}
-		tokens.add(token);
-	}
-	
-	public void addTokens(Iterable<CTestToken> tokens) {
-		for (CTestToken token: tokens) {
-			addToken(token);
-		}
-	}
-
 	public List<Double> getPredictions() {
-		List<Double> predictions = new ArrayList<>();
-		
-		for (CTestToken token : tokens) {
-			if (token.isGap()) {
-				predictions.add(token.getPrediction());
-			}
-		}
-		return predictions;
+		return getGappedTokens().stream()
+				.map(token -> token.getPrediction())
+				.collect(Collectors.toList());
 	}
 	
-	public boolean setPrediction(Double prediction, int gapOffset) {
-		int counter = 0;
-		for (CTestToken token : tokens) {
-			if (token.isGap()) {
-				if (counter == gapOffset) {
-					token.setPrediction(prediction);
-					return true;
-				}
-				counter++;
-			}
-		}
-		return false;
+	public boolean setPrediction(Double prediction, int gapIndex) {
+		CTestToken token = getGappedToken(gapIndex);
+		if (token == null)
+			return false;
+		
+		token.setPrediction(prediction);
+		return true;
+	}
+	
+	//TODO: Rename to 'getAverageTokenDifficulty'?
+	public double getOverallDifficulty() {
+		return getGappedTokens().stream()
+				.map(token -> token.getPrediction())
+				.collect(Collectors.averagingDouble(val -> val));
 	}
 }
