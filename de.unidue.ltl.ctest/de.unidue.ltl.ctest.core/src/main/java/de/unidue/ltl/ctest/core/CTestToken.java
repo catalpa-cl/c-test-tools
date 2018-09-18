@@ -9,8 +9,15 @@ import org.apache.commons.lang.StringUtils;
 
 //TODO: Implement equals
 /**
- * Represents a token in a c-Test.
- * A token can either have a gap or not. The token's gap index marks the start of the gap. The gap type determines the kind of gap.
+ * A data class, representing a token in a C-Test.
+ * <p>
+ * A {@code CTestToken} captures both content and difficulty of the token it represents.<br>
+ * A token is basically a string of text with some additional properties.
+ * It may or may not have a gap or not. 
+ * The token's gap index marks the start index of the gap.
+ * A gap index may be present, even if the token is not gapped. 
+ * The gap type determines the position of the gap (at the start or the end of the token).<br>
+ * The error rate is an indicator for the token's difficulty.
  * 
  * @see CTestObject
  * @see GapType
@@ -29,16 +36,30 @@ public class CTestToken implements Serializable {
 	private Double prediction;
 	private boolean lastTokenInSentence;
 	
+	/**
+	 * Creates an ungapped {@code CTestToken}, based on the given text.
+	 * 
+	 * @param text the text, representing the token. Should be a single word, not null.
+	 */
 	public CTestToken(String text) {
 		gap = false;
 		initialize(text, null, null);
 	}
 	
+
+	/**
+	 * Creates an gapped {@code CTestToken}, based on the given text.
+	 * 
+	 * @param text the text, representing the token. Should be a single word, not null.
+	 * @param prompt the visible (ungapped) part of the token. Should be a substring of {@code text}.
+	 * @param errorRate the recoreded errorRate for the token, not null.
+	 * @param otherSolutions valid alternative solutions, if appended to {@code prompt}. 
+	 */
 	public CTestToken(String text, String prompt, Double errorRate, String ... otherSolutions) {
 		gap = true;
 		initialize(text, prompt, errorRate, otherSolutions);
 	}
-	
+
 	private void initialize(String text, String prompt, Double errorRate, String ... otherSolutions) {
 		this.text = text;
 		this.prompt = prompt;
@@ -71,27 +92,50 @@ public class CTestToken implements Serializable {
 			return text;
 		}
 	}
-
+	
+	/**
+	 * Returns the entire token.
+	 */
 	public String getText() {
 		return text;
 	}
 
+	//FIXME: May invalidate otherSolutions.
+	/**
+	 * Sets the text of the token.
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/**
+	 * Indicates, whether the token is gapped.
+	 */
 	public boolean isGap() {
 		return gap;
 	}
 
+	/**
+	 * Sets the gap status of the token.
+	 * 
+	 * @param gap the gap status, true means that the token is gapped.
+	 */
 	public void setGap(boolean gap) {
 		this.gap = gap;
 	}
 	
+	/**
+	 * Returns the token's gap index. The index marks the beginning of the gap. 
+	 */
 	public int getGapIndex() {
 		return this.gapIndex;
 	}
 	
+	/**
+	 * Sets the token's gap index.
+	 * 
+	 * @param index the index. If it exceeds the token's text length, it is set to -1.
+	 */
 	public void setGapIndex(int index) {
 		if (index > -1 && index < this.text.length()) {
 			this.gapIndex = index;
@@ -100,10 +144,19 @@ public class CTestToken implements Serializable {
 			this.gapIndex = -1;
 	}
 	
+	/**
+	 * Returns the type of gap of the token. 
+	 */
 	public GapType getGapType() {
 		return this.gapType;
 	}
 	
+	/**
+	 * Sets the gap type of the token, based on the given string. <br>
+	 * If the string does not represent a valid gap type, nothing is changed.
+	 * 
+	 * @see GapType
+	 */
 	public void setGapType(String type) {
 		if (type.equals(GapType.POSTFIX.toString())) {
 			this.gapType = GapType.POSTFIX; 
@@ -116,59 +169,105 @@ public class CTestToken implements Serializable {
 		}
 	}
 	
+	/**
+	 * Sets the gap type of the token.
+	 * 
+	 * @see GapType
+	 */
 	public void setGapType(GapType type) {
 			this.gapType = type;
 	}
 	
+	//FIXME: Should be based on the text and gapIndex
+	/**
+	 * Returns the prompt of the token.<br> 
+	 * The prompt is the visible part of a gapped token, i.e. "invi" in "invi_____" (invisible).
+	 */
 	public String getPrompt() {
 		return prompt;
 	}
 
+	//FIXME: Should not be settable without side effects.
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
 	}
 	
 	//TODO: Add "getSolutions"?
+	/**
+	 * Returns valid solutions to the token, other than the primary solution.
+	 */
 	public List<String> getOtherSolutions() {
 		return otherSolutions;
 	}
-
+	
+	/**
+	 * Indicates whether other solutions, other than the primary solution.
+	 */
 	public boolean hasOtherSolutions() {
 		return !getOtherSolutions().isEmpty();
 	}
 	
+	/**
+	 * Sets other solutions.
+	 * 
+	 * @param otherSolutions a list of solutions. Each solution is a string that could fill the gapped part of the token, not null.
+	 */
 	public void setOtherSolutions(List<String> otherSolutions) {
 		this.otherSolutions = otherSolutions;
 	}
 
+	/**
+	 * Returns the error rate for the token.
+	 */
 	public Double getErrorRate() {
 		return errorRate;
 	}
 
+	/**
+	 * Sets the error rate.
+	 */
 	public void setErrorRate(Double errorRate) {
 		this.errorRate = errorRate;
 	}
 
+	/**
+	 * Returns the predicted error rate for the token.
+	 */
 	public Double getPrediction() {
 		return prediction;
 	}
 
+	/**
+	 * Sets the predicted error rate for the token.
+	 */
 	public void setPrediction(Double prediction) {
 		this.prediction = prediction;
 	}
 
+	/**
+	 * Indicates whether the token is the last token in a sentence. Usually this means that the token text is punctuation at the ent of a sentence.
+	 */
 	public boolean isLastTokenInSentence() {
 		return lastTokenInSentence;
 	}
 
+	/**
+	 * Sets the status of the token as last token in the sentence.
+	 */
 	public void setLastTokenInSentence(boolean lastTokenInSentence) {
 		this.lastTokenInSentence = lastTokenInSentence;
 	}
 
+	/**
+	 * Returns the token's id.
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the token's id.
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
