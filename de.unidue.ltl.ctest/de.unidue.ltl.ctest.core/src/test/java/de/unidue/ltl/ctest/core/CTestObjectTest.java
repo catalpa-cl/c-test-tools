@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CTestTest {
+public class CTestObjectTest {
 	
 	private CTestObject ctest;
 	private List<CTestToken> tokens;
@@ -17,7 +17,7 @@ public class CTestTest {
 	private List<CTestToken> otherTokens;
 	private List<CTestToken> otherGappedTokens;
 	
-	public CTestTest() {
+	public CTestObjectTest() {
 		this.tokens = new ArrayList<CTestToken>();
 		this.gappedTokens = new ArrayList<CTestToken>();
 		this.otherTokens = new ArrayList<CTestToken>();

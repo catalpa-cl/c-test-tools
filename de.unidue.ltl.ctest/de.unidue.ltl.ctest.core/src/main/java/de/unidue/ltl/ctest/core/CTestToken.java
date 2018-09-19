@@ -178,21 +178,52 @@ public class CTestToken implements Serializable {
 			this.gapType = type;
 	}
 	
-	//FIXME: Should be based on the text and gapIndex
+	//TODO: Should be based on the text and gapIndex.
 	/**
 	 * Returns the prompt of the token.<br> 
 	 * The prompt is the visible part of a gapped token, i.e. "invi" in "invi_____" (invisible).
 	 */
 	public String getPrompt() {
-		return prompt;
+		if (prompt != null)
+			return prompt;
+		
+		if (gapIndex < 0)
+			return "";
+		
+		return text.substring(0, gapIndex);
 	}
 
-	//FIXME: Should not be settable without side effects.
+	//TODO: Should not be settable without side effects.
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
 	}
 	
-	//TODO: Add "getSolutions"?
+	//TODO: Should not depend on prompt.
+	/**
+	 * Returns the primary solution to the token.
+	 */
+	public String getPrimarySolution() {
+		if (prompt != null)
+			return text.substring(prompt.length());
+		
+		if (gapIndex < 0)
+			return text;
+		
+		return text.substring(gapIndex);
+	}
+	
+	//FIXME: Should be a property as well
+	/**
+	 * Returns all valid solutions to the token.
+	 */
+	public List<String> getAllSolutions() {
+		List<String> solutions = new ArrayList<>();
+		solutions.add(getPrimarySolution());
+		solutions.addAll(otherSolutions);
+		return solutions;
+	}
+	
+	
 	/**
 	 * Returns valid solutions to the token, other than the primary solution.
 	 */
