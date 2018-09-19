@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import de.unidue.ltl.ctest.core.CTestObject;
-import de.unidue.ltl.ctest.core.CTestToken;
+import de.unidue.ltl.ctest.util.Transformation;
 
 public class CTestIOSWriter implements CTestWriter {
 	
@@ -24,7 +24,7 @@ public class CTestIOSWriter implements CTestWriter {
 		}
 		
 		String docText = ctest.getTokens().stream()
-				.map(this::toIOSFormat)
+				.map(Transformation::toIOSFormat)
 				.collect(Collectors.joining("\n"));
 		
 		Files.write(filePath, docText.getBytes());
@@ -39,28 +39,5 @@ public class CTestIOSWriter implements CTestWriter {
 	@Override
 	public void write(CTestObject ctest, File file) throws IOException {
 		this.write(ctest, file.getAbsolutePath());
-
-	}
-	
-	//TODO: Create transformer class
-	private String toIOSFormat(CTestToken token) {
-		if (!token.isGap())
-			return token.getText();
-		
-		String text = token.getText();
-		String wordBase = text.substring(0, token.getGapIndex());
-		String solution = text.substring(token.getGapIndex());
-		String solutions = "{" + solution + "}";
-		
-		if (token.hasOtherSolutions())
-			solutions = new StringBuilder("")
-				.append("{")
-				.append(solution)
-				.append(",")
-				.append(String.join(",", token.getOtherSolutions()))
-				.append("}")
-				.toString();
-		
-		return wordBase + solutions;
 	}
 }
