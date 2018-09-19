@@ -1,6 +1,7 @@
 package de.unidue.ltl.ctest.core.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.junit.Test;
 
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
@@ -42,14 +44,69 @@ public class TransformationTest {
 			this.tokens.add(token);
 			this.ctest.addToken(token);
 		}
+		this.tokens.get(4).setLastTokenInSentence(true);
+	}
+	
+	@Test
+	public void testToCTestToken() {
+		List<String> otherSolutions = new ArrayList<>();
+		otherSolutions.add("great");
+		otherSolutions.add("splendid");
+		
+		CTestToken token = new CTestToken("this_should_work");
+		CTestToken copy = Transformation.toCTestToken(token.toString());
+		
+		assertEquals(token.toString(), copy.toString());
+		
+		token.setId("0");
+		token.setGap(true);
+		token.setGapIndex(12);
+		token.setOtherSolutions(otherSolutions);
+		token.setErrorRate(9000.1);
+		token.setPrediction(0.0);
+		
+		copy = Transformation.toCTestToken(token.toString());
+		
+		assertEquals(token.toString(), copy.toString());
+		
+		String foo = "foo";
+		
+		try {
+			Transformation.toCTestToken(foo);
+		} catch (IllegalArgumentException e) {
+			fail("Should have not thrown an IllegalArgumentException");
+		}
+	}
+	
+	@Test
+	public void testToIOSFormat() {
+		List<String> otherSolutions = new ArrayList<>();
+		otherSolutions.add("great");
+		otherSolutions.add("splendid");
+		
+		CTestToken token = new CTestToken("this_should_work");
+		
+		assertEquals("this_should_work", Transformation.toIOSFormat(token));
+		
+		token.setId("0");
+		token.setGap(true);
+		token.setGapIndex(12);
+		token.setOtherSolutions(otherSolutions);
+		token.setErrorRate(9000.1);
+		token.setPrediction(0.0);
+		
+		assertEquals("this_should_{work,great,splendid}", Transformation.toIOSFormat(token));
 	}
 	
 	@Test
 	public void testToJCas() throws UIMAException {
 		JCas jcas = Transformation.toJCas(this.ctest);
+		List<Sentence> sentences = new ArrayList<>(JCasUtil.select(jcas, Sentence.class));
 		List<Token> tokens = new ArrayList<>(JCasUtil.select(jcas, Token.class));
 		List<Gap> gaps = new ArrayList<> (JCasUtil.select(jcas, Gap.class));
 		
+		assertEquals(1, sentences.size());
+		assertEquals("token0 token1 token2 token3 token4", sentences.get(0).getCoveredText());
 		assertEquals(this.tokens.size(), tokens.size());
 		assertEquals(this.gappedTokens.size(), gaps.size());
 		
@@ -68,4 +125,5 @@ public class TransformationTest {
 			assertEquals(ctoken.getPrediction(), new Double(gap.getDifficulty()));
 		}
 	}
+	
 }
