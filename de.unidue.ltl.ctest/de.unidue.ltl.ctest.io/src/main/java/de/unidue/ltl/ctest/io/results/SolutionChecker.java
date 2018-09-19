@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
 
-//TODO: Find proper place.
-//TODO: Create Own DataStructure, to simplify.
 /**
  * A class checking whether solutions for C-Tests are correct. 
  * May be used to update the Error Rates of {@code CTestTokens} in a {@code CTestObject}.
@@ -29,7 +27,7 @@ public class SolutionChecker {
 				.collect(Collectors.toList());
 		
 		this.correctResults = gappedTokens.stream()
-				.map(this::getAllSolutions)
+				.map(token -> token.getAllSolutions())
 				.collect(Collectors.toList());
 		
 		this.results = gappedTokens.stream()
@@ -52,21 +50,6 @@ public class SolutionChecker {
 		}
 		
 		return this.ctest;			
-	}
-	
-	//TODO: Move to CTestToken
-	private List<String> getAllSolutions(CTestToken token) {
-		List<String> solutions = new ArrayList<>();
-		
-		if (!token.isGap())
-			return solutions;
-		
-		if (token.getGapIndex() >= 0)
-			solutions.add(token.getText().substring(token.getGapIndex()));
-		
-		solutions.addAll(token.getOtherSolutions());
-		
-		return solutions;
 	}
 	
 	public void addSolution(int i, String solution) {

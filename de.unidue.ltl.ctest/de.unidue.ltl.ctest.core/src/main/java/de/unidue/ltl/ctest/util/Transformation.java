@@ -1,5 +1,6 @@
 package de.unidue.ltl.ctest.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.uima.UIMAException;
@@ -15,7 +16,46 @@ import de.unidue.ltl.ctest.type.Gap;
 public class Transformation {
 	
 	/**
-	 * Transforms the given token into a string in the IOS C-Test Format.
+	 * Transforms the given text to a {@code CTestToken}.
+	 * 
+	 * @param text the text to be converted. Must be in the same format as the output of {@code CTestToken.toString()}, not null.
+	 * @return the CTestToken.
+	 * 
+	 * @throws IllegalArgumentException if text does not represent a {@code CTestToken}.
+	 */
+	public static CTestToken toCTestToken (String text) {
+		if (text == null)
+			throw new IllegalArgumentException("Input text must not be null!");
+		
+		String[] tokenInfo = text.split("\t");
+		
+		CTestToken token = new CTestToken(tokenInfo[0]);
+		
+		if (tokenInfo.length >= 6) {
+			token.setGap(true);
+			token.setId(tokenInfo[1].trim());
+			token.setPrompt(tokenInfo[2].trim());
+			token.setGapType(tokenInfo[4].trim());
+			try {
+				token.setErrorRate(Double.parseDouble(tokenInfo[3].trim()));
+				token.setGapIndex(Integer.parseInt(tokenInfo[5].trim()));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException("Input does not represent a CTestToken. Text: " + text);
+			}
+		}
+		if (tokenInfo.length >= 7) {
+			List<String> solutions = new ArrayList<>();
+			for (String solution : tokenInfo[6].split("/")) {
+				solutions.add(solution.trim());
+			}
+			token.setOtherSolutions(solutions);
+		}
+		
+		return token;
+	}
+	
+	/**
+	 * Transforms the given token to a string in the IOS C-Test Format.
 	 */
 	public static String toIOSFormat(CTestToken token) {
 		if (!token.isGap())
@@ -47,8 +87,7 @@ public class Transformation {
 	 * @throws UIMAException if the initial jcas cannot be created.
 	 */
 	public static JCas toJCas(CTestObject ctest) throws UIMAException {
-		//TODO: Also include sentences?
-		
+
 		JCas jcas = JCasFactory.createJCas();
 		
 		int offset = 0;
@@ -67,7 +106,6 @@ public class Transformation {
 	        offset += gapText.length() + 1;
 
 			if (ctoken.isGap()) {
-				//TODO: Let gap span the actual gap only?
 				Gap g = new Gap(jcas, token.getBegin(), token.getEnd());
 				g.setSolutions(getSolutionArray(jcas, ctoken.getAllSolutions()));
 		        g.setDifficulty(ctoken.getPrediction());

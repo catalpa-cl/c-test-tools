@@ -185,8 +185,7 @@ public class CTestResourceProvider {
 			engines.add(createEngine(StanfordNamedEntityRecognizer.class, 
 					StanfordNamedEntityRecognizer.PARAM_VARIANT, "nemgp", 
 					StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language));
-			engines.add(createEngine(CompoundAnnotator.class, 
-					//TODO: MAY BE BROKEN. Before PARAM_SPLITTING_ALGO
+			engines.add(createEngine(CompoundAnnotator.class,
 					CompoundAnnotator.RES_SPLITTING_ALGO,
 					ExternalResourceFactory.createExternalResourceDescription(BananaSplitterResource.class,
 							BananaSplitterResource.PARAM_DICT_RESOURCE,
@@ -226,7 +225,7 @@ public class CTestResourceProvider {
 		List<String> abbreviations = new ArrayList<>();
 		
 		if (SUPPORTED_LANGUAGES.contains(language)) {
-			//FIXME: Location on Webapp Server must be different.
+			//FIXME: Location on Webapp Server must be different. Solution: CTestResourceProvider.class.getResourceAsStream(String.format("abbreviations_%s.txt", language))
 			Path file = Paths.get(String.format("src/main/resources/abbreviations_%s.txt", language));			
 			try {
 				abbreviations = Files.lines(file).collect(Collectors.toList());

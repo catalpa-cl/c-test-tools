@@ -75,7 +75,6 @@ public class JACKSolutionReader implements CTestSolutionReader {
 		return read(new File(filePath));
 	}
 	
-	//TODO: Move to JackUtils
 	/**
 	 * Reads the given {@code XML File} and returns it as {@code Document}.
 	 * 

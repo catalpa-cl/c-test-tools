@@ -22,7 +22,6 @@ import de.unidue.ltl.ctest.core.CTestToken;
 
 public class CTestJACKReader implements CTestReader {
 	
-	//TODO: Move Patterns to util
 	private static final String XML_GAP_MARKER = "(\\[fillIn groesse=\"\\d+\" parser=\".*?\"\\])";
 	
 	private static final String GAP_MARKER = "___GAP___";
@@ -76,7 +75,7 @@ public class CTestJACKReader implements CTestReader {
 		String[] words = extractWords(xmlLines);
 		List<CTestToken> tokens = extractTokens(words, tokenSolutions);
 		
-		CTestObject ctest = new CTestObject("UNKNOWN"); //TODO: No language information?
+		CTestObject ctest = new CTestObject("UNKNOWN");
 		ctest.setId(title);
 		tokens.forEach(ctest::addToken);
 		return ctest;
@@ -118,7 +117,6 @@ public class CTestJACKReader implements CTestReader {
 	}
 	
 	private String[] extractWords(String[] xmlLines) {
-		//TODO: Shouldn't this start 1 line later, if the doc title is in line 1? Implement sanity check?
 		String xmlDoc = String.join("", Arrays.copyOfRange(xmlLines, 1, xmlLines.length)); // Skip title line	
 		return Jsoup.parse(xmlDoc)
 				.text()
@@ -126,7 +124,6 @@ public class CTestJACKReader implements CTestReader {
 				.split(" ");
 	}
 	
-	//TODO: Rewrite
 	private List<List<String>> extractSolutions(Document document) throws IOException {		
 		List<Element> options = document
 				.getRootElement()

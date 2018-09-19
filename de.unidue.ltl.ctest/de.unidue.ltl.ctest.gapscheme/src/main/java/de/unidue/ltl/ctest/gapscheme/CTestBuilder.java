@@ -94,8 +94,7 @@ public class CTestBuilder {
 	 * Returns the number of gaps in the last <b><i>successfully</i></b> generated {@code CTestObject}.
 	 */	
 	public int getGapCount() {
-		//TODO: Implement in CTestObject
-		return gapCount;
+		return ctest.getGapCount();
 	}
 	
 	/**

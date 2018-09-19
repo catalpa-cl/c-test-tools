@@ -15,7 +15,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 public class IsNumber implements Predicate<Token> {
 
 	// should catch ips, isbns, power expressions (a^b) and percentages.
-	//TODO: does not necessarily catch hexadecimals
 	private static Pattern pattern = Pattern.compile("[a-zA-Z]*\\d+([,\\.\\-\\^][0-9]+)*%?[a-zA-Z]*");
 	
 	/**

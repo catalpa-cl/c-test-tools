@@ -14,8 +14,7 @@ import org.apache.uima.jcas.cas.StringArray;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.type.Gap;
 
-//TODO: Implement equals.
-//TODO: Extend ArrayList<CTestToken>?
+//TODO: Rewrite in Version 0.0.2-SNAPSHOT: remove unnecessary properties etc.
 /**
  * A data class, representing a C-Test.
  * <p>
@@ -102,7 +101,6 @@ public class CTestObject implements Serializable {
 		return language;
 	}
 	
-	//TODO: add language validation.
 	/**
 	 * sets the language of the {@code CTestObject}. 
 	 */
@@ -137,7 +135,7 @@ public class CTestObject implements Serializable {
 	 * Returns a List of all {@code CTestToken}s of the {@code CTestObject}.
 	 */
 	public List<CTestToken> getTokens() {
-		return tokens; //TODO: Return copy? Mutation could invalidate CTestObject state.
+		return tokens;
 	}
 	
 
@@ -185,7 +183,12 @@ public class CTestObject implements Serializable {
 		return getGappedTokens().size();
 	}
 	
-	//TODO: Create Transformer class?
+	/**
+	 * Initializes the given {@code JCas} with the values from this {@code CTestObject}.
+	 *
+	 * @deprecated use {@link de.unidue.ltl.ctest.util.Transformation#toJCas(CTestObject)} instead.
+	 */
+	@Deprecated
 	public void initializeJCas(JCas jcas) 
 	{
 		int offset = 0;
@@ -225,7 +228,12 @@ public class CTestObject implements Serializable {
 		return arr;
 	}
 	
-	//TODO: Remove and update References with CTestFileReader.read(inputFile).
+	/**
+	 * Intitializes this {@CTestObject} with the C-Test at the given file location. <br>
+	 * File must encode the C-Test in the C-Test File Format.
+	 * 
+	 * @deprecated use {@link de.unidue.ltl.ctest.CTestFileReader.read(File)} instead.
+	 */
 	@Deprecated
 	public void initializeFromFile(File inputFile) 
 			throws IOException
@@ -290,7 +298,6 @@ public class CTestObject implements Serializable {
 		return true;
 	}
 	
-	//TODO: Rename to 'getAverageTokenDifficulty'?
 	/**
 	 * Returns the average predicted difficulty for all gapped tokens.
 	 */

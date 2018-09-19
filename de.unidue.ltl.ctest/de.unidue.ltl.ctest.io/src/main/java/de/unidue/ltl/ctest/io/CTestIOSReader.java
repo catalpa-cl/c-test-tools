@@ -81,12 +81,11 @@ public class CTestIOSReader implements CTestReader {
 		if (path.getNameCount() < 2) 
 			return "UNKNOWN";
 
-		// TODO: Validate language.
+		// TODO: validate language
 		// Extracts language from folder structure. Parent folder is language.
 		return path.getParent().getFileName().toString();
 	}
-
-	// TODO: Implement in a cleaner fashion.
+	
 	private List<CTestToken> extractTokens(Path path) throws IOException {
 		List<CTestToken> tokens = new ArrayList<>();
 		

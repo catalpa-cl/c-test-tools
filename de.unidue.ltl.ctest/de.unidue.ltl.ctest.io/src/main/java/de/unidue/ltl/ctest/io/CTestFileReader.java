@@ -10,6 +10,7 @@ import java.util.List;
 
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
+import de.unidue.ltl.ctest.util.Transformation;
 
 /**
  * A class reading {@code CTestObject}s from file.
@@ -27,9 +28,9 @@ public class CTestFileReader implements CTestReader {
 	 * Reads given input file and returns corresponding {@code CTestObject}.
 	 */
 	public CTestObject read(Path filePath) throws IOException {
-		//TODO: allow directories?
 		if (filePath.toFile().isDirectory())
 			throw new IOException("Input path is a directory, not a file.");
+		
 		this.path = filePath;
 		this.lines = Files.lines(filePath).toArray(String[]::new);
 		
@@ -87,25 +88,7 @@ public class CTestFileReader implements CTestReader {
 				continue;
 			}
 			
-			//TODO: TokenInfo Transformer?
-			tokenInfo = line.split("\t");
-			token = new CTestToken(tokenInfo[0]);
-			if (tokenInfo.length >= 6) {
-				token.setGap(true);
-				token.setId(tokenInfo[1].trim());
-				token.setPrompt(tokenInfo[2].trim());
-				token.setErrorRate(Double.parseDouble(tokenInfo[3].trim()));
-				token.setGapType(tokenInfo[4].trim());
-				token.setGapIndex(Integer.parseInt(tokenInfo[5].trim()));
-			}
-			if (tokenInfo.length >= 7) {
-				solutions = new ArrayList<>();
-				for (String solution : tokenInfo[6].split("/")) {
-					solutions.add(solution.trim());
-				}
-				token.setOtherSolutions(solutions);
-			}
-			tokens.add(token);
+			tokens.add(Transformation.toCTestToken(line));
 		}
 		return tokens;
 	}

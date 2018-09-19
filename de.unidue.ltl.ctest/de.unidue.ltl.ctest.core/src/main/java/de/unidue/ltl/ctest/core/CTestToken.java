@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-//TODO: Implement equals
 /**
  * A data class, representing a token in a C-Test.
  * <p>
@@ -100,7 +99,6 @@ public class CTestToken implements Serializable {
 		return text;
 	}
 
-	//FIXME: May invalidate otherSolutions.
 	/**
 	 * Sets the text of the token.
 	 */
@@ -178,7 +176,6 @@ public class CTestToken implements Serializable {
 			this.gapType = type;
 	}
 	
-	//TODO: Should be based on the text and gapIndex.
 	/**
 	 * Returns the prompt of the token.<br> 
 	 * The prompt is the visible part of a gapped token, i.e. "invi" in "invi_____" (invisible).
@@ -193,12 +190,10 @@ public class CTestToken implements Serializable {
 		return text.substring(0, gapIndex);
 	}
 
-	//TODO: Should not be settable without side effects.
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
 	}
 	
-	//TODO: Should not depend on prompt.
 	/**
 	 * Returns the primary solution to the token.
 	 */
@@ -212,7 +207,6 @@ public class CTestToken implements Serializable {
 		return text.substring(gapIndex);
 	}
 	
-	//FIXME: Should be a property as well
 	/**
 	 * Returns all valid solutions to the token.
 	 */

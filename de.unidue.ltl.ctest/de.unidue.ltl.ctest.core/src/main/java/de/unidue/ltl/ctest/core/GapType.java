@@ -7,7 +7,7 @@ package de.unidue.ltl.ctest.core;
  * A <i>prefix</i> gap is a gap at the beginning of the word, e.g. "___inning" (beginning).
  */
 public enum GapType {
-	POSTFIX("postfix"), //TODO: Change name to suffix?
+	POSTFIX("postfix"),
 	PREFIX("prefix");
 	
 	private String value;
