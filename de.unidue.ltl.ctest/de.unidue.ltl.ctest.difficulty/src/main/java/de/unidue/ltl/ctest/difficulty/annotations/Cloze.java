@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package de.unidue.ltl.ctest.difficulty.train.annotation;
+package de.unidue.ltl.ctest.difficulty.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,10 +23,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to flag a feature extractor that is applicable for xTests.
+ * This annotation is used to flag a feature extractor that is applicable for cloze tests.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface XTest {
+public @interface Cloze {
 	
 }
