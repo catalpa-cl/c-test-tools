@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.unidue.ltl.ctest</groupId>
 		<artifactId>de.unidue.ltl.ctest</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${ctest.version}</version>
 	</parent>
 	
 	<artifactId>de.unidue.ltl.ctest.gapscheme</artifactId>
@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>de.unidue.ltl.ctest</groupId>
 			<artifactId>de.unidue.ltl.ctest.core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${ctest.version}</version>
 		</dependency>
 	</dependencies>
 	
