@@ -8,18 +8,14 @@
 		<artifactId>de.unidue.ltl.ctest</artifactId>
 		<version>${ctest.version}</version>
 	</parent>
-	
-	<artifactId>de.unidue.ltl.ctest.core</artifactId>
+
+	<artifactId>de.unidue.ltl.ctest.difficulty</artifactId>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>uimafit-core</artifactId>
+			<groupId>de.unidue.ltl.ctest</groupId>
+			<artifactId>de.unidue.ltl.ctest.core</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.segmentation-asl</artifactId>
-		</dependency>
-	</dependencies>
-
+    </dependencies>
 </project>

@@ -5,10 +5,12 @@
 	
 	<groupId>de.unidue.ltl.ctest</groupId>
 	<artifactId>de.unidue.ltl.ctest</artifactId>
-	<version>0.0.1</version>
+	<version>${ctest.version}</version>
 	<packaging>pom</packaging>
 	
 	<properties>
+		<ctest.version>0.0.2-SNAPSHOT</ctest.version>
+
 		<dkpro.core.version>1.9.3</dkpro.core.version>
 		<dkpro.tc.version>1.0.1</dkpro.tc.version>
 
@@ -25,6 +27,7 @@
 		<module>de.unidue.ltl.ctest.core</module>
 		<module>de.unidue.ltl.ctest.gapscheme</module>
 		<module>de.unidue.ltl.ctest.io</module>
+		<module>de.unidue.ltl.ctest.difficulty</module>
 	</modules>
 	
 	<dependencyManagement>
