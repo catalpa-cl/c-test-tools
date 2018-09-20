@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>de.unidue.ltl.ctest</groupId>
 			<artifactId>de.unidue.ltl.ctest.core</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+			<version>${ctest.version}</version>
 		</dependency>
 	</dependencies>
 	
