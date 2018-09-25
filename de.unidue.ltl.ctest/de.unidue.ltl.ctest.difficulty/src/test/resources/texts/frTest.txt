@@ -1,0 +1,154 @@
+L'Association
+de
+la
+fondation
+étudiante
+pour
+la
+ville
+(
+AFEV
+)
+cherche
+des
+étudiants
+----
+Depuis
+quelques
+jours
+,
+Cindy
+Lennuyeux
+,
+19
+ans
+,
+et
+Kevin
+Rossignol
+,
+22
+ans
+,
+deux
+jeunes
+qui
+effectuent
+leur
+service
+volontaire
+civil
+,
+arpentent
+les
+couloirs
+de
+l'université
+pour
+recruter
+des
+bénévoles
+pour
+l'Association
+de
+la
+fondation
+étudiante
+pour
+la
+ville
+(
+AFEV
+)
+,
+basée
+à
+Calais
+.
+----
+„
+On
+recherche	0	rech	0.0
+des
+étudiants	1	étud	0.5
+qui
+accepteraient	2	accept	0.75
+de
+donner	3	don	0.44
+deux
+heures	4	heu	0.19
+de
+leur	5	le	0.56
+temps
+tout	6	to	0.56
+au
+long	7	lo	0.88
+de
+l'année	8	l'a	0.88
+pour
+accompagner	9	accom	0.44
+des
+jeunes	10	jeu	0.06
+en
+difficulté	11	diffi	0.63
+de
+différents	12	diffé	0.5
+quartiers
+de	13	d	0.13
+Calais
+.
+----
+Il
+nous	14	no	0.63
+en
+manque	15	man	0.69
+au
+moins	16	mo	0.69
+une
+soixantaine	17	soixa	0.81
+aujourd'hui
+“
+,
+expliquent	18	expli	0.69
+les
+deux	19	de	0.5
+jeunes
+volontaires
+.
+----
+Attention
+,
+ne
+vous
+méprenez
+pas
+:
+il
+ne
+s'agit
+pas
+d'aide
+aux
+devoirs
+.
+----
+Ces
+rencontres
+s'inscrivent
+dans
+un
+échange
+entre
+le
+bénévole
+et
+le
+jeune
+sur
+leurs
+passions
+,
+leurs
+loisirs
+.
+----
