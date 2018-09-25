@@ -23,7 +23,12 @@
 			<artifactId>de.unidue.ltl.ctest.core</artifactId>
             <version>${ctest.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>de.unidue.ltl.ctest</groupId>
+			<artifactId>de.unidue.ltl.ctest.io</artifactId>
+            <version>${ctest.version}</version>
+		</dependency>
+				
 		<!-- DKPRO Dependencies -->
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
