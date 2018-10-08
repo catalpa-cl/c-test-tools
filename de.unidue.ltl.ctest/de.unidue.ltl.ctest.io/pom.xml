@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.unidue.ltl.ctest</groupId>
 		<artifactId>de.unidue.ltl.ctest</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${ctest.version}</version>
 	</parent>
 
 	<artifactId>de.unidue.ltl.ctest.io</artifactId>
@@ -15,9 +15,9 @@
 		<dependency>
 			<groupId>de.unidue.ltl.ctest</groupId>
 			<artifactId>de.unidue.ltl.ctest.core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${ctest.version}</version>
 		</dependency>
-		
+
 		<!-- Used for CTestDocWriter -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -25,6 +25,16 @@
 			<version>3.15</version>
 		</dependency>
 		
+		<!-- Used for CTestReaderTC -->
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.text-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-api</artifactId>
+		</dependency>
+
 		<!-- Used for JACK HTML parsing -->
 		<dependency>
 			<groupId>org.jdom</groupId>
