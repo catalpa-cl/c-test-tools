@@ -39,7 +39,7 @@ import de.unidue.ltl.ctest.gapscheme.preprocessing.IsSimpleNamedEntity;
 import de.unidue.ltl.ctest.gapscheme.preprocessing.IsTooShort;
 
 /**
- * A class providing required resources for {@link CTestBuilder} objects.
+ * A class providing required resources for {@link CTestGenerator} objects.
  * Provides both general and language specific resources.
  * <p>
  * Resources include <ul>
@@ -161,7 +161,7 @@ public class CTestResourceProvider {
 	}
 	
 	/**
-	 * Returns a list of languages, currently supported by the {@code CTestBuilder} Service. 
+	 * Returns a list of languages, currently supported by the {@code CTestGenerator} Service. 
 	 */
 	public static List<String> getSupportedLanguages() {
 		return SUPPORTED_LANGUAGES;
