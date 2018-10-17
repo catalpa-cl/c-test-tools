@@ -89,12 +89,15 @@ public class CTestGenerator {
 	 * The C-Test is generated as usual, with the exception that the first and last sentences are
 	 * also gapped and there is no limit to the number of gaps in the C-Test. Consequently, no
 	 * warnings are generated.
-	 * Note that the <b><i>first</i></b> token in the text is gapped, unlike in normal gapschemes,
-	 * where the second token receives the first gap.
+	 * 
+	 * @param text the text to be gapped.
+	 * @param language the language of the text.
+	 * @param gapFirst if true, gapping starts at the first token.
 	 */
-	public CTestObject generatePartialCTest(String text, String language) throws UIMAException {
+	public CTestObject generatePartialCTest(String text, String language, boolean gapFirst) throws UIMAException {
 		initialise(text, language);
-		makeSimpleGaps();
+		int gapOffset = gapFirst ? 0 : 1; //determines, where the first gap is set.
+		makeSimpleGaps(gapOffset);
 		return ctest;
 	}
 			
@@ -105,7 +108,7 @@ public class CTestGenerator {
 	 * starting at the <b><i>first</i></b> token in the text. 
 	 */
 	//FIXME: Not working
-	private void makeSimpleGaps() {
+	private void makeSimpleGaps(int gapOffset) {
 		ctest = new CTestObject(language);
 		sentences = new ArrayList<>(JCasUtil.select(jcas, Sentence.class));
 
@@ -125,7 +128,7 @@ public class CTestGenerator {
 					}
 						
 				if (!exclude) {
-					if (gapCandidates % gapInterval == 0) // first token is gapped
+					if (gapCandidates % gapInterval == gapOffset) // first token is gapped
 						cToken.setGap(true);
 					gapCandidates++;
 				}

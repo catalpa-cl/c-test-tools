@@ -13,7 +13,8 @@ public class CTestGeneratorTest extends TestCase {
 		String text = "Angela Merkel ist eine Politikerin. Bananenbrot Bananenbrot Bananen-Brot Bananen-Brot Nathalie ist leider nicht zu 100% Politikerin in Hamburg, aber avec-vous avec-vous l'homme l'homme sie mag auch keine Augangssperre. Dieser Satz sollte keine Gaps erhalten.";
 		String language = "de";
 		
-		System.out.println(ctb.generatePartialCTest(text,language));
+		System.out.println(ctb.generatePartialCTest(text,language,true));
+		System.out.println(ctb.generatePartialCTest(text, language, false));
 	}
 	
 	@Test
