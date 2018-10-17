@@ -92,7 +92,7 @@ public class CTestGenerator {
 	 * Note that the <b><i>first</i></b> token in the text is gapped, unlike in normal gapschemes,
 	 * where the second token receives the first gap.
 	 */
-	CTestObject generatePartialCTest(String text, String language) throws UIMAException {
+	public CTestObject generatePartialCTest(String text, String language) throws UIMAException {
 		initialise(text, language);
 		makeSimpleGaps();
 		return ctest;
