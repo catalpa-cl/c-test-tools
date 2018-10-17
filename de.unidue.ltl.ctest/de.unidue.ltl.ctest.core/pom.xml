@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.unidue.ltl.ctest</groupId>
 		<artifactId>de.unidue.ltl.ctest</artifactId>
-		<version>${ctest.version}</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>de.unidue.ltl.ctest.core</artifactId>
