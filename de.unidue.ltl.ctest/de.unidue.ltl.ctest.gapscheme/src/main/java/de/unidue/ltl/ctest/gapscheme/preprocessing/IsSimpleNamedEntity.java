@@ -25,7 +25,6 @@ public class IsSimpleNamedEntity implements Predicate<Token> {
 	@Override
 	public boolean test(Token token) {
 		isNamedEntityCandidate = pattern.matcher(token.getCoveredText()).matches();
-		System.out.println(String.format("%s is a Named Entity: %b", token.getCoveredText(), isNamedEntityCandidate));
 		isAtBeginningOfSentence = false;
 		
 		if (isNamedEntityCandidate) {

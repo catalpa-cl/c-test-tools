@@ -3,10 +3,19 @@ package de.unidue.ltl.ctest.gapscheme;
 import org.junit.Test;
 
 import de.unidue.ltl.ctest.core.CTestObject;
-import de.unidue.ltl.ctest.core.CTestToken;
 import junit.framework.TestCase;
 
 public class CTestGeneratorTest extends TestCase {
+	
+	@Test
+	public void testPartial() throws Exception {
+		CTestGenerator ctb = new CTestGenerator();
+		String text = "Angela Merkel ist eine Politikerin. Bananenbrot Bananenbrot Bananen-Brot Bananen-Brot Nathalie ist leider nicht zu 100% Politikerin in Hamburg, aber avec-vous avec-vous l'homme l'homme sie mag auch keine Augangssperre. Dieser Satz sollte keine Gaps erhalten.";
+		String language = "de";
+		
+		System.out.println(ctb.generatePartialCTest(text,language));
+	}
+	
 	@Test
 	public void testGerman() throws Exception {
 		CTestGenerator ctb = new CTestGenerator();
@@ -24,9 +33,6 @@ public class CTestGeneratorTest extends TestCase {
 		CTestObject ctest = ctb.generateCTest(text,language);
 		
 		System.out.println(ctest);
-		for (CTestToken t : ctest.getTokens()) {
-			System.out.println(String.format("Token: %s, Index: %d", t.getText(), t.getGapIndex()));
-		}
 	}
 	
 	@Test

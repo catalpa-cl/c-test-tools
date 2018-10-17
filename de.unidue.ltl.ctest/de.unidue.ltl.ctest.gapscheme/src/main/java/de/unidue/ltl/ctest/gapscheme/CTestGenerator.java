@@ -84,6 +84,59 @@ public class CTestGenerator {
 	}
 	
 	/**
+	 * Generates a {@code CTestObject} from the given input text, ignoring any C-Test constraints.
+	 * <p>
+	 * The C-Test is generated as usual, with the exception that the first and last sentences are
+	 * also gapped and there is no limit to the number of gaps in the C-Test. Consequently, no
+	 * warnings are generated.
+	 * Note that the <b><i>first</i></b> token in the text is gapped, unlike in normal gapschemes,
+	 * where the second token receives the first gap.
+	 */
+	CTestObject generatePartialCTest(String text, String language) throws UIMAException {
+		initialise(text, language);
+		makeSimpleGaps();
+		return ctest;
+	}
+			
+	/**
+	 * Generates the C-Test.
+	 * <p>
+	 * The given text is gapped, according to the normal gapping rules, 
+	 * starting at the <b><i>first</i></b> token in the text. 
+	 */
+	//FIXME: Not working
+	private void makeSimpleGaps() {
+		ctest = new CTestObject(language);
+		sentences = new ArrayList<>(JCasUtil.select(jcas, Sentence.class));
+
+		gapCandidates = 0;
+		
+		for (Sentence sentence : sentences) {
+			for (Token token : JCasUtil.selectCovered(jcas, Token.class, sentence)) {
+				CTestToken cToken = new CTestToken(token.getCoveredText());
+				cToken.setGapIndex(estimateGapIndex(token));
+				
+				// check if exclusion rule applies
+				boolean exclude = false;
+				for (Predicate<Token> rule : exclusionRules)
+					if (rule.test(token)) {
+						exclude = true;
+						break;
+					}
+						
+				if (!exclude) {
+					if (gapCandidates % gapInterval == 0) // first token is gapped
+						cToken.setGap(true);
+					gapCandidates++;
+				}
+				ctest.addToken(cToken);
+			}
+			sentenceCount++;
+		}
+	}
+
+
+	/**
 	 * Returns the last <b><i>successfully</i></b> generated {@code CTestObject}.
 	 */	
 	public CTestObject getCTest() {
@@ -136,7 +189,7 @@ public class CTestGenerator {
 		return warnings;
 	}
 	
-	/*
+	/**
 	 * Processes the text and initialises exclusion criteria and gap index finders, based on the passed language.
 	 */
 	private void initialise(String aText, String aLanguage) throws UIMAException {
@@ -158,8 +211,8 @@ public class CTestGenerator {
 	}
 	
 	/**
-	 * Creates the CTestObject.
-	 * 
+	 * Creates the C-Test.
+	 * <p>
 	 * For each Token in the text, it is first tested, whether the token is a candidate for gapping, then a corresponding CTestToken is generated.
 	 * For valid candidates, the index of the gap is determined using the estimateGapIndex method.
 	 */
@@ -177,9 +230,7 @@ public class CTestGenerator {
 				CTestToken cToken = new CTestToken(token.getCoveredText());
 				cToken.setGapIndex(estimateGapIndex(token));
 				
-				if (!isValidGapCandidate(token)) {
-					cToken.setGap(false);
-				} else {
+				if(isValidGapCandidate(token)) {
 					if (gapCandidates % gapInterval != 0) {
 						cToken.setGap(true);
 						gapCount++;
@@ -246,6 +297,7 @@ public class CTestGenerator {
 					+ " You may need to add additional sentences.");
 		}
 
+		//FIXME #3: Also generated, when sentence limit is below sentence count.
 		if (sentenceCount > sentenceLimit) {
 			warnings.add(
 					"TOO MANY SENTENCES - The supplied text contained more sentences than necessary. "
