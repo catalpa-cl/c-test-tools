@@ -34,11 +34,12 @@ public class Transformation {
 
 		CTestToken token = new CTestToken(tokenInfo[0]);
 
-		if (tokenInfo.length >= 6) {
+		if (tokenInfo.length >= 7) {
 			token.setGap(true);
 			token.setId(tokenInfo[1].trim());
 			token.setPrompt(tokenInfo[2].trim());
 			token.setGapType(tokenInfo[4].trim());
+			token.setCandidate(Boolean.parseBoolean(tokenInfo[6].trim()));
 			try {
 				token.setErrorRate(Double.parseDouble(tokenInfo[3].trim()));
 				token.setGapIndex(Integer.parseInt(tokenInfo[5].trim()));
@@ -46,9 +47,9 @@ public class Transformation {
 				throw new IllegalArgumentException("Input does not represent a CTestToken. Text: " + text);
 			}
 		}
-		if (tokenInfo.length >= 7) {
+		if (tokenInfo.length >= 8) {
 			List<String> solutions = new ArrayList<>();
-			for (String solution : tokenInfo[6].split("/")) {
+			for (String solution : tokenInfo[7].split("/")) {
 				solutions.add(solution.trim());
 			}
 			token.setOtherSolutions(solutions);

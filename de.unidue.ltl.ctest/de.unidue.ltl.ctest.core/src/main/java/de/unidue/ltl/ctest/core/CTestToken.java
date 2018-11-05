@@ -22,18 +22,24 @@ import org.apache.commons.lang.StringUtils;
  * @see GapType
  */
 public class CTestToken implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 	
+	// Core Properties
 	private String text;
-	private String id;
 	private boolean gap;
 	private GapType gapType = GapType.POSTFIX;
 	private int gapIndex = -1;
 	private String prompt;
 	private List<String> otherSolutions;
+
+	// Meta Information
+	private String id;
+	private boolean isValidCandidate = true;
+	private boolean lastTokenInSentence;
+
+	// Difficulty Prediction Variables
 	private Double errorRate;
 	private Double prediction;
-	private boolean lastTokenInSentence;
 	
 	/**
 	 * Creates an ungapped {@code CTestToken}, based on the given text.
@@ -47,7 +53,7 @@ public class CTestToken implements Serializable {
 	
 
 	/**
-	 * Creates an gapped {@code CTestToken}, based on the given text.
+	 * Creates a gapped {@code CTestToken}, based on the given text.
 	 * 
 	 * @param text the text, representing the token. Should be a single word, not null.
 	 * @param prompt the visible (ungapped) part of the token. Should be a substring of {@code text}.
@@ -82,6 +88,9 @@ public class CTestToken implements Serializable {
 			sb.append(gapType);
 			sb.append("\t");
 			sb.append(gapIndex);
+			sb.append("\t");
+			//TODO: Adjust Readers with tokenInfo
+			sb.append(isValidCandidate);
 			sb.append("\t");
 			sb.append(StringUtils.join(otherSolutions, "/"));
 			
@@ -135,9 +144,8 @@ public class CTestToken implements Serializable {
 	 * @param index the index. If it exceeds the token's text length, it is set to -1.
 	 */
 	public void setGapIndex(int index) {
-		if (index > -1 && index < this.text.length()) {
+		if (index > -1 && index < this.text.length())
 			this.gapIndex = index;
-		}
 		else
 			this.gapIndex = -1;
 	}
@@ -241,6 +249,20 @@ public class CTestToken implements Serializable {
 		this.otherSolutions = otherSolutions;
 	}
 
+	/**
+	 * Returns whether or not the token is a valid candidate.
+	 */
+	public boolean isCandidate() {
+		return this.isValidCandidate;
+	}	
+	
+	/**
+	 * Sets the candidate status of the token.
+	 */
+	public void setCandidate(boolean isCandidate) {
+		this.isValidCandidate = isCandidate;
+	}
+	
 	/**
 	 * Returns the error rate for the token.
 	 */

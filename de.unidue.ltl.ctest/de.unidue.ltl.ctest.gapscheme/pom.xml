@@ -6,12 +6,17 @@
 	<parent>
 		<groupId>de.unidue.ltl.ctest</groupId>
 		<artifactId>de.unidue.ltl.ctest</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>de.unidue.ltl.ctest.gapscheme</artifactId>
 	
 	<dependencies>
+		<dependency>
+			<groupId>de.unidue.ltl.ctest</groupId>
+			<artifactId>de.unidue.ltl.ctest.core</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
@@ -90,11 +95,6 @@
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-model-ner-es-person</artifactId>
 			<version>20100908.0</version>
-		</dependency>
-		<dependency>
-			<groupId>de.unidue.ltl.ctest</groupId>
-			<artifactId>de.unidue.ltl.ctest.core</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	

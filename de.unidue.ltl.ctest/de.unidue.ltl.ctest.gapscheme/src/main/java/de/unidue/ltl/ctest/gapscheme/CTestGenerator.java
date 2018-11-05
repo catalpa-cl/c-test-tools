@@ -107,7 +107,7 @@ public class CTestGenerator {
 	 * The given text is gapped, according to the normal gapping rules, 
 	 * starting at the <b><i>first</i></b> token in the text. 
 	 */
-	//FIXME: Not working
+	
 	private void makeSimpleGaps(int gapOffset) {
 		ctest = new CTestObject(language);
 		sentences = new ArrayList<>(JCasUtil.select(jcas, Sentence.class));
@@ -232,8 +232,10 @@ public class CTestGenerator {
 			for (Token token : JCasUtil.selectCovered(jcas, Token.class, sentence)) {
 				CTestToken cToken = new CTestToken(token.getCoveredText());
 				cToken.setGapIndex(estimateGapIndex(token));
+				cToken.setCandidate(false);
 				
 				if(isValidGapCandidate(token)) {
+					cToken.setCandidate(true);
 					if (gapCandidates % gapInterval != 0) {
 						cToken.setGap(true);
 						gapCount++;
@@ -251,7 +253,7 @@ public class CTestGenerator {
 	/**
 	 * Checks whether the given Token is eligible for gapping.
 	 */
-	private boolean isValidGapCandidate(Token token) {
+	private boolean isValidGapCandidate(Token token) {		
 		if (sentenceCount == 0)
 			return false;
 
