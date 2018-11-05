@@ -107,7 +107,6 @@ public class CTestGenerator {
 	 * The given text is gapped, according to the normal gapping rules, 
 	 * starting at the <b><i>first</i></b> token in the text. 
 	 */
-	
 	private void makeSimpleGaps(int gapOffset) {
 		ctest = new CTestObject(language);
 		sentences = new ArrayList<>(JCasUtil.select(jcas, Sentence.class));
@@ -138,6 +137,24 @@ public class CTestGenerator {
 		}
 	}
 
+	/**
+	 * Updates the gap indices of the {@code CTestToken}s.
+	 * 
+	 * @param tokens The tokens to be regapped.
+	 * @param gapFirst Whether or not the first token should be gapped.
+	 */
+	public List<CTestToken> updateGaps(List<CTestToken> tokens, boolean gapFirst) {
+		gapCandidates = gapFirst ? 0 : 1;
+		
+		for (CTestToken token : tokens) {
+			if (token.isCandidate()) {
+				token.setGap(gapCandidates % gapInterval == 0);
+				gapCandidates++;
+			}
+		}
+		
+		return tokens;
+	}
 
 	/**
 	 * Returns the last <b><i>successfully</i></b> generated {@code CTestObject}.
@@ -236,7 +253,7 @@ public class CTestGenerator {
 				
 				if(isValidGapCandidate(token)) {
 					cToken.setCandidate(true);
-					if (gapCandidates % gapInterval != 0) {
+					if (gapCandidates % gapInterval != 0) { //FIXME: Will fail for intervals other than 2
 						cToken.setGap(true);
 						gapCount++;
 						if (gapCount == gapLimit)
