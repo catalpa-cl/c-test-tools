@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -47,6 +48,7 @@ public class CTestToken implements Serializable {
 	 * @param text the text, representing the token. Should be a single word, not null.
 	 */
 	public CTestToken(String text) {
+		id = UUID.randomUUID().toString();
 		gap = false;
 		initialize(text, null, null);
 	}
@@ -307,6 +309,7 @@ public class CTestToken implements Serializable {
 
 	/**
 	 * Returns the token's id.
+	 * By default, this represents a type 4 UUID.
 	 */
 	public String getId() {
 		return id;
@@ -314,6 +317,8 @@ public class CTestToken implements Serializable {
 
 	/**
 	 * Sets the token's id.
+	 * 
+	 * @param id should be a type 4 UUID.
 	 */
 	public void setId(String id) {
 		this.id = id;

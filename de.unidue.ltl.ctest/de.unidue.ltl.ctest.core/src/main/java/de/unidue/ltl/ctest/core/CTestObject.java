@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
@@ -30,7 +31,7 @@ public class CTestObject implements Serializable {
 	public static final double EASY_CUTOFF = 0.3;
 	public static final double MEDIUM_CUTOFF = 0.6;
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 	
 	private List<CTestToken> tokens;
 	private String language;
@@ -44,7 +45,7 @@ public class CTestObject implements Serializable {
 		this.language = "unknown";
 		this.tokens = new ArrayList<>();
 		this.nrOfGaps = 0;
-		this.id = null;
+		this.id = UUID.randomUUID().toString();
 	}
 
 	/**
@@ -52,11 +53,9 @@ public class CTestObject implements Serializable {
 	 * 
 	 * @param language the language of the C-Test. Should be a two-letter language code, not null.
 	 */
-	public CTestObject(String language) {	
+	public CTestObject(String language) {
+		this();
 		this.language = language;
-		this.tokens = new ArrayList<>();
-		this.nrOfGaps = 0;
-		this.id = null;
 	}
 	
 	@Override
@@ -79,7 +78,8 @@ public class CTestObject implements Serializable {
 	}
 	
 	/**
-	 * Returns the id of the {@code CTestObject}. 
+	 * Returns the id of the {@code CTestObject}.
+	 * Initially this represents a type 4 UUID.
 	 */
 	public String getId() {
 		return id;
@@ -87,7 +87,9 @@ public class CTestObject implements Serializable {
 
 
 	/**
-	 * Sets the id of the {@code CTestObject}. 
+	 * Sets the id of the {@code CTestObject}.
+	 *  
+	 * @param id should be a type 4 UUID.
 	 */
 	public void setId(String id) {
 		this.id = id;
