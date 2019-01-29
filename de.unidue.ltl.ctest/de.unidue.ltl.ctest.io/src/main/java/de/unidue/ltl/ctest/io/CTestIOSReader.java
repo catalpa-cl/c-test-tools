@@ -43,7 +43,7 @@ public class CTestIOSReader implements CTestReader {
 	 */
 	public static final Pattern JUNK = Pattern.compile(""
 			+ "(?<pre>[^\\p{L}]*)"
-			+ "(?<token>[\\p{L}\\{,\\}]*)"
+			+ "(?<token>[\\p{L}\\{,; \\}]*)"
 			+ "(?<post>[^\\p{L}]*)");
 	
 	/**
@@ -55,6 +55,18 @@ public class CTestIOSReader implements CTestReader {
 	 *  Pattern matching curly braces.
 	 */
 	public static final Pattern CURLY_BRACES = Pattern.compile("[\\{\\}]");
+	
+	public static final String DEFAULT_DELIMITER = ",";
+	
+	public String delimiter;
+	
+	public CTestIOSReader() {
+		this.delimiter = DEFAULT_DELIMITER;
+	}
+	
+	public CTestIOSReader(String delimiter) {
+		this.delimiter = delimiter;
+	}
 	
 	@Override
 	public CTestObject read(Path path) throws IOException {
@@ -119,10 +131,13 @@ public class CTestIOSReader implements CTestReader {
 			
 			// Adds additional information, if word is a gapped token.
 			if (tokenMatcher.find()) {
-				String[] solutions = tokenMatcher.group("solutions").split(",");
-				String base = tokenMatcher.group("base");
-				String text = base + solutions[0];
-				List<String> otherSolutions = Arrays.asList(solutions).subList(1, solutions.length);
+				String[] solutions = tokenMatcher.group("solutions").split(delimiter);
+				String base = tokenMatcher.group("base").trim();
+				String text = base + solutions[0].trim();
+				List<String> otherSolutions = Arrays.stream(solutions)
+						.skip(1)
+						.map(String::trim)
+						.collect(Collectors.toList());
 				int gapIndex = word.indexOf("{");
 				
 				token.setText(text);
