@@ -63,7 +63,7 @@ public class CTestObject implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		sb.append(COMMENT + " " + language + "\t" + getGapCount() + "\n");
 		if (id != null) {
-			sb.append(COMMENT + " " + id);			
+			sb.append(COMMENT + " " + id + "\n");			
 		}
 		
 		for (CTestToken token : tokens) {

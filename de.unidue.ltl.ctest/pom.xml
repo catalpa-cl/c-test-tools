@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 	
 	<properties>
-		<ctest.version>0.0.2-SNAPSHOT</ctest.version>
+		<ctest.version>0.0.3-SNAPSHOT</ctest.version>
 
 		<dkpro.core.version>1.9.3</dkpro.core.version>
 		<dkpro.tc.version>1.0.1</dkpro.tc.version>
