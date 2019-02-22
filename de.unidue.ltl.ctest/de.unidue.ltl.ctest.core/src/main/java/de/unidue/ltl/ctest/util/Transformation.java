@@ -105,6 +105,7 @@ public class Transformation {
 	public static JCas addToJCas(CTestObject ctest, JCas jcas) {
 		int offset = 0;
 		int sentenceStart = 0;
+		int gapCount = 1;
 		StringBuilder docText = new StringBuilder();
 
 		for (CTestToken ctoken : ctest.getTokens()) {
@@ -120,11 +121,14 @@ public class Transformation {
 			offset += tokenText.length() + 1;
 
 			if (ctoken.isGap()) {
+				double errorRate = ctoken.getErrorRate() != null ? ctoken.getErrorRate() : -1.0;
 				Gap g = new Gap(jcas, token.getBegin(), token.getEnd());
+				g.setId(gapCount);
 				g.setSolutions(getSolutionArray(jcas, ctoken.getAllSolutions()));
-				g.setDifficulty(ctoken.getPrediction());
 				g.setPrefix(ctoken.getPrompt());
+				g.setErrorRate(errorRate);
 				g.addToIndexes();
+				gapCount++;
 			}
 
 			if (ctoken.isLastTokenInSentence()) {

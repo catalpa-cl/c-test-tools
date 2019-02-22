@@ -14,6 +14,7 @@ import org.dkpro.tc.api.type.TextClassificationTarget;
 import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
 import de.unidue.ltl.ctest.type.Gap;
 
+
 public class CTestReaderTC
     extends ResourceCollectionReaderBase
 {
