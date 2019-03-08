@@ -39,6 +39,7 @@ public class CTestFileReader implements CTestReader {
 		List<CTestToken> tokens = this.extractTokens();
 		
 		CTestObject ctest = new CTestObject(language);
+		ctest.setId(id);
 		tokens.forEach(token -> ctest.addToken(token));
 		return ctest;
 	}
@@ -62,7 +63,7 @@ public class CTestFileReader implements CTestReader {
 	
 	private String extractId() {
 		if (lines[1].startsWith(CTestObject.COMMENT))
-			return this.lines[0]
+			return this.lines[1]
 					.substring(CTestObject.COMMENT.length())
 					.trim();
 		

@@ -77,6 +77,7 @@ public class RoundTripTest extends TestCase {
 		CTestObject copy = reader.read(outputFile);
 		
 		assertEquals(original.getTokens().size(), copy.getTokens().size());
-		assertEquals(original.toString(), copy.toString());
+		assertEquals(original.getLanguage(), copy.getLanguage());
+		assertEquals(original.getTokens().toString(), copy.getTokens().toString());
 	}
 }

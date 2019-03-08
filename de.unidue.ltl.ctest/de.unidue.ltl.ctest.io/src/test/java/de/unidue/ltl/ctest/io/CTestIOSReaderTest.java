@@ -35,6 +35,7 @@ public class CTestIOSReaderTest extends TestCase {
 		CTestObject pathRead = reader.read(Paths.get("src/test/resources/texts/ios/de/test.ctest.ios.txt"));
 		CTestObject fileRead = reader.read(new File("src/test/resources/texts/ios/de/test.ctest.ios.txt"));
 		
-		assertEquals(pathRead.toString(), fileRead.toString());
+		assertEquals(pathRead.getLanguage(), fileRead.getLanguage());
+		assertEquals(pathRead.getTokens().toString(), fileRead.getTokens().toString());
 	}
 }
