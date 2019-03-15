@@ -199,7 +199,8 @@ public class DefaultTrainer implements ModelTrainer {
 		return CollectionReaderFactory.createReaderDescription(
 				CTestCollectionReader.class,
 				CTestCollectionReader.PARAM_CTEST_READER, readerClass.getName(),
-				CTestCollectionReader.PARAM_SOURCE_LOCATION, collectionPath);
+				CTestCollectionReader.PARAM_SOURCE_LOCATION, collectionPath,
+				CTestCollectionReader.PARAM_PATTERNS, "[+]*.*");
 	}
 	
 	private ParameterSpace getParameterSpace(Map<String, Object> readersDimension, Experiment experiment) throws IOException, ResourceInitializationException {

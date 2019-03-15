@@ -27,8 +27,8 @@ import de.unidue.ltl.ctest.io.CTestFileReader;
 
 public class DefaultTrainerTest {
 	private final String basePath = "src/test/resources/texts/";
-	private final String trainPath = basePath + "train/enTest.txt";
-	private final String testPath = basePath + "test/enTest.txt";
+	private final String trainPath = basePath + "train/";
+	private final String testPath = basePath + "test/";
 	private final String modelPath = "src/test/resources/model/";
 	
 	private ModelTrainer trainer = new DefaultTrainer();

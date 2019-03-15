@@ -9,6 +9,7 @@ import de.unidue.ltl.ctest.difficulty.experiments.Experiment;
 import de.unidue.ltl.ctest.difficulty.experiments.Model;
 import de.unidue.ltl.ctest.io.CTestReader;
 
+//TODO: Harmonize with rest of ctest api. All API Methods should take either CTestObjects or CTestTokens or simple file paths. Reader Class seems overly complicated. Also BatchReportBase is DKPro Specific and should not be included in Interface.
 public interface ModelTrainer {
 	public void runTrainTest(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, String testPath);
 	
