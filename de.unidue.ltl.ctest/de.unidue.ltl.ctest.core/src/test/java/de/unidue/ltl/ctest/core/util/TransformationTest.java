@@ -16,6 +16,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
 import de.unidue.ltl.ctest.type.Gap;
+import de.unidue.ltl.ctest.util.ModelVersion;
 import de.unidue.ltl.ctest.util.Transformation;
 
 public class TransformationTest {
@@ -76,6 +77,54 @@ public class TransformationTest {
 		} catch (IllegalArgumentException e) {
 			fail("Should have not thrown an IllegalArgumentException");
 		}
+	}
+	
+	@Test
+	public void testToCTestFileFormatLegacy() {
+		List<String> otherSolutions = new ArrayList<>();
+		otherSolutions.add("great");
+		otherSolutions.add("splendid");
+		
+		CTestToken token = new CTestToken("this_should_work");
+		token.setId("0");
+		token.setGap(true);
+		token.setGapIndex(12);
+		token.setOtherSolutions(otherSolutions);
+		token.setErrorRate(9000.1);
+		token.setPrediction(0.0);
+		
+		String v1 = "this_should_work\t0\tthis_should_\t9000.1\tgreat/splendid";
+		String v2 = "this_should_work\t0\tthis_should_\t9000.1\tpostfix\t12\tgreat/splendid";
+		String v3 = "this_should_work\t0\tthis_should_\t9000.1\tpostfix\t12\ttrue\tgreat/splendid";
+		
+		assertEquals(v1, Transformation.toCTestFileFormat(token, ModelVersion.V1));
+		assertEquals(v2, Transformation.toCTestFileFormat(token, ModelVersion.V2));
+		assertEquals(v3, Transformation.toCTestFileFormat(token, ModelVersion.V3));
+		
+	}
+	
+	@Test
+	public void testToCTestTokenLegacy() {
+		String v1 = "this_should_work\t0\tthis_should_\t9000.1\tgreat/splendid";
+		String v2 = "this_should_work\t0\tthis_should_\t9000.1\tpostfix\t12\tgreat/splendid";
+		String v3 = "this_should_work\t0\tthis_should_\t9000.1\tpostfix\t12\ttrue\tgreat/splendid";
+		
+		List<String> otherSolutions = new ArrayList<>();
+		otherSolutions.add("great");
+		otherSolutions.add("splendid");
+		
+		CTestToken token = new CTestToken("this_should_work");
+		token.setId("0");
+		token.setGap(true);
+		token.setGapIndex(12);
+		token.setOtherSolutions(otherSolutions);
+		token.setErrorRate(9000.1);
+		token.setPrediction(0.0);		
+		
+		assertEquals(token.toString(), Transformation.toCTestToken(v1, ModelVersion.V1).toString());
+		assertEquals(token.toString(), Transformation.toCTestToken(v2, ModelVersion.V2).toString());
+		assertEquals(token.toString(), Transformation.toCTestToken(v3, ModelVersion.V3).toString());
+		
 	}
 	
 	@Test

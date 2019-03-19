@@ -91,7 +91,6 @@ public class CTestToken implements Serializable {
 			sb.append("\t");
 			sb.append(gapIndex);
 			sb.append("\t");
-			//TODO: Adjust Readers with tokenInfo
 			sb.append(isValidCandidate);
 			sb.append("\t");
 			sb.append(StringUtils.join(otherSolutions, "/"));
@@ -146,8 +145,10 @@ public class CTestToken implements Serializable {
 	 * @param index the index. If it exceeds the token's text length, it is set to -1.
 	 */
 	public void setGapIndex(int index) {
-		if (index > -1 && index < this.text.length())
+		if (index > -1 && index < this.text.length()) {
 			this.gapIndex = index;
+			this.prompt = this.text.substring(0, index);
+		}
 		else
 			this.gapIndex = -1;
 	}
@@ -202,6 +203,7 @@ public class CTestToken implements Serializable {
 
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
+		this.setGapIndex(prompt.length());
 	}
 	
 	/**
