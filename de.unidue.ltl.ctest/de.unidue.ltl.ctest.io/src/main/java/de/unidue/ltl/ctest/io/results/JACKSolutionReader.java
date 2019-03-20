@@ -27,7 +27,6 @@ public class JACKSolutionReader implements CTestSolutionReader {
 		if(solutionFile.isDirectory()) 
 			solutionFile = findSolutionFile(solutionFile);
 			
-		
 		// readDocument
 		Document document = readXMLDocument(solutionFile);
 		
@@ -45,8 +44,14 @@ public class JACKSolutionReader implements CTestSolutionReader {
 		List<String> answers = new ArrayList<>();		
 		
 		for(Element input : inputs) {	
-			Element omobj = input.getChild("OMOBJ",ns2namespace);
+			Element omobj = input.getChild("OMOBJ") == null ? input.getChild("OMOBJ", ns2namespace) : input.getChild("OMOBJ");
 			String answer = omobj != null ? omobj.getChild("OMSTR",ns2namespace).getValue() : MISSING_ANSWER;
+			
+			if (answer.equals(MISSING_ANSWER)) {
+				System.out.println("WARNING: No value attached to input " + input.getAttributeValue("id") + ".\n"
+						+ " XML Malformed for " + solutionFile.getPath());
+			}
+						
 			answers.add(answer);			
 		}
 		

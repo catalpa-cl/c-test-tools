@@ -30,6 +30,7 @@ public class SolutionCheckerTest extends TestCase {
 		assertNotNull(token.getErrorRate());
 		assertEquals(0.0, token.getErrorRate());
 		
+		checker.addSolution(id, "CORRECT");
 		checker.addSolution(id, "WRONG");
 		checker.addSolution(id, "WRONGER");
 		checker.addSolution(id, "WRONGEREST");
@@ -38,7 +39,7 @@ public class SolutionCheckerTest extends TestCase {
 		
 		checker.applyTestResults();
 		
-		assertEquals(0.75, token.getErrorRate());
+		assertEquals(0.6, token.getErrorRate());
 				
 	}
 }

@@ -30,7 +30,11 @@ Viele Deutsche zog und zieht es ins Ausland. Dabei wa[fillIn groesse="5" parser=
 
 <option result="equals('[pos=4]','ner')" points="5"/>
 
+<option result="equals('[pos=4]','CORRECT')" points="5"/>
+
 <option result="equals('[pos=5]','orderung')" points="5"/>
+
+<option result="equals('[pos=5]','CORRECT')" points="5"/>
 
 <option result="equals('[pos=6]','lichen')" points="5"/>
 

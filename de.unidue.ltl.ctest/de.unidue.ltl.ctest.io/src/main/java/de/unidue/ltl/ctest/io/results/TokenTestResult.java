@@ -23,7 +23,7 @@ public class TokenTestResult {
 	}	
 	
 	public double getErrorRate() {
-		return 1d - getSolveRate();
+		return 1.0 - getSolveRate();
 	}
 	
 	public void addSolved() {

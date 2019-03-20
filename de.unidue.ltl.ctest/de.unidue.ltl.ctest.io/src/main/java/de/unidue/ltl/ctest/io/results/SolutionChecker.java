@@ -42,6 +42,14 @@ public class SolutionChecker {
 		return this.results;
 	}
 	
+	public List<List<String>> getCorrectResults() {
+		return this.correctResults;
+	}
+	
+	public List<List<String>> getSolutions() {
+		return this.solutions;
+	}
+	
 	public CTestObject applyTestResults() {
 		for (int i = 0; i < this.gappedTokens.size(); i++) {
 			CTestToken token = this.gappedTokens.get(i);
