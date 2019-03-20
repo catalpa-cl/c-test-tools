@@ -10,6 +10,7 @@ import java.util.List;
 
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
+import de.unidue.ltl.ctest.util.ModelVersion;
 import de.unidue.ltl.ctest.util.Transformation;
 
 /**
@@ -23,6 +24,27 @@ public class CTestFileReader implements CTestReader {
 
 	private Path path;
 	private String[] lines;
+	private ModelVersion version;
+	
+	public CTestFileReader() {
+		this.version = ModelVersion.CURRENT;
+	}
+	
+	/**
+	 * Creates a new CTestFileReader, reading files of the specified model version.
+	 * @param version the version of the serialized CTestObject
+	 */
+	public CTestFileReader(ModelVersion version) {
+		this.version = version;
+	}
+	
+	public ModelVersion getModelVersion() {
+		return this.version;
+	}
+	
+	public void setModelVersion(ModelVersion version) {
+		this.version = version;
+	}
 	
 	/**
 	 * Reads given input file and returns corresponding {@code CTestObject}.
@@ -89,7 +111,7 @@ public class CTestFileReader implements CTestReader {
 				continue;
 			}
 			
-			tokens.add(Transformation.toCTestToken(line));
+			tokens.add(Transformation.toCTestToken(line, this.version));
 		}
 		return tokens;
 	}

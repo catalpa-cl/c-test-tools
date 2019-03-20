@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
+import de.unidue.ltl.ctest.util.ModelVersion;
+import de.unidue.ltl.ctest.util.Transformation;
 
 /**
  * A class, writing {@code CTestObject}s to file, using the <i>CTestFile Format</i> (basically {@code CTestObject#toString()}).
@@ -40,8 +42,8 @@ import de.unidue.ltl.ctest.core.CTestToken;
  * %% example.ctest<br>
  * First<br>
  * ----<br>
- * Second	 1	null	0.0	postfix	3	other/solutions/here<br>
- * Third	2	null	1.3	postfix	2<br>
+ * Second	 1	null	0.0	postfix	3	true	other/solutions/here<br>
+ * Third	2	null	1.3	postfix	2	true<br>
  * ----<br>
  * </code><br>
  * 
@@ -50,7 +52,20 @@ import de.unidue.ltl.ctest.core.CTestToken;
  * @see CTestFileReader
  */
 public class CTestFileWriter implements CTestWriter {
-		
+	
+	private ModelVersion version;
+	
+	public CTestFileWriter() {
+		this.version = ModelVersion.CURRENT;
+	}
+	
+	/*
+	 * Creates a new CTestFileWriter, writing CTests in the specified ModelVersion.
+	 */
+	public CTestFileWriter(ModelVersion version) {
+		this.version = version;
+	}
+	
 	public void write(CTestObject ctest, Path filePath) throws IOException {
 		if (filePath.toFile().isDirectory())
 			throw new IOException("Input path is a directory, not a file.");
@@ -61,7 +76,25 @@ public class CTestFileWriter implements CTestWriter {
 			outFile.createNewFile();
 		}
 		
-		Files.write(filePath, ctest.toString().getBytes());
+		//TODO: move to Transformation.toCTestFileFormat(CTest ctest)
+		//TODO: update toString method of CTestObject
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(CTestObject.COMMENT + " " + ctest.getLanguage() + "\t" + ctest.getGapCount() + "\n");
+		if (ctest.getId() != null) {
+			sb.append(CTestObject.COMMENT + " " + ctest.getId() + "\n");			
+		}
+		
+		for (CTestToken token : ctest.getTokens()) {
+			sb.append(Transformation.toCTestFileFormat(token, version));
+			if (token.isLastTokenInSentence()) {
+				sb.append("\n");
+				sb.append(CTestObject.SENT_BOUNDARY);
+			}
+			sb.append("\n");
+		}
+		
+		Files.write(filePath, sb.toString().getBytes());
 	}
 	
 	public void write(CTestObject ctest, String filePath) throws IOException {
