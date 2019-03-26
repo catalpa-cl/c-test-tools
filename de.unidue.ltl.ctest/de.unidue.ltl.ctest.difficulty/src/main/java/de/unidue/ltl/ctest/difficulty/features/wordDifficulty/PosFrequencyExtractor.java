@@ -31,8 +31,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import org.dkpro.tc.api.features.MissingValue;
-import org.dkpro.tc.api.features.MissingValue.MissingValueNonNominalType;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
@@ -104,13 +103,14 @@ public class PosFrequencyExtractor
 
         if (count > 0) {
             double prob = Math.log(count / numberOfEntries);
-            return new Feature(FN_POS_PROBABILITY, prob).asSet();
+            return new Feature(FN_POS_PROBABILITY, prob, FeatureType.NUMERIC).asSet();
         }
         else {
             // unseen pos sequences are set to a missing value because the pos-tagging might just
             // have gone wrong (more likely than a completely unknown pos sequence
             // the missing value is usually replaced by the mean in weka
-        	return new Feature(FN_POS_PROBABILITY, new MissingValue(MissingValueNonNominalType.NUMERIC)).asSet();
+        	// MISSING VALUE
+        	return new Feature(FN_POS_PROBABILITY, 0.0, FeatureType.NUMERIC).asSet();
         }
     }
 }

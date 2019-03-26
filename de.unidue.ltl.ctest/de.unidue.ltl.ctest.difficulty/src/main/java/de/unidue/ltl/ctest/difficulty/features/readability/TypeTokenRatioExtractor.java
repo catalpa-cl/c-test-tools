@@ -30,10 +30,11 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_VERB;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 
@@ -67,8 +68,8 @@ public class TypeTokenRatioExtractor extends FeatureExtractorResource_ImplBase i
 					"Probably empty token input: No POS information available for " + jcas.getDocumentText());
 		}
 
-		featList.add(new Feature(FN_TYPE_TOKEN_RATIO, ttr));
-		featList.add(new Feature(FN_VERB_VARIATION, vv));
+		featList.add(new Feature(FN_TYPE_TOKEN_RATIO, ttr, FeatureType.NUMERIC));
+		featList.add(new Feature(FN_VERB_VARIATION, vv, FeatureType.NUMERIC));
 
 		double ttr_target = -1.0;
 		List<Sentence> sentences = JCasUtil.selectCovering(jcas, Sentence.class, target);
@@ -82,7 +83,7 @@ public class TypeTokenRatioExtractor extends FeatureExtractorResource_ImplBase i
 			}
 		}
 
-		featList.add(new Feature(FN_TYPE_TOKEN_RATIO_TARGET, ttr_target));
+		featList.add(new Feature(FN_TYPE_TOKEN_RATIO_TARGET, ttr_target, FeatureType.NUMERIC));
 		return featList;
 
 	}
@@ -114,7 +115,7 @@ public class TypeTokenRatioExtractor extends FeatureExtractorResource_ImplBase i
 		for (Sentence sent : JCasUtil.select(jcas, Sentence.class)) {
 			for (Token t : JCasUtil.selectCovered(jcas, Token.class, sent)) {
 				POS pos = t.getPos();
-				if (pos instanceof V) {
+				if (pos instanceof POS_VERB) {
 					numberOfVerbs++;
 					String lemma = t.getLemma().getValue().toLowerCase();
 					if (!verbtypes.contains(lemma)) {
@@ -140,7 +141,7 @@ public class TypeTokenRatioExtractor extends FeatureExtractorResource_ImplBase i
 					"Probably empty token in put: No POS information available for " + jcas.getDocumentText());
 		}
 
-		featList.add(new Feature(FN_TYPE_TOKEN_RATIO_TARGET, ttr));
+		featList.add(new Feature(FN_TYPE_TOKEN_RATIO_TARGET, ttr, FeatureType.NUMERIC));
 		return featList;
 	}
 

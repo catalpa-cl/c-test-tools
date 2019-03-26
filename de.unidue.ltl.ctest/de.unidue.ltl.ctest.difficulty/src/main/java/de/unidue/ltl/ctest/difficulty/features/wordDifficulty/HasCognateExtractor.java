@@ -34,12 +34,13 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADJ;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADJ;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_NOUN;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_VERB;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 /**
  * Base class for cognate extractors.
@@ -86,13 +87,13 @@ public abstract class HasCognateExtractor
 
         boolean cognateFound = false;
  
-        if (pos instanceof N || pos instanceof V || pos instanceof ADJ) {
+        if (pos instanceof POS_NOUN || pos instanceof POS_VERB || pos instanceof POS_ADJ) {
             String[] helpverbs = de.unidue.ltl.ctest.difficulty.features.util.WordFilters.getHelpverbs(jcas.getDocumentLanguage());
             if (!Arrays.asList(helpverbs).contains(tok.getCoveredText())) {
                 cognateFound = cognates.contains(lemma.toLowerCase());
             }
         }
         
-        return new Feature(getFeatureName(), cognateFound).asSet();        
+        return new Feature(getFeatureName(), cognateFound, FeatureType.NUMERIC).asSet();        
     }
 }

@@ -30,6 +30,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -53,17 +54,17 @@ public class AvgLengthExtractor extends FeatureExtractorResource_ImplBase implem
 
 	}
 
-	public static Set<Feature> averageLengthExtraction(JCas jcas, TextClassificationTarget target) {
+	public static Set<Feature> averageLengthExtraction(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
 		Set<Feature> featList = new HashSet<Feature>();
 
 		// Document Features
-		featList.add(new Feature(FN_AVG_SENTENCE_LENGTH, getAverageSentenceLength(jcas)));
-		featList.add(new Feature(FN_AVG_WORD_LENGTH_IN_CHARACTERS, getAverageWordLengthInCharacters(jcas)));
-		featList.add(new Feature(FN_AVG_WORD_LENGTH_IN_SYLLABLES, getAverageWordLengthInSyllables(jcas)));
+		featList.add(new Feature(FN_AVG_SENTENCE_LENGTH, getAverageSentenceLength(jcas), FeatureType.NUMERIC));
+		featList.add(new Feature(FN_AVG_WORD_LENGTH_IN_CHARACTERS, getAverageWordLengthInCharacters(jcas), FeatureType.NUMERIC));
+		featList.add(new Feature(FN_AVG_WORD_LENGTH_IN_SYLLABLES, getAverageWordLengthInSyllables(jcas), FeatureType.NUMERIC));
 
 		// Target Feature
 		Sentence coverSent = JCasUtil.selectCovering(jcas, Sentence.class, target).get(0);
-		featList.add(new Feature(FN_SENTENCE_LENGTH, ReadabilityFeaturesUtil.numberOfWords(coverSent)));
+		featList.add(new Feature(FN_SENTENCE_LENGTH, ReadabilityFeaturesUtil.numberOfWords(coverSent), FeatureType.NUMERIC));
 		return featList;
 	}
 

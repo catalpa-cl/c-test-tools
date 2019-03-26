@@ -26,9 +26,11 @@ import java.util.Set;
 
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -41,7 +43,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.Chunk;
  */
 public class NumberOfChunksExtractor extends FeatureExtractorResource_ImplBase implements FeatureExtractor {
 
-	public Set<Feature> extract(JCas jcas, TextClassificationTarget target)
+	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException
 
 	{
 		Set<Feature> featList = new HashSet<Feature>();
@@ -56,7 +58,7 @@ public class NumberOfChunksExtractor extends FeatureExtractorResource_ImplBase i
 
 		Collection<Chunk> chunks = JCasUtil.select(jcas, Chunk.class);
 
-		featList.add(new Feature("NumberOfChunksPerSentence", ReadabilityFeaturesUtil.getSize(chunks) / nrOfSentences));
+		featList.add(new Feature("NumberOfChunksPerSentence", ReadabilityFeaturesUtil.getSize(chunks) / nrOfSentences, FeatureType.NUMERIC));
 
 		return featList;
 

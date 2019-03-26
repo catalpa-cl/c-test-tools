@@ -32,7 +32,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import org.dkpro.tc.api.features.MissingValue;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.ngrams.util.CharacterNGramStringIterable;
@@ -139,13 +139,14 @@ public class CharLangModelProbExtractor
         return featList;
     }
 
-    private Set<Feature> addLmScoreFeature(Set<Feature> featList, String name, double score)
+    private Set<Feature> addLmScoreFeature(Set<Feature> featList, String name, double score) throws TextClassificationException
     {
         if (Double.isNaN(score)) {
-            featList.add(new Feature(name, MissingValue.MissingValueNonNominalType.NUMERIC));
+        	// MISSING VALUE
+            featList.add(new Feature(name, 0.0, FeatureType.NUMERIC));
         }
         else {
-            featList.add(new Feature(name, score));
+            featList.add(new Feature(name, score, FeatureType.NUMERIC));
         }
         return featList;
     }

@@ -26,13 +26,14 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ART;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.CONJ;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.PP;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.PR;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADP;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_CONJ;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_DET;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_PRON;
 import de.unidue.ltl.ctest.difficulty.annotations.CTest;
 import de.unidue.ltl.ctest.difficulty.annotations.Cloze;
 import de.unidue.ltl.ctest.difficulty.annotations.XTest;
@@ -65,12 +66,12 @@ public class IsFunctionWordExtractor
     	List<POS> tags = JCasUtil.selectCovered(POS.class, classificationTarget);
     	if (tags.size() > 0) {
     		POS pos = tags.get(0);
-            isFunctionWord = (pos instanceof ART || pos instanceof PP || pos instanceof PR || pos instanceof CONJ);
+            isFunctionWord = (pos instanceof POS_DET || pos instanceof POS_PRON || pos instanceof POS_ADP || pos instanceof POS_CONJ);
     	}
     	else {
     		System.out.println("No POS for gap: " + classificationTarget);
     	}
     	
-    	return new Feature(FN_IS_FUNC_WORD, isFunctionWord).asSet();
+    	return new Feature(FN_IS_FUNC_WORD, isFunctionWord, FeatureType.BOOLEAN).asSet();
     }
 }

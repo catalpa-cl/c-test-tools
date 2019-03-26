@@ -25,6 +25,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
@@ -49,7 +50,7 @@ public class AbsolutePositionExtractor extends FeatureExtractorResource_ImplBase
 		for (Token token : JCasUtil.select(jcas, Token.class)) {
 			position++;
 			if (token.getBegin() == classificationTarget.getBegin()) {
-				return new Feature(FN_POSITION, position).asSet();
+				return new Feature(FN_POSITION, position, FeatureType.NUMERIC).asSet();
 			}
 		}
 

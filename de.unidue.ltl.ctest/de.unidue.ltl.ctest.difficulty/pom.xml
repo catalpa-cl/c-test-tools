@@ -9,11 +9,6 @@
 		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 	
-	<properties>
-		<dkpro.core.version>1.8.0</dkpro.core.version>
-		<dkpro.tc.version>0.9.0</dkpro.tc.version>
-	</properties>
-
 	<artifactId>de.unidue.ltl.ctest.difficulty</artifactId>
 
 	<dependencies>

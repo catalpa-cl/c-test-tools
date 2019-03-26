@@ -30,15 +30,17 @@ import org.apache.uima.fit.internal.ExtendedLogger;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.util.Level;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADJ;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADV;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADJ;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADV;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_NOUN;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_VERB;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 
 public class PosTypesExtractor extends FeatureExtractorResource_ImplBase implements FeatureExtractor {
@@ -46,14 +48,15 @@ public class PosTypesExtractor extends FeatureExtractorResource_ImplBase impleme
 	 * This Extractor counts the occurrences of different Part-Of-Speech types in
 	 * the text. It also counts the occurrences of different Part-Of-Speech types in
 	 * the cover sentence of the target.
+	 * @throws TextClassificationException 
 	 */
 
 	@Override
-	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) {
+	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
 		return extractPosTypes(jcas, getLogger(), target);
 	}
 
-	public static Set<Feature> extractPosTypes(JCas jcas, ExtendedLogger logger, TextClassificationTarget target) {
+	public static Set<Feature> extractPosTypes(JCas jcas, ExtendedLogger logger, TextClassificationTarget target) throws TextClassificationException {
 		Set<Feature> featList = new HashSet<Feature>();
 		Collection<Sentence> sents = JCasUtil.select(jcas, Sentence.class);
 		double nrOfSentences;
@@ -67,7 +70,7 @@ public class PosTypesExtractor extends FeatureExtractorResource_ImplBase impleme
 		try {
 			Map<String, Integer> posTypeCounters = getPosTypeCounters(jcas);
 			for (String counter : posTypeCounters.keySet()) {
-				featList.add(new Feature(counter + "PerSentence", posTypeCounters.get(counter) / nrOfSentences));
+				featList.add(new Feature(counter + "PerSentence", posTypeCounters.get(counter) / nrOfSentences, FeatureType.NUMERIC));
 			}
 		} catch (NullPointerException e) {
 			logger.log(Level.INFO, "POS information not available.");
@@ -78,7 +81,7 @@ public class PosTypesExtractor extends FeatureExtractorResource_ImplBase impleme
 			Map<String, Integer> posTypeCountersSentence = getPosTypeCountersForSentence(coverSent);
 
 			for (String sentenceCounter : posTypeCountersSentence.keySet()) {
-				featList.add(new Feature(sentenceCounter, posTypeCountersSentence.get(sentenceCounter)));
+				featList.add(new Feature(sentenceCounter, posTypeCountersSentence.get(sentenceCounter), FeatureType.NUMERIC));
 			}
 		}
 		return featList;
@@ -88,10 +91,10 @@ public class PosTypesExtractor extends FeatureExtractorResource_ImplBase impleme
 		// This function counts nouns, verbs, adverbs and adjectives in the text
 		Map<String, Integer> counters = new HashMap<String, Integer>();
 
-		counters.put("NounsInDocument", getSize(JCasUtil.select(jcas, N.class)));
-		counters.put("VerbsInDocument", getSize(JCasUtil.select(jcas, V.class)));
-		counters.put("AdverbsInDocument", getSize(JCasUtil.select(jcas, ADV.class)));
-		counters.put("AdjectivesInDocument", getSize(JCasUtil.select(jcas, ADJ.class)));
+		counters.put("NounsInDocument", getSize(JCasUtil.select(jcas, POS_NOUN.class)));
+		counters.put("VerbsInDocument", getSize(JCasUtil.select(jcas, POS_VERB.class)));
+		counters.put("AdverbsInDocument", getSize(JCasUtil.select(jcas, POS_ADV.class)));
+		counters.put("AdjectivesInDocument", getSize(JCasUtil.select(jcas, POS_ADJ.class)));
 
 		return counters;
 	}
@@ -100,10 +103,10 @@ public class PosTypesExtractor extends FeatureExtractorResource_ImplBase impleme
 		// This function counts nouns, verbs, adverbs and adjectives in the cover
 		// sentence
 		Map<String, Integer> counters = new HashMap<String, Integer>();
-		counters.put("Nouns", getSize(JCasUtil.selectCovered(N.class, sent)));
-		counters.put("Verbs", getSize(JCasUtil.selectCovered(V.class, sent)));
-		counters.put("Adverbs", getSize(JCasUtil.selectCovered(ADV.class, sent)));
-		counters.put("Adjectives", getSize(JCasUtil.selectCovered(ADJ.class, sent)));
+		counters.put("Nouns", getSize(JCasUtil.selectCovered(POS_NOUN.class, sent)));
+		counters.put("Verbs", getSize(JCasUtil.selectCovered(POS_VERB.class, sent)));
+		counters.put("Adverbs", getSize(JCasUtil.selectCovered(POS_ADV.class, sent)));
+		counters.put("Adjectives", getSize(JCasUtil.selectCovered(POS_ADJ.class, sent)));
 
 		return counters;
 	}

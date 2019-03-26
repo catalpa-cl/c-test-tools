@@ -19,7 +19,7 @@ public class XDiceMeasure
 {
     @Override
     public double getSimilarity(String arg1, String arg2)
-        throws dkpro.similarity.algorithms.api.SimilarityException
+        throws org.dkpro.similarity.algorithms.api.SimilarityException
     {
         Set<String> bigrams1 = getExtendedBigrams(arg1);
         Set<String> bigrams2 = getExtendedBigrams(arg2);

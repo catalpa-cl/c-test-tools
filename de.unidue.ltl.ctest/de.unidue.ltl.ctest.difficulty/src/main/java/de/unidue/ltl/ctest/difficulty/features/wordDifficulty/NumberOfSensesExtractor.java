@@ -33,6 +33,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
@@ -94,6 +95,6 @@ public class NumberOfSensesExtractor
             nrOfSenses = senses.get(lemma.toLowerCase());
         }
         
-        return new Feature(FN_NR_OF_SENSES, nrOfSenses).asSet();
+        return new Feature(FN_NR_OF_SENSES, nrOfSenses, FeatureType.NUMERIC).asSet();
     }
 }

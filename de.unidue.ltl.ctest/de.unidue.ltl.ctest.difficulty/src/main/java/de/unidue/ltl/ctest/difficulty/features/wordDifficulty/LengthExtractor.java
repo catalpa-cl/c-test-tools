@@ -25,6 +25,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.readability.measure.WordSyllableCounter;
@@ -57,8 +58,8 @@ public class LengthExtractor
         // number of syllables is not always correct, but a good approximation
         WordSyllableCounter counter = new WordSyllableCounter(jcas.getDocumentLanguage());
 
-        featList.add(new Feature(FN_LENGTH, classificationTarget.getCoveredText().length()));
-        featList.add(new Feature(FN_LENGTH_SYL, counter.countSyllables(classificationTarget.getCoveredText())));
+        featList.add(new Feature(FN_LENGTH, classificationTarget.getCoveredText().length(), FeatureType.NUMERIC));
+        featList.add(new Feature(FN_LENGTH_SYL, counter.countSyllables(classificationTarget.getCoveredText()), FeatureType.NUMERIC));
         
         return featList;
     }

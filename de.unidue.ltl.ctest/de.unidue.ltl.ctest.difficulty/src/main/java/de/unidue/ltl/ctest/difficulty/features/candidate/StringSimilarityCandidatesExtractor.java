@@ -22,16 +22,17 @@ import java.util.Set;
 
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.similarity.algorithms.api.SimilarityException;
+import org.dkpro.similarity.algorithms.api.TermSimilarityMeasure;
+import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.unidue.ltl.ctest.difficulty.types.GapCandidate;
-import dkpro.similarity.algorithms.api.SimilarityException;
-import dkpro.similarity.algorithms.api.TermSimilarityMeasure;
-import dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
 
 /**
  * Check if there are candidates that have a very high string similarity to the
@@ -61,6 +62,6 @@ public class StringSimilarityCandidatesExtractor extends FeatureExtractorResourc
 			}
 			
 		}
-		return new Feature(FN_STRING_SIM_CANDIDATES, maxScore).asSet();
+		return new Feature(FN_STRING_SIM_CANDIDATES, maxScore, FeatureType.NUMERIC).asSet();
 	}
 }

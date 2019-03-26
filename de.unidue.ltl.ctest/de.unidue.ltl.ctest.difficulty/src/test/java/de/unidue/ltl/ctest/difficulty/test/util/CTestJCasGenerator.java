@@ -11,12 +11,12 @@ import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADJ;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADV;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ART;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.PR;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADJ;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADV;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_DET;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_NOUN;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_PRON;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_VERB;
 import de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -70,37 +70,37 @@ public class CTestJCasGenerator {
 		l.addToIndexes();
 		t.setLemma(l);
 		if(posValue.equals("N")){
-			N noun = new N(jcas, begin, end);
+			POS_NOUN noun = new POS_NOUN(jcas, begin, end);
 			noun.setPosValue("N");
 	        noun.addToIndexes();       
 	        t.setPos(noun);   	
 	        
 		}else if(posValue.equals("PR")){
-			PR pronoun = new PR(jcas, begin, end);
+			POS_PRON pronoun = new POS_PRON(jcas, begin, end);
 			pronoun.setPosValue("PR");
 		    pronoun.addToIndexes();       
 		    t.setPos(pronoun); 
 		    
 		}else if(posValue.equals("ART")){
-			ART article = new ART(jcas, begin, end);
+			POS_DET article = new POS_DET(jcas, begin, end);
 			article.setPosValue("ART");
 			article.addToIndexes();       
 		    t.setPos(article);    
 		    
 		}else if(posValue.equals("V")){
-			V verb = new V(jcas, begin, end);
+			POS_VERB verb = new POS_VERB(jcas, begin, end);
 			verb.setPosValue("V");
 	        verb.addToIndexes();	        
 	        t.setPos(verb);   
 	        
 		}else if(posValue.equals("ADV")){
-			ADV adverb = new ADV(jcas, begin, end);
+			POS_ADV adverb = new POS_ADV(jcas, begin, end);
 			adverb.setPosValue("ADV");
 			adverb.addToIndexes();	        
 	        t.setPos(adverb);   	
 	        
 		}else if(posValue.equals("ADJ")){
-			ADJ adjective = new ADJ(jcas, begin, end);
+			POS_ADJ adjective = new POS_ADJ(jcas, begin, end);
 			adjective.setPosValue("ADJ");
 			adjective.addToIndexes();	        
 	        t.setPos(adjective);   	

@@ -23,9 +23,11 @@ import java.util.Set;
 
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
@@ -45,11 +47,12 @@ public class PosTypeExtractor
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
 {
-    public Set<Feature> extract(JCas jcas, TextClassificationTarget target)
+    public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException
     {
 
         Set<Feature> featList = new HashSet<Feature>();
 
+        //TODO: Check if still applicable
         String[] postags = { "ADJ", "ADV", "ART", "CONJ", "NN", "NP", "PP", "PR", "V" };
         
         String solPos = "";
@@ -64,7 +67,7 @@ public class PosTypeExtractor
         
         for (String pos : postags) {
             String featureName = "GapIs" + pos;
-            featList.add(new Feature(featureName, pos.equals(solPos)));
+            featList.add(new Feature(featureName, pos.equals(solPos), FeatureType.BOOLEAN));
         }
 
         return featList;

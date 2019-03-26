@@ -28,6 +28,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -59,9 +60,9 @@ public class RelativePositionExtractor extends FeatureExtractorResource_ImplBase
 			}
 		}
 
-		featList.add(new Feature(FN_PREVIOUS_GAPS, previousGaps.size()));
-		featList.add(new Feature(FN_PREVIOUS_GAPS_IN_COVERSENTENCE, previousGapsInCoverSent.size()));
-		featList.add(new Feature(FN_GAPS_IN_COVERSENTENCE, gapsinCoverSent.size()));
+		featList.add(new Feature(FN_PREVIOUS_GAPS, previousGaps.size(), FeatureType.NUMERIC));
+		featList.add(new Feature(FN_PREVIOUS_GAPS_IN_COVERSENTENCE, previousGapsInCoverSent.size(), FeatureType.NUMERIC));
+		featList.add(new Feature(FN_GAPS_IN_COVERSENTENCE, gapsinCoverSent.size(), FeatureType.NUMERIC));
 
 		return featList;
 	}

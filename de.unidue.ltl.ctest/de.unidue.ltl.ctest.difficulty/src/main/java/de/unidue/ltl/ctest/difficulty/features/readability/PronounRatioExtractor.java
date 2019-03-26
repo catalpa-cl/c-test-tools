@@ -23,13 +23,15 @@ import java.util.Set;
 
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.PR;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_PRON;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 
@@ -41,13 +43,13 @@ public class PronounRatioExtractor extends FeatureExtractorResource_ImplBase imp
 	public static final String FN_PRONOUN_RATIO = "PronounRatio";
 	public static final String FN_PRONOUN_RATIO_TARGET = "PronounRatio_Target";
 
-	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) {
+	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
 		Set<Feature> featList = new HashSet<Feature>();
 		Sentence coverSent = JCasUtil.selectCovering(jcas, Sentence.class, target).get(0);
 		// Pronoun Ratio of document
-		featList.add(new Feature(FN_PRONOUN_RATIO, getPronounRatio(jcas)));
+		featList.add(new Feature(FN_PRONOUN_RATIO, getPronounRatio(jcas), FeatureType.NUMERIC));
 		// Pronoun Ratio of targets cover sentence
-		featList.add(new Feature(FN_PRONOUN_RATIO_TARGET, getPronounRatio(jcas, coverSent)));
+		featList.add(new Feature(FN_PRONOUN_RATIO_TARGET, getPronounRatio(jcas, coverSent), FeatureType.NUMERIC));
 
 		return featList;
 	}
@@ -62,7 +64,7 @@ public class PronounRatioExtractor extends FeatureExtractorResource_ImplBase imp
 			if (pos != null) {
 				if (!t.getPos().getType().getShortName().equals("PUNC")) {
 					nrOfWords++;
-					if (pos instanceof PR) {
+					if (pos instanceof POS_PRON) {
 						nrOfPronouns++;
 					}
 				}
@@ -82,7 +84,7 @@ public class PronounRatioExtractor extends FeatureExtractorResource_ImplBase imp
 			if (pos != null) {
 				if (!t.getPos().getType().getShortName().equals("PUNC")) {
 					nrOfWords++;
-					if (pos instanceof PR) {
+					if (pos instanceof POS_PRON) {
 						nrOfPronouns++;
 					}
 				}

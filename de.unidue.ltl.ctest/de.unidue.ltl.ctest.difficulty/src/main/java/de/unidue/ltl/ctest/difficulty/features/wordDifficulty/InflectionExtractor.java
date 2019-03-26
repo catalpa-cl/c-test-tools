@@ -28,12 +28,13 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADJ;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADJ;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_NOUN;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_VERB;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.unidue.ltl.ctest.difficulty.annotations.CTest;
 import de.unidue.ltl.ctest.difficulty.annotations.Cloze;
@@ -82,7 +83,7 @@ public class InflectionExtractor
         boolean derivedAdjective = false;
         
         if (solutionPos != null) {
-            if (solutionPos instanceof ADJ) {
+            if (solutionPos instanceof POS_ADJ) {
                 String[] adjectiveEndings = de.unidue.ltl.ctest.difficulty.features.util.WordFilters.getAdjectiveEndings(lang);
                 for (String ending : adjectiveEndings) {
                     if (token.endsWith(ending)) {
@@ -94,23 +95,23 @@ public class InflectionExtractor
             
             // is inflected
             if (!token.equals(solutionLemma.toLowerCase())) {
-                if (solutionPos instanceof ADJ) {
+                if (solutionPos instanceof POS_ADJ) {
                     inflectedAdjective = true;
                 }
-                else if (solutionPos instanceof N) {
+                else if (solutionPos instanceof POS_NOUN) {
                     inflectedNoun = true;
                 }
-                else if (solutionPos instanceof V) {
+                else if (solutionPos instanceof POS_VERB) {
                     inflectedVerb = true;
                 }
             }
         }
 
-        featList.add(new Feature(FN_IS_LEMMA,       solutionLemma.equals(token)));
-        featList.add(new Feature(FN_INFLECTED_NOUN, inflectedNoun));
-        featList.add(new Feature(FN_INFLECTED_ADJ,  inflectedAdjective));
-        featList.add(new Feature(FN_INFLECTED_VERB, inflectedVerb));
-        featList.add(new Feature(FN_DERIVED_ADJ,    derivedAdjective));
+        featList.add(new Feature(FN_IS_LEMMA,       solutionLemma.equals(token), FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_INFLECTED_NOUN, inflectedNoun, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_INFLECTED_ADJ,  inflectedAdjective, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_INFLECTED_VERB, inflectedVerb, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_DERIVED_ADJ,    derivedAdjective, FeatureType.BOOLEAN));
         
         return featList;
     }

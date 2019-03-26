@@ -28,8 +28,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import org.dkpro.tc.api.features.MissingValue;
-import org.dkpro.tc.api.features.MissingValue.MissingValueNonNominalType;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.provider.FrequencyCountProvider;
@@ -70,7 +69,8 @@ public class NeighbourProbabilityExtractor extends FeatureExtractorResource_Impl
 			}
 			// There is no left trigram
 			catch (IndexOutOfBoundsException e) {
-				featList.add(new Feature(PROB_OF_LEFT_TRIGRAM, new MissingValue(MissingValueNonNominalType.NUMERIC)));
+				// MISSING VALUE
+				featList.add(new Feature(PROB_OF_LEFT_TRIGRAM, 0.0, FeatureType.NUMERIC));
 			}
 			// Get probability of right trigram
 			try {
@@ -81,7 +81,8 @@ public class NeighbourProbabilityExtractor extends FeatureExtractorResource_Impl
 			}
 			// There is no right trigram
 			catch (IndexOutOfBoundsException e) {
-				featList.add(new Feature(PROB_OF_LEFT_TRIGRAM, new MissingValue(MissingValueNonNominalType.NUMERIC)));
+				// MISSING VALUE
+				featList.add(new Feature(PROB_OF_LEFT_TRIGRAM, 0.0, FeatureType.NUMERIC));
 			}
 		} catch (IOException e) {
 			throw new TextClassificationException(e);

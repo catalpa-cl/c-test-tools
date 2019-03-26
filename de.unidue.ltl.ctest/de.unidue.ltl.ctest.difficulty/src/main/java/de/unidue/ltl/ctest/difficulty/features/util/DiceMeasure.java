@@ -13,11 +13,11 @@ import de.tudarmstadt.ukp.dkpro.core.ngrams.util.CharacterNGramStringIterable;
  * g., DICE(colour,couleur) = 6/11 = 0.55 (the shared bigrams are co, ou, ur)."
  */
 public class DiceMeasure
-    extends dkpro.similarity.algorithms.api.TermSimilarityMeasureBase
+    extends org.dkpro.similarity.algorithms.api.TermSimilarityMeasureBase
 {
 
     public double getSimilarity(String arg1, String arg2)
-        throws dkpro.similarity.algorithms.api.SimilarityException
+        throws org.dkpro.similarity.algorithms.api.SimilarityException
     {
         Set<String> bigrams1 = getBigrams(arg1);
         Set<String> bigrams2 = getBigrams(arg2);

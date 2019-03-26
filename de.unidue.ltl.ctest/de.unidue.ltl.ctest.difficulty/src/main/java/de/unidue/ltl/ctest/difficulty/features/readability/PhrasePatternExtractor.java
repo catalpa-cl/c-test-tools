@@ -29,9 +29,11 @@ import java.util.Set;
 import org.apache.uima.fit.internal.ExtendedLogger;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -47,12 +49,13 @@ public class PhrasePatternExtractor extends FeatureExtractorResource_ImplBase im
 	/**
 	 * This Extractor counts the occurrences of different chunk types in the text.
 	 * (noun, verb, prepositional and adverbial chunks)
+	 * @throws TextClassificationException 
 	 */
-	public Set<org.dkpro.tc.api.features.Feature> extract(JCas jcas, TextClassificationTarget target) {
+	public Set<org.dkpro.tc.api.features.Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
 		return extractPhraseTypes(jcas, getLogger(), target);
 	}
 
-	public static Set<Feature> extractPhraseTypes(JCas jcas, ExtendedLogger logger, TextClassificationTarget target) {
+	public static Set<Feature> extractPhraseTypes(JCas jcas, ExtendedLogger logger, TextClassificationTarget target) throws TextClassificationException {
 		Set<Feature> featList = new HashSet<Feature>();
 		Collection<Sentence> sents = JCasUtil.select(jcas, Sentence.class);
 		double nrOfSentences = sents.size();
@@ -60,14 +63,14 @@ public class PhrasePatternExtractor extends FeatureExtractorResource_ImplBase im
 		// counts of phrase types in the complete text
 		Map<String, Integer> phraseTypeCounters = getPhraseTypeCounters(jcas);
 		for (String counter : phraseTypeCounters.keySet()) {
-			featList.add(new Feature(counter + "PerSentence", phraseTypeCounters.get(counter) / nrOfSentences));
+			featList.add(new Feature(counter + "PerSentence", phraseTypeCounters.get(counter) / nrOfSentences, FeatureType.NUMERIC));
 		}
 
 		// counts of phrase types in the cover sentence of the target only
 		Sentence coverSent = JCasUtil.selectCovering(jcas, Sentence.class, target).get(0);
 		Map<String, Integer> phraseTypeCountersSentence = getPhraseTypeCountersForSentence(coverSent);
 		for (String sentenceCounter : phraseTypeCountersSentence.keySet()) {
-			featList.add(new Feature(sentenceCounter, phraseTypeCountersSentence.get(sentenceCounter)));
+			featList.add(new Feature(sentenceCounter, phraseTypeCountersSentence.get(sentenceCounter), FeatureType.NUMERIC));
 		}
 
 		return featList;

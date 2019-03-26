@@ -12,11 +12,11 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.DocumentAnnotation;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADJ;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.ADV;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADJ;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_ADV;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_NOUN;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_VERB;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 
@@ -34,7 +34,7 @@ public class ReadabilityUtils
                     "having", "may", "might", "must", "need", "ought", "shall", "should", "will",
                     "would" };
 
-            return ((pos instanceof V) && Arrays.asList(auxVerbs).contains(token.getCoveredText()));
+            return ((pos instanceof POS_VERB) && Arrays.asList(auxVerbs).contains(token.getCoveredText()));
         }
         else {
             throw new MissingResourceException(
@@ -51,7 +51,7 @@ public class ReadabilityUtils
         if (documentLanguage.equals("en")) {
             String[] modalVerbs = new String[] { "can", "could", "might", "may", "must", "should",
                     "will", "would", "shall" };
-            return ((pos instanceof V) && Arrays.asList(modalVerbs)
+            return ((pos instanceof POS_VERB) && Arrays.asList(modalVerbs)
                     .contains(token.getCoveredText()));
         }
         else {
@@ -89,7 +89,7 @@ public class ReadabilityUtils
     public static boolean isLexicalWord(Token token, String documentLanguage)
     {
         POS p = token.getPos();
-        boolean rightPos = (p instanceof N || p instanceof V || p instanceof ADJ || p instanceof ADV);
+        boolean rightPos = (p instanceof POS_NOUN || p instanceof POS_VERB || p instanceof POS_ADJ || p instanceof POS_ADV);
         if (documentLanguage.equals("en")) {
             return (rightPos && !isModalVerb(token, documentLanguage) && !isAuxiliaryVerb(token,
                     documentLanguage));

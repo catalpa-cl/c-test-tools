@@ -30,6 +30,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -50,7 +51,7 @@ public class EntityMentionsExtractor extends FeatureExtractorResource_ImplBase i
 	}
 
 	public static Set<Feature> extractEntityMentions(JCas jcas, ExtendedLogger logger,
-			TextClassificationTarget target) {
+			TextClassificationTarget target) throws TextClassificationException {
 		Collection<Sentence> sents = JCasUtil.select(jcas, Sentence.class);
 		double nrOfSentences = 1.0;
 		try {
@@ -63,14 +64,16 @@ public class EntityMentionsExtractor extends FeatureExtractorResource_ImplBase i
 
 		// Document Feature
 		featList.add(new Feature(FN_UNIQUE_ENTITIES_PER_SENTENCE,
-				ReadabilityFeaturesUtil.getNumberOfUniqueEntities(jcas) / nrOfSentences));
+				ReadabilityFeaturesUtil.getNumberOfUniqueEntities(jcas) / nrOfSentences,
+				FeatureType.NUMERIC));
 
 		if (JCasUtil.selectCovering(jcas, Sentence.class, target).size() != 0) {
 			Sentence coverSent = JCasUtil.selectCovering(jcas, Sentence.class, target).get(0);
 
 			// Target Feature
 			featList.add(new Feature(FN_UNIQUE_ENTITIES_IN_COVERING_SENTENCE,
-					ReadabilityFeaturesUtil.getNumberOfUniqueEntities(coverSent)));
+					ReadabilityFeaturesUtil.getNumberOfUniqueEntities(coverSent), 
+					FeatureType.NUMERIC));
 		}
 		return featList;
 	}

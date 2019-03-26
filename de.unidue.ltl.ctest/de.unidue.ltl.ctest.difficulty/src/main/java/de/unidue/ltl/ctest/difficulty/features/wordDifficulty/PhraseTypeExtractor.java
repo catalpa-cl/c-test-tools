@@ -22,9 +22,11 @@ import java.util.Set;
 
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.ADJC;
@@ -55,7 +57,7 @@ public class PhraseTypeExtractor
     public static final String FN_IS_SBAR = "GapIsSBar";
     public static final String FN_IS_PC = "GapIsPC";
 
-    public Set<Feature> extract(JCas jcas, TextClassificationTarget target)
+    public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException
     {
 
         boolean nc = false;
@@ -91,12 +93,12 @@ public class PhraseTypeExtractor
             sbar = true;
         }
         // phrase type of gap
-        featList.add(new Feature(FN_IS_NC, nc));
-        featList.add(new Feature(FN_IS_VC, vc));
-        featList.add(new Feature(FN_IS_ADJC, adjc));
-        featList.add(new Feature(FN_IS_ADVC, advc));
-        featList.add(new Feature(FN_IS_PC, pc));
-        featList.add(new Feature(FN_IS_SBAR, sbar));
+        featList.add(new Feature(FN_IS_NC, nc, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_IS_VC, vc, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_IS_ADJC, adjc, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_IS_ADVC, advc, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_IS_PC, pc, FeatureType.BOOLEAN));
+        featList.add(new Feature(FN_IS_SBAR, sbar, FeatureType.BOOLEAN));
 
         return featList;
     }

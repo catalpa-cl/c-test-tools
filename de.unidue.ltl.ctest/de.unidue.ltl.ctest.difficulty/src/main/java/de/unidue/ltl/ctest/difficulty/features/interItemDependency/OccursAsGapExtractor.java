@@ -28,6 +28,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
@@ -81,6 +82,6 @@ public class OccursAsGapExtractor extends FeatureExtractorResource_ImplBase impl
 
 		// TODO it might be useful to differentiate between cases where the gap
 		// repetition is before or after the current gap
-		return new Feature(FN_OCCURS_AS_GAP, occursAsGap).asSet();
+		return new Feature(FN_OCCURS_AS_GAP, occursAsGap, FeatureType.BOOLEAN).asSet();
 	}
 }

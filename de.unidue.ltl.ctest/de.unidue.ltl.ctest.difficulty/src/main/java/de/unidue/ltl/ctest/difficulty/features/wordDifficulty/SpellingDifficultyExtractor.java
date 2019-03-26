@@ -34,17 +34,18 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.Level;
+import org.dkpro.similarity.algorithms.api.SimilarityException;
+import org.dkpro.similarity.algorithms.api.TermSimilarityMeasureBase;
+import org.dkpro.similarity.algorithms.lexical.string.LevenshteinSecondStringComparator;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.difficulty.features.util.PhonetisaurusPronunciation;
-import dkpro.similarity.algorithms.api.SimilarityException;
-import dkpro.similarity.algorithms.api.TermSimilarityMeasureBase;
-import dkpro.similarity.algorithms.lexical.string.LevenshteinSecondStringComparator;
 
 public class SpellingDifficultyExtractor extends FeatureExtractorResource_ImplBase implements FeatureExtractor {
 	// ADJUST THIS FEATURE; CURRENTLY WORKS ONLY FOR ENGLISH
@@ -170,8 +171,8 @@ public class SpellingDifficultyExtractor extends FeatureExtractorResource_ImplBa
 			}
 		}
 		Set<Feature> features = new HashSet<Feature>();
-		features.add(new Feature(PHON_SCORE, phonscore));
-		features.add(new Feature(CMU_SIM, cmuSimilarity));
+		features.add(new Feature(PHON_SCORE, phonscore, FeatureType.NUMERIC));
+		features.add(new Feature(CMU_SIM, cmuSimilarity, FeatureType.NUMERIC));
 
 		return features;
 	}

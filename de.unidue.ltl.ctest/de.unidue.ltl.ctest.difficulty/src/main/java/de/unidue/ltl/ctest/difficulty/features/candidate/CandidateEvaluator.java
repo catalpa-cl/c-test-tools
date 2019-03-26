@@ -30,6 +30,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.provider.FrequencyCountProvider;
@@ -145,10 +146,10 @@ public class CandidateEvaluator extends FeatureExtractorResource_ImplBase implem
 		}
 
 		// extract candidate space
-		featList.add(new Feature(NR_CANDIDATES, candidates.size()));
-		featList.add(new Feature(UNIGRAM_CANDIDATES_SIZE, unigramCandidates.size()));
-		featList.add(new Feature(BIGRAM_CANDIDATES_SIZE, bigramCandidates.size()));
-		featList.add(new Feature(TRIGRAM_CANDIDATES_SIZE, trigramCandidates.size()));
+		featList.add(new Feature(NR_CANDIDATES, candidates.size(), FeatureType.NUMERIC));
+		featList.add(new Feature(UNIGRAM_CANDIDATES_SIZE, unigramCandidates.size(), FeatureType.NUMERIC));
+		featList.add(new Feature(BIGRAM_CANDIDATES_SIZE, bigramCandidates.size(), FeatureType.NUMERIC));
+		featList.add(new Feature(TRIGRAM_CANDIDATES_SIZE, trigramCandidates.size(), FeatureType.NUMERIC));
 
 		// extract rank of solution in the candidate space
 		int unigramSolutionRank = CTestFeaturesUtil.getSolutionRank(gap.getSolutions().toArray(), unigramCandidates);
@@ -170,9 +171,9 @@ public class CandidateEvaluator extends FeatureExtractorResource_ImplBase implem
 			trigramSolutionRank = Math.max(candidates.size() + 1, 50);
 		}
 
-		featList.add(new Feature(UNIGRAM_SOLUTION_RANK, unigramSolutionRank));
-		featList.add(new Feature(BIGRAM_SOLUTION_RANK, bigramSolutionRank));
-		featList.add(new Feature(TRIGRAM_SOLUTION_RANK, trigramSolutionRank));
+		featList.add(new Feature(UNIGRAM_SOLUTION_RANK, unigramSolutionRank, FeatureType.NUMERIC));
+		featList.add(new Feature(BIGRAM_SOLUTION_RANK, bigramSolutionRank, FeatureType.NUMERIC));
+		featList.add(new Feature(TRIGRAM_SOLUTION_RANK, trigramSolutionRank, FeatureType.NUMERIC));
 
 		return featList;
 	}

@@ -18,6 +18,7 @@
 package de.unidue.ltl.ctest.difficulty.features.wordDifficulty;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +33,11 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_NOUN;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.dictionary.SimpleDictionary;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.splitter.DecompoundedWord;
@@ -54,6 +56,8 @@ public class PrefixBreaksCompoundExtractor
     implements FeatureExtractor
 {
 
+	public static final String UTF8 = "UTF-8";
+	
     public static final String FN_IS_COMPOUND_BREAK = "IsCompoundBreak";
     public static final String FN_IS_COMPOUND = "IsCompound";
     
@@ -70,7 +74,13 @@ public class PrefixBreaksCompoundExtractor
     {
         super.initialize(aSpecifier, aAdditionalParams);
         splitter = new JWordSplitterAlgorithm();
-        splitter.setDictionary(new SimpleDictionary(dictionaryFile));
+        try {
+			splitter.setDictionary(new SimpleDictionary(dictionaryFile, UTF8));
+		} catch (IOException e) {
+			System.out.println("Could not load dictionary!");
+			e.printStackTrace();
+			return false;
+		}
         return true;
     }
 
@@ -87,15 +97,15 @@ public class PrefixBreaksCompoundExtractor
         String word = tok.getLemma().getValue()
                 .toLowerCase();
         // only check decompounding of nouns
-        if (pos instanceof N) {
+        if (pos instanceof POS_NOUN) {
             isCompound = isCompound(word);
 
         }
-        featList.add(new Feature(FN_IS_COMPOUND, isCompound));
+        featList.add(new Feature(FN_IS_COMPOUND, isCompound, FeatureType.BOOLEAN));
 
         Gap gap = JCasUtil.selectCovered(Gap.class, classificationTarget).get(0);
 
-        if (pos instanceof N) {
+        if (pos instanceof POS_NOUN) {
             String prefix = "";
             String solution = gap.getCoveredText();
             if (gap.getPrefix().length() > 0) {
@@ -112,7 +122,7 @@ public class PrefixBreaksCompoundExtractor
             }
             isCompoundBreak = isCompoundBreak(word, prefix);
         }
-        featList.add(new Feature(FN_IS_COMPOUND_BREAK, isCompoundBreak));
+        featList.add(new Feature(FN_IS_COMPOUND_BREAK, isCompoundBreak, FeatureType.BOOLEAN));
 
         return featList;
     }
@@ -160,10 +170,10 @@ public class PrefixBreaksCompoundExtractor
         return splitter.split(word).getAllSplits();
     }
 
-    public void setDictionaryFile(String dictionaryFile)
+    public void setDictionaryFile(String dictionaryFile) throws IOException
     {
         splitter = new JWordSplitterAlgorithm();
-        splitter.setDictionary(new SimpleDictionary(new File(dictionaryFile)));
+        splitter.setDictionary(new SimpleDictionary(new File(dictionaryFile), UTF8));
     }
 
 }

@@ -10,9 +10,9 @@ import java.util.TreeSet;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
+import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
-import org.dkpro.tc.api.features.MissingValue;
-import org.dkpro.tc.api.features.MissingValue.MissingValueNonNominalType;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.provider.FrequencyCountProvider;
@@ -71,7 +71,7 @@ public class CTestFeaturesUtil
 
     public static Set<Feature> addLogProbability(FrequencyCountProvider frequencyProvider,
             String language, Set<Feature> featureList, String featureName, String phrase)
-        throws IOException
+        throws IOException, TextClassificationException
     {
 
         Double prob = getLogProbability(frequencyProvider, language, phrase);
@@ -81,30 +81,28 @@ public class CTestFeaturesUtil
 
     public static Set<Feature> addLogProbability(Set<Feature> featureList, String featureName,
             Double prob)
-        throws IOException
+        throws IOException, TextClassificationException
     {
 
         if (prob.isInfinite() || prob.isNaN() || prob == null) {
-            featureList.add(new Feature(featureName, new MissingValue(
-                    MissingValueNonNominalType.NUMERIC)));
+            featureList.add(new Feature(featureName, 0.0, FeatureType.NUMERIC));
         }
         else {
-            featureList.add(new Feature(featureName, prob));
+            featureList.add(new Feature(featureName, prob, FeatureType.NUMERIC));
         }
         return featureList;
     }
 
     public static Set<Feature> addProbability(Set<Feature> featureList, String featureName,
             Double prob)
-        throws IOException
+        throws IOException, TextClassificationException
     {
 
         if (prob == 0.0 || prob == null) {
-            featureList.add(new Feature(featureName, new MissingValue(
-                    MissingValueNonNominalType.NUMERIC)));
+            featureList.add(new Feature(featureName, 0.0, FeatureType.NUMERIC));
         }
         else {
-            featureList.add(new Feature(featureName, prob));
+            featureList.add(new Feature(featureName, prob, FeatureType.NUMERIC));
         }
         return featureList;
     }
