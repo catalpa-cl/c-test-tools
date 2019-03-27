@@ -32,9 +32,9 @@ import weka.classifiers.functions.SMO;
 import weka.classifiers.functions.SMOreg;
 
 public class DefaultTrainer implements ModelTrainer {
-	private static String CTEST = "-CTest_Experiment";
-	private static String TRAIN_TEST = "-TrainTest";
-	private static String CV = "-Fold-CrossValidation";
+	private static String CTEST = "CTest-Experiment-";
+	private static String TRAIN_TEST = "TrainTest-";
+	private static String CV = "-Fold-CrossValidation-";
 	
 	private ExperimentBuilder builder;
 	
@@ -54,7 +54,7 @@ public class DefaultTrainer implements ModelTrainer {
 	@Override
 	public void runTrainTest(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, String testPath) throws Exception {
 		getBuilder(experiment)
-			.experiment(ExperimentType.TRAIN_TEST, getNameAndDateString(experiment) + CTEST + TRAIN_TEST)
+			.experiment(ExperimentType.TRAIN_TEST,CTEST + TRAIN_TEST + getNameAndDateString(experiment))
 			.dataReaderTrain(getCollectionReader(trainPath, reader))
 			.dataReaderTest(getCollectionReader(testPath, reader))
 			.run();
@@ -62,7 +62,7 @@ public class DefaultTrainer implements ModelTrainer {
 	@Override
 	public void runCrossValidation(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, int numFolds) throws Exception {
 		getBuilder(experiment)
-			.experiment(ExperimentType.CROSS_VALIDATION, getNameAndDateString(experiment) + CTEST + numFolds + CV)
+			.experiment(ExperimentType.CROSS_VALIDATION, CTEST + numFolds + CV + getNameAndDateString(experiment))
 			.numFolds(numFolds)
 			.dataReaderTrain(getCollectionReader(trainPath, reader))
 			.run();
@@ -72,7 +72,7 @@ public class DefaultTrainer implements ModelTrainer {
 	public void saveModel(Experiment experiment, Class<? extends CTestReader> reader, String trainPath,
 			String modelPath) throws Exception {
 		getBuilder(experiment)
-			.experiment(ExperimentType.CROSS_VALIDATION, getNameAndDateString(experiment) + CTEST + CV)
+			.experiment(ExperimentType.CROSS_VALIDATION, CTEST + "Model-" + getNameAndDateString(experiment))
 			.dataReaderTrain(getCollectionReader(trainPath, reader))
 			.outputFolder(modelPath)
 			.run();
@@ -93,7 +93,7 @@ public class DefaultTrainer implements ModelTrainer {
 	}
 	
 	private String getNameAndDateString(Experiment experiment) {
-		return experiment.getExperimentName() + new Date().getTime();
+		return experiment.getExperimentName() + "-" + new Date().getTime();
 	}
 	
 	private CollectionReaderDescription getCollectionReader(String collectionPath, Class<? extends CTestReader> readerClass) throws ResourceInitializationException {
