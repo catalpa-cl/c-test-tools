@@ -30,7 +30,7 @@ public class CTestToken implements Serializable {
 	private boolean gap;
 	private GapType gapType = GapType.POSTFIX;
 	private int gapIndex = -1;
-	private String prompt;
+	private String prompt; //TODO: Remove and switch to gapindex
 	private List<String> otherSolutions;
 
 	// Meta Information
@@ -192,29 +192,49 @@ public class CTestToken implements Serializable {
 	 * The prompt is the visible part of a gapped token, i.e. "invi" in "invi_____" (invisible).
 	 */
 	public String getPrompt() {
-		if (prompt != null)
-			return prompt;
-		
 		if (gapIndex < 0)
 			return "";
+		
+		if (prompt != null)
+			return prompt;
 		
 		return text.substring(0, gapIndex);
 	}
 
+	/*
+	 * Sets the prompt of the Gap. 
+	 * Must be a substring of {@code CTestToken.getText()}.
+	 * Must not be null.
+	 * 
+	 * @param prompt the text to set the prompt to.
+	 */
 	public void setPrompt(String prompt) {
+		if (prompt == null) {
+			System.out.println("WARNING: CTestToken.setPrompt received null as parameter. Call to setPrompt is ignored.");
+			return;
+		}
+		
+		if (!this.text.startsWith(prompt)) {
+			System.out.println("WARNING: Prompt passed to CTestToken.setPrompt is not a substring of CTestToken.getText. "
+					+ "Call to setPrompt is ignored.\n"
+					+ " Prompt: " + prompt + ", "
+					+ " Text: " + this.text);
+			return;
+		}
+		
 		this.prompt = prompt;
-		this.setGapIndex(prompt.length());
+		this.setGapIndex(prompt.length()); 
 	}
 	
 	/**
 	 * Returns the primary solution to the token.
 	 */
 	public String getPrimarySolution() {
-		if (prompt != null)
-			return text.substring(prompt.length());
-		
 		if (gapIndex < 0)
 			return text;
+		
+		if (prompt != null)
+			return text.substring(prompt.length());
 		
 		return text.substring(gapIndex);
 	}

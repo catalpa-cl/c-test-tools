@@ -304,6 +304,7 @@ public class Transformation {
 				g.setId(gapCount);
 				g.setSolutions(getSolutionArray(jcas, ctoken.getAllSolutions()));
 				g.setPrefix(ctoken.getPrompt());
+				g.setPostfix(ctoken.getPrimarySolution());
 				g.setErrorRate(errorRate);
 				g.addToIndexes();
 				gapCount++;

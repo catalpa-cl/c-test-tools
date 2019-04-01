@@ -72,7 +72,7 @@ public class DefaultTrainer implements ModelTrainer {
 	public void saveModel(Experiment experiment, Class<? extends CTestReader> reader, String trainPath,
 			String modelPath) throws Exception {
 		getBuilder(experiment)
-			.experiment(ExperimentType.CROSS_VALIDATION, CTEST + "Model-" + getNameAndDateString(experiment))
+			.experiment(ExperimentType.SAVE_MODEL, CTEST + "Model-" + getNameAndDateString(experiment))
 			.dataReaderTrain(getCollectionReader(trainPath, reader))
 			.outputFolder(modelPath)
 			.run();
