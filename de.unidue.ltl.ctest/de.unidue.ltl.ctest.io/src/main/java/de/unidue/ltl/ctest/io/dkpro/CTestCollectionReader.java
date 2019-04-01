@@ -67,6 +67,7 @@ public class CTestCollectionReader extends ResourceCollectionReaderBase {
 		Resource res = nextFile();
 		File file = new File(res.getResolvedUri());
         initCas(aCas, res);
+        System.out.println(res.getResolvedUri());
 
         try {
 			JCas jcas = aCas.getJCas();

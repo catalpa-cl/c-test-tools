@@ -45,12 +45,18 @@ public class PronounRatioExtractor extends FeatureExtractorResource_ImplBase imp
 
 	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
 		Set<Feature> featList = new HashSet<Feature>();
-		Sentence coverSent = JCasUtil.selectCovering(jcas, Sentence.class, target).get(0);
-		// Pronoun Ratio of document
-		featList.add(new Feature(FN_PRONOUN_RATIO, getPronounRatio(jcas), FeatureType.NUMERIC));
-		// Pronoun Ratio of targets cover sentence
-		featList.add(new Feature(FN_PRONOUN_RATIO_TARGET, getPronounRatio(jcas, coverSent), FeatureType.NUMERIC));
-
+		
+		try {
+			Sentence coverSent = JCasUtil.selectCovering(jcas, Sentence.class, target).get(0);
+			// Pronoun Ratio of document
+			featList.add(new Feature(FN_PRONOUN_RATIO, getPronounRatio(jcas), FeatureType.NUMERIC));
+			// Pronoun Ratio of targets cover sentence
+			featList.add(new Feature(FN_PRONOUN_RATIO_TARGET, getPronounRatio(jcas, coverSent), FeatureType.NUMERIC));
+		} catch (IndexOutOfBoundsException e) {
+			featList.add(new Feature(FN_PRONOUN_RATIO, 0, FeatureType.NUMERIC));
+			featList.add(new Feature(FN_PRONOUN_RATIO_TARGET, 0, FeatureType.NUMERIC));
+		}
+		
 		return featList;
 	}
 

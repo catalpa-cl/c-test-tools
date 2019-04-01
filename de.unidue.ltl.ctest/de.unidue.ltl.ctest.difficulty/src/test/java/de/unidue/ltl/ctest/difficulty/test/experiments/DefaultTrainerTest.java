@@ -14,16 +14,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.matetools.MateLemmatizer;
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpChunker;
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
-import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.difficulty.experiments.Experiment;
 import de.unidue.ltl.ctest.difficulty.experiments.Model;
-import de.unidue.ltl.ctest.difficulty.features.wordDifficulty.LengthExtractor;
+import de.unidue.ltl.ctest.difficulty.features.interItemDependency.ThGapExtractor;
 import de.unidue.ltl.ctest.difficulty.train.DefaultTrainer;
 import de.unidue.ltl.ctest.difficulty.train.ModelTrainer;
 import de.unidue.ltl.ctest.io.CTestFileReader;
+
 
 public class DefaultTrainerTest {
 	private final String basePath = "src/test/resources/texts/";
@@ -53,7 +51,7 @@ public class DefaultTrainerTest {
 	public void saveLoadRoundTripTest() throws Exception {
 		this.trainer.saveModel(this.experiment, CTestFileReader.class, this.trainPath, this.modelPath);
 		Model model = this.trainer.loadModel(this.modelPath);
-		CTestObject ctest = new CTestFileReader().read(testPath);
+		CTestObject ctest = new CTestFileReader().read(testPath + "enTest.txt");
 		
 		assertTrue(!model.predict(ctest).isEmpty());
 		System.out.println(model.predict(ctest));
@@ -64,13 +62,9 @@ public class DefaultTrainerTest {
 		
 		List<AnalysisEngineDescription> preprocessing = new ArrayList<>();
 		preprocessing.add(createEngineDescription(MateLemmatizer.class, MateLemmatizer.PARAM_LANGUAGE, languageCode));
-		preprocessing.add(createEngineDescription(OpenNlpPosTagger.class, OpenNlpPosTagger.PARAM_LANGUAGE, languageCode));
-		preprocessing.add(createEngineDescription(OpenNlpChunker.class, OpenNlpChunker.PARAM_LANGUAGE, languageCode));
-		preprocessing.add(createEngineDescription(StanfordNamedEntityRecognizer.class, StanfordNamedEntityRecognizer.PARAM_LANGUAGE, languageCode));
-		
 		
 		TcFeatureSet features = new TcFeatureSet();
-		features.add(create(LengthExtractor.class));
+		features.add(create(ThGapExtractor.class));
 		
 		Experiment experiment = new Experiment();
 		experiment.setExperimentName("UnitTestExperiment");

@@ -55,7 +55,7 @@ public class CharLangModelProbExtractor
     public static final String FN_LM_PROB_PREFIX = "LMProbPrefix";
     public static final String FN_LM_PROB_POSTFIX = "LMProbPostfix";
     public static final String FN_LM_PROB_SOLUTION = "LMProbSolution";
-
+    
     public static final String PARAM_LM_FILE = "characterBasedLMFile";
     @ConfigurationParameter(name = PARAM_LM_FILE, mandatory = true)
     protected static String characterBasedLMFile;
@@ -85,8 +85,18 @@ public class CharLangModelProbExtractor
         double lmProbSolution = 0.0;
         double lmProbPrefix = 0.0;
         double lmProbPostfix = 0.0;
-
-        Gap gap = JCasUtil.selectCovered(Gap.class, classificationTarget).get(0);
+        
+        List<Gap> gapsCovered = JCasUtil.selectCovered(Gap.class, classificationTarget);
+        
+        if (gapsCovered.size() == 0) {
+        	featList = addLmScoreFeature(featList, FN_LM_PROB, 0);
+        	featList = addLmScoreFeature(featList, FN_LM_PROB_PREFIX, 0);
+        	featList = addLmScoreFeature(featList, FN_LM_PROB_POSTFIX, 0);
+        	featList = addLmScoreFeature(featList, FN_LM_PROB_SOLUTION, 0);
+        	return featList;
+        }
+        
+        Gap gap = gapsCovered.get(0);
 
         // add markers to beginning and end of word
         String word = "#" + gap.getCoveredText().toLowerCase() + "$";

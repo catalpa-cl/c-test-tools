@@ -48,7 +48,7 @@ public class DefaultTrainer implements ModelTrainer {
 				.featureSets(experiment.getFeatureSet())
 				.featureMode(FeatureMode.UNIT)
 				.learningMode(experiment.isRegression() ? LearningMode.REGRESSION : LearningMode.SINGLE_LABEL)
-				.machineLearningBackend(getBackend(experiment));
+				.machineLearningBackend(new MLBackend(new WekaAdapter(), getEstimator(experiment)));
 	}
 	
 	@Override
@@ -72,7 +72,7 @@ public class DefaultTrainer implements ModelTrainer {
 	public void saveModel(Experiment experiment, Class<? extends CTestReader> reader, String trainPath,
 			String modelPath) throws Exception {
 		getBuilder(experiment)
-			.experiment(ExperimentType.SAVE_MODEL, CTEST + "Model-" + getNameAndDateString(experiment))
+			.experiment(ExperimentType.SAVE_MODEL, CTEST + "Save_Model-" + getNameAndDateString(experiment))
 			.dataReaderTrain(getCollectionReader(trainPath, reader))
 			.outputFolder(modelPath)
 			.run();
@@ -116,9 +116,5 @@ public class DefaultTrainer implements ModelTrainer {
 		return createEngineDescription(
 				preprocessingEngines.toArray(new AnalysisEngineDescription[preprocessingEngines.size()]));
 		
-	}
-	
-	private MLBackend getBackend(Experiment experiment) {
-		return new MLBackend(new WekaAdapter(), getEstimator(experiment));
 	}
 }

@@ -17,6 +17,7 @@
  ******************************************************************************/
 package de.unidue.ltl.ctest.difficulty.features.interItemDependency;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.uima.fit.util.JCasUtil;
@@ -45,7 +46,13 @@ public class ThGapExtractor extends FeatureExtractorResource_ImplBase implements
 
 	@Override
 	public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
-		Gap gap = JCasUtil.selectCovered(Gap.class, target).get(0);
+		List<Gap> coveredGaps = JCasUtil.selectCovered(jcas, Gap.class, target);
+		
+		if (coveredGaps.size() == 0) {
+			return new Feature(FN_TH_GAP, false, FeatureType.BOOLEAN).asSet();
+		}
+		
+		Gap gap = coveredGaps.get(0);
 		boolean isThGap = gap.getPrefix().toLowerCase().equals("th");
 
 		return new Feature(FN_TH_GAP, isThGap, FeatureType.BOOLEAN).asSet();

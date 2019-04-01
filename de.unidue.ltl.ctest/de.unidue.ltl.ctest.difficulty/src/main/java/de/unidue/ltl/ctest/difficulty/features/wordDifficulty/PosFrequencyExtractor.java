@@ -88,29 +88,32 @@ public class PosFrequencyExtractor
     public Set<Feature> extract(JCas jcas, TextClassificationTarget classificationTarget)
         throws TextClassificationException
     {
+    	try {
+    		String left = JCasUtil.selectPreceding(jcas, POS.class, classificationTarget, 1).get(0)
+                    .getType().getShortName();
 
-        String left = JCasUtil.selectPreceding(jcas, POS.class, classificationTarget, 1).get(0)
-                .getType().getShortName();
+            String right = JCasUtil.selectFollowing(jcas, POS.class, classificationTarget, 1).get(0)
+                    .getType().getShortName();
 
-        String right = JCasUtil.selectFollowing(jcas, POS.class, classificationTarget, 1).get(0)
-                .getType().getShortName();
+            String solPos = JCasUtil.selectCovered(jcas, POS.class, classificationTarget).get(0)
+                    .getType().getShortName();
 
-        String solPos = JCasUtil.selectCovered(jcas, POS.class, classificationTarget).get(0)
-                .getType().getShortName();
+            String posSequence = left + " " + solPos + " " + right;
+            long count = posDistribution.getCount(posSequence);
 
-        String posSequence = left + " " + solPos + " " + right;
-        long count = posDistribution.getCount(posSequence);
-
-        if (count > 0) {
-            double prob = Math.log(count / numberOfEntries);
-            return new Feature(FN_POS_PROBABILITY, prob, FeatureType.NUMERIC).asSet();
-        }
-        else {
-            // unseen pos sequences are set to a missing value because the pos-tagging might just
-            // have gone wrong (more likely than a completely unknown pos sequence
-            // the missing value is usually replaced by the mean in weka
-        	// MISSING VALUE
-        	return new Feature(FN_POS_PROBABILITY, 0.0, FeatureType.NUMERIC).asSet();
-        }
+            if (count > 0) {
+                double prob = Math.log(count / numberOfEntries);
+                return new Feature(FN_POS_PROBABILITY, prob, FeatureType.NUMERIC).asSet();
+            }
+            else {
+                // unseen pos sequences are set to a missing value because the pos-tagging might just
+                // have gone wrong (more likely than a completely unknown pos sequence
+                // the missing value is usually replaced by the mean in weka
+            	// MISSING VALUE
+            	return new Feature(FN_POS_PROBABILITY, 0.0, FeatureType.NUMERIC).asSet();
+            }
+    	} catch (IndexOutOfBoundsException e) {
+    		return new Feature(FN_POS_PROBABILITY, 0.0, FeatureType.NUMERIC).asSet();
+    	}
     }
 }
