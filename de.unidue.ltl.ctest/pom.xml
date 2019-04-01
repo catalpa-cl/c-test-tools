@@ -11,7 +11,7 @@
 	<properties>
 		<ctest.version>0.0.3-SNAPSHOT</ctest.version>
 
-		<dkpro.core.version>1.9.3</dkpro.core.version>
+		<dkpro.core.version>1.10.0</dkpro.core.version>
 		<dkpro.tc.version>1.1.0</dkpro.tc.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
