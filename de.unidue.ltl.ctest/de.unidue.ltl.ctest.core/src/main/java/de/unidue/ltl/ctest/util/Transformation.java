@@ -284,6 +284,7 @@ public class Transformation {
 		int offset = 0;
 		int sentenceStart = 0;
 		int gapCount = 1;
+		boolean hasSentence = false;
 		StringBuilder docText = new StringBuilder();
 
 		for (CTestToken ctoken : ctest.getTokens()) {
@@ -314,7 +315,14 @@ public class Transformation {
 				Sentence sentence = new Sentence(jcas, sentenceStart, offset - 1);
 				sentence.addToIndexes(jcas);
 				sentenceStart = offset;
+				hasSentence = true;
 			}
+		}
+		
+		// add sentence, if no sentence boundaries were present in c-test
+		if (!hasSentence) {
+			Sentence sentence = new Sentence(jcas, sentenceStart, offset - 1);
+			sentence.addToIndexes(jcas);
 		}
 
 		jcas.setDocumentLanguage(ctest.getLanguage());
