@@ -16,7 +16,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.tc.ml.builder.FeatureMode;
 import org.dkpro.tc.ml.builder.LearningMode;
 import org.dkpro.tc.ml.builder.MLBackend;
-import org.dkpro.tc.ml.experiment.builder.ExperimentBuilder;
+import org.dkpro.tc.ml.experiment.ExperimentCrossValidation;
 import org.dkpro.tc.ml.experiment.builder.ExperimentType;
 import org.dkpro.tc.ml.model.PreTrainedModelProviderUnitMode;
 import org.dkpro.tc.ml.weka.WekaAdapter;
@@ -36,14 +36,15 @@ public class DefaultTrainer implements ModelTrainer {
 	private static String TRAIN_TEST = "TrainTest-";
 	private static String CV = "-Fold-CrossValidation-";
 	
-	private ExperimentBuilder builder;
+	private ExtendedExperimentBuilder builder;
 	
 	/*
 	 * Returns a new ExperimentBuilder with the default configuration for the given Experiment.
 	 * Run before every kind of experiment.
 	 */
-	protected ExperimentBuilder getBuilder(Experiment experiment) throws ResourceInitializationException {
-		return new ExperimentBuilder()
+	protected ExtendedExperimentBuilder getBuilder(Experiment experiment) throws ResourceInitializationException {
+		// don't ask...
+		return (ExtendedExperimentBuilder) new ExtendedExperimentBuilder()
 				.preprocessing(getPreprocessing(experiment))
 				.featureSets(experiment.getFeatureSet())
 				.featureMode(FeatureMode.UNIT)
@@ -59,6 +60,7 @@ public class DefaultTrainer implements ModelTrainer {
 			.dataReaderTest(getCollectionReader(testPath, reader))
 			.run();
 	}
+	
 	@Override
 	public void runCrossValidation(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, int numFolds) throws Exception {
 		getBuilder(experiment)
@@ -68,6 +70,23 @@ public class DefaultTrainer implements ModelTrainer {
 			.run();
 	}
 
+	public void runCustomCrossValidation(ExperimentCrossValidation cv, Experiment experiment, Class<? extends CTestReader> reader, String trainPath, int numFolds) throws Exception {
+		/*
+		 		CollectionReaderDescription collectionReader = CollectionReaderFactory.createReaderDescription(
+				CTestCollectionReader.class,
+				//TODO: Param_JCAS_PER_FILE
+				CTestCollectionReader.PARAM_CTEST_READER, reader.getName(),
+				CTestCollectionReader.PARAM_SOURCE_LOCATION, trainPath,
+				CTestCollectionReader.PARAM_PATTERNS, "[+]*.*");
+		*/
+		
+		getBuilder(experiment)
+			.experiment(cv, ExperimentType.CROSS_VALIDATION, CTEST + "Unit-" + numFolds + CV + getNameAndDateString(experiment))
+			.numFolds(numFolds)
+			.dataReaderTrain(getCollectionReader(trainPath, reader))
+			.run();
+	}
+	
 	@Override
 	public void saveModel(Experiment experiment, Class<? extends CTestReader> reader, String trainPath,
 			String modelPath) throws Exception {

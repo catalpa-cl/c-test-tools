@@ -2,6 +2,8 @@ package de.unidue.ltl.ctest.difficulty.train;
 
 import java.io.IOException;
 
+import org.dkpro.tc.ml.experiment.ExperimentCrossValidation;
+
 import de.unidue.ltl.ctest.difficulty.experiments.Experiment;
 import de.unidue.ltl.ctest.difficulty.experiments.Model;
 import de.unidue.ltl.ctest.io.CTestReader;
@@ -11,6 +13,8 @@ public interface ModelTrainer {
 	public void runTrainTest(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, String testPath) throws Exception;
 	
 	public void runCrossValidation(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, int numFolds) throws Exception;
+	
+	public void runCustomCrossValidation(ExperimentCrossValidation cv, Experiment experiment, Class<? extends CTestReader> reader, String trainPath, int numFolds) throws Exception;
 	
 	public void saveModel(Experiment experiment, Class<? extends CTestReader> reader, String trainPath, String modelPath) throws Exception;
 	

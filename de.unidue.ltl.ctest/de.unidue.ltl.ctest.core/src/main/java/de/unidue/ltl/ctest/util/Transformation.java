@@ -68,7 +68,7 @@ public class Transformation {
 			try {
 				token.setErrorRate(Double.parseDouble(tokenInfo[3].trim()));
 			} catch (NumberFormatException e) {
-				throw new IllegalArgumentException("Input does not represent a CTestToken of CTestTokenVersion 2" + tokenInfo);
+				throw new IllegalArgumentException("Input does not represent a CTestToken of CTestTokenVersion 1" + tokenInfo);
 			}
 		}
 		
