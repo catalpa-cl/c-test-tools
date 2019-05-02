@@ -115,7 +115,16 @@ public class DefaultTrainer implements ModelTrainer {
 		return experiment.getExperimentName() + "-" + new Date().getTime();
 	}
 	
-	private CollectionReaderDescription getCollectionReader(String collectionPath, Class<? extends CTestReader> readerClass) throws ResourceInitializationException {
+	/**
+	 * Creates a CollectionReaderDescription for the collection of C-Tests at the specified path.
+	 * Uses the given reader class to read the C-Tests.
+	 * 
+	 * @param collectionPath path to the C-Tests, must refer to directory in which C-Test files are placed.
+	 * @param readerClass reader class to use for reading C-Tests, must implement CTestReader.
+	 * @return the reader description
+	 * @throws ResourceInitializationException, if CollectionReaderDescription could not be created.
+	 */
+	public CollectionReaderDescription getCollectionReader(String collectionPath, Class<? extends CTestReader> readerClass) throws ResourceInitializationException {
 		return CollectionReaderFactory.createReaderDescription(
 				CTestCollectionReader.class,
 				CTestCollectionReader.PARAM_CTEST_READER, readerClass.getName(),
@@ -123,11 +132,22 @@ public class DefaultTrainer implements ModelTrainer {
 				CTestCollectionReader.PARAM_PATTERNS, "[+]*.*");
 	}
 	
+	public CollectionReaderDescription getCollectionReader(String collectionPath, Class<? extends CTestReader> readerClass, String patterns) throws ResourceInitializationException {
+		return CollectionReaderFactory.createReaderDescription(
+				CTestCollectionReader.class,
+				CTestCollectionReader.PARAM_CTEST_READER, readerClass.getName(),
+				CTestCollectionReader.PARAM_SOURCE_LOCATION, collectionPath,
+				CTestCollectionReader.PARAM_PATTERNS, patterns);
+	}
+	
 	private String getEstimator(Experiment experiment) {
 		return experiment.isRegression() ? SMOreg.class.getName() : SMO.class.getName();
 	}
 	
-	private AnalysisEngineDescription getPreprocessing(Experiment experiment) throws ResourceInitializationException {
+	/*
+	 * Generates an AnalysisEngineDescription for the given experiment.
+	 */
+	public AnalysisEngineDescription getPreprocessing(Experiment experiment) throws ResourceInitializationException {
 		List<AnalysisEngineDescription> preprocessingEngines = new ArrayList<>();
 		preprocessingEngines.add(createEngineDescription(OutcomeSetter.class,
 				OutcomeSetter.PARAM_IS_REGRESSION, experiment.isRegression()));
