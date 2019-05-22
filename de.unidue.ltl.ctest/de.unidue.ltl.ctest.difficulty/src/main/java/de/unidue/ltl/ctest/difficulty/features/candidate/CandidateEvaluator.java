@@ -19,6 +19,7 @@ package de.unidue.ltl.ctest.difficulty.features.candidate;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -78,7 +79,22 @@ public class CandidateEvaluator extends FeatureExtractorResource_ImplBase implem
 			throws TextClassificationException {
 
 		Set<Feature> featList = new HashSet<Feature>();
-		Gap gap = JCasUtil.selectCovered(Gap.class, classificationTarget).get(0);
+		List<Gap> gaps = JCasUtil.selectCovered(Gap.class, classificationTarget);
+		
+		if (gaps.isEmpty()) {
+			// counts
+			featList.add(new Feature(NR_CANDIDATES, 0, FeatureType.NUMERIC));
+			featList.add(new Feature(UNIGRAM_CANDIDATES_SIZE, 0, FeatureType.NUMERIC));
+			featList.add(new Feature(BIGRAM_CANDIDATES_SIZE, 0, FeatureType.NUMERIC));
+			featList.add(new Feature(TRIGRAM_CANDIDATES_SIZE, 0, FeatureType.NUMERIC));
+			// rank features
+			featList.add(new Feature(UNIGRAM_SOLUTION_RANK, Integer.MAX_VALUE, FeatureType.NUMERIC));
+			featList.add(new Feature(BIGRAM_SOLUTION_RANK, Integer.MAX_VALUE, FeatureType.NUMERIC));
+			featList.add(new Feature(TRIGRAM_SOLUTION_RANK, Integer.MAX_VALUE, FeatureType.NUMERIC));
+			return featList;
+		}
+		
+		Gap gap = gaps.get(0);
 		Collection<GapCandidate> candidates = JCasUtil.selectCovered(GapCandidate.class, gap);
 
 		// get micro context
@@ -159,6 +175,8 @@ public class CandidateEvaluator extends FeatureExtractorResource_ImplBase implem
 		// if the solution is not in the candidate space, return the last position in
 		// the candidate
 		// space (at least 50)
+		// TODO: WHY 50?
+		// TODO: WHY max?
 		if (unigramSolutionRank < 0) {
 			unigramSolutionRank = Math.max(candidates.size() + 1, 50);
 		}

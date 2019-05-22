@@ -142,7 +142,12 @@ public class CTestFeaturesUtil
         String previousWord = "";
         String followingWord = "";
 
-        Sentence sent = JCasUtil.selectCovering(Sentence.class, unit).get(0);
+        List<Sentence> sentences = JCasUtil.selectCovering(Sentence.class, unit);
+        if (sentences.isEmpty()) {
+        	// TODO: universal NA marker?
+        	return "<NA>" + " " + unit.getCoveredText() + " " + "<NA>";
+        }
+        Sentence sent = sentences.get(0);
 
         if (unit.getBegin() == sent.getBegin()) {
             previousWord = "<S>";
@@ -151,12 +156,13 @@ public class CTestFeaturesUtil
             followingWord = "</S>";
         }
         else {
-
-            previousWord = JCasUtil.selectPreceding(jcas, Token.class, unit, 1).get(0)
-                    .getCoveredText();
-            followingWord = JCasUtil.selectFollowing(jcas, Token.class, unit, 1).get(0)
-                    .getCoveredText();
+        	List<Token> previousTokens = JCasUtil.selectPreceding(jcas, Token.class, unit, 1);
+            previousWord = previousTokens.isEmpty() ? "<NA>" : previousTokens.get(0).getCoveredText();
+            
+            List<Token> followingTokens = JCasUtil.selectFollowing(jcas, Token.class, unit, 1);
+            followingWord = followingTokens.isEmpty() ? "<NA>" : previousTokens.get(0).getCoveredText();
         }
+        
         return previousWord + " " + unit.getCoveredText() + " " + followingWord;
 
     }

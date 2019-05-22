@@ -36,8 +36,11 @@ public class ContextProvider
             AnnotationFS targetAnnotation, int size)
     {
         List<T> annotationsInSentence = getAnnotationsInSentence(jcas, aType, targetAnnotation);
+        if (annotationsInSentence.isEmpty()) {
+        	return new ArrayList<T>();
+        }
+        
         int targetAnnotationPosition = getTargetPosition(annotationsInSentence, targetAnnotation);
-
         int endPosition = targetAnnotationPosition + 1 + size;
 
         if (endPosition > annotationsInSentence.size()) {
@@ -57,6 +60,8 @@ public class ContextProvider
         }
 
         // if the context is smaller than requested, add begin of sentence markers
+        // TODO: Why for loop?
+        // this does not seem right
         for (int i = 0; i < size - leftStrings.size(); i++) {
             leftStrings.add(0, BOS);
         }
@@ -84,9 +89,12 @@ public class ContextProvider
     private static <T extends Annotation> List<T> getAnnotationsInSentence(JCas jcas,
             Class<T> aType, AnnotationFS targetAnnotation)
     {
-        Sentence coveringSentence = JCasUtil
-                .selectCovering(jcas, Sentence.class, targetAnnotation.getBegin(),
-                        targetAnnotation.getEnd()).iterator().next();
+    	List<Sentence> sentences = JCasUtil.selectCovering(jcas, Sentence.class, targetAnnotation.getBegin(), targetAnnotation.getEnd());
+    	if (sentences.isEmpty()) {
+    		return new ArrayList<T>();
+    	}
+    	
+        Sentence coveringSentence = sentences.iterator().next();
         return JCasUtil.selectCovered(jcas, aType, coveringSentence);
     }
 

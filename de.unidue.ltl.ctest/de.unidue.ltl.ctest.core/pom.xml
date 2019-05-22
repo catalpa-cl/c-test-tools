@@ -12,10 +12,6 @@
 	<artifactId>de.unidue.ltl.ctest.core</artifactId>
 
 	<dependencies>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.uima</groupId> -->
-<!-- 			<artifactId>uimafit-core</artifactId> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.segmentation-asl</artifactId>
