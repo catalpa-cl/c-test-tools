@@ -22,9 +22,10 @@ public class CTestCollectionReaderTest {
 	public void readingTestIOS() throws Exception {
 		CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 CTestCollectionReader.class,
+                // TODO: make backwards compatible.
                 CTestCollectionReader.PARAM_CTEST_READER, CTestIOSReader.class,
                 ResourceCollectionReaderBase.PARAM_LANGUAGE, "en",
-                ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, "src/test/resources/texts/ios/de/",
+                ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, "src/test/resources/texts/ios/en/",
                 ResourceCollectionReaderBase.PARAM_PATTERNS, new String[] { 
                 		ResourceCollectionReaderBase.INCLUDE_PREFIX + "*.ctest.ios.txt" });
 		

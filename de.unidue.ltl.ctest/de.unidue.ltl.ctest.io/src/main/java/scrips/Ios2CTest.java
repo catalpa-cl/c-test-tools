@@ -11,13 +11,14 @@ import de.unidue.ltl.ctest.io.CTestFileWriter;
 import de.unidue.ltl.ctest.io.CTestIOSReader;
 import de.unidue.ltl.ctest.io.CTestReader;
 import de.unidue.ltl.ctest.io.CTestWriter;
+import de.unidue.ltl.ctest.util.IOSModelVersion;
 
 public class Ios2CTest {
 
 	public static void main(String[] args) throws IOException {
-		CTestReader reader = new CTestIOSReader(";");
-		CTestWriter writer = new CTestFileWriter();
-		String path = "src/main/resources/temp/de/";
+		CTestReader reader = new CTestIOSReader(IOSModelVersion.V2);
+		String path = "src/main/resources/temp/en/";
+		int gapCountTarget = 20;
 		
 		File[] files = new File(path).listFiles();
 		
@@ -27,12 +28,18 @@ public class Ios2CTest {
 			if(file.isDirectory()) continue;
 			
 			CTestObject ctest = reader.read(file);
+			if (ctest.getGapCount() > gapCountTarget) {
+				System.out.println("WARNING: C-Test " + file.getName() + " does not contain the required number of gaps. Please fix.");
+			}
 			String fileContent = toString(ctest);
 			String outpath = path + "/out/" + file.getName();
 			Files.write(Paths.get(outpath), fileContent.getBytes());
 		}
 	}
 	
+	/**
+	 * Turns a given C-Test into the outdated C-Test File Format.
+	 */
 	private static String toString(CTestObject ctest) {
 		String commentMarker = "%%";
 		String sentenceBoundary = "----";
@@ -53,7 +60,10 @@ public class Ios2CTest {
 		}
 		return sb.toString();
 	}
-	
+
+	/**
+	 * Turns a given C-Test Token into the outdated C-Test File Format.
+	 */
 	private static String toString(CTestToken token) {
 		if (token.isGap()) {
 			StringBuilder sb = new StringBuilder();

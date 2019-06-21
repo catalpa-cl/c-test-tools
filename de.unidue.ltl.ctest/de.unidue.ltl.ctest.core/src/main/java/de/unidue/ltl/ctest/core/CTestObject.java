@@ -309,6 +309,7 @@ public class CTestObject implements Serializable {
 				.collect(Collectors.averagingDouble(val -> val));
 	}
 	
+	// TODO: also handle non-gapped tokens
 	/**
 	 * Sets the ids of gapped tokens in the C-Test to their position in the C-Test, such that the ith token in the C-Test has the id i.
 	 */

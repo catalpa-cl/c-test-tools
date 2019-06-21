@@ -2,6 +2,7 @@ package de.unidue.ltl.ctest.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.uima.UIMAException;
 import org.apache.uima.fit.factory.JCasFactory;
@@ -237,28 +238,55 @@ public class Transformation {
 	}
 	
 	/**
-	 * Transforms the given token to a string in the IOS C-Test Format.
+	 * Transforms the given token to a string in the <i>current</i> IOS C-Test Format.
 	 */
 	public static String toIOSFormat(CTestToken token) {
+		return toIOSFormat(token, IOSModelVersion.CURRENT);
+	}
+	
+	/**
+	 * Transforms the given token to a string in the IOS C-Test Format of the given version.
+	 */
+	public static String toIOSFormat(CTestToken token, IOSModelVersion version) {
 		if (!token.isGap())
 			return token.getText();
 
-		String text = token.getText();
-		String wordBase = text.substring(0, token.getGapIndex());
-		String solution = text.substring(token.getGapIndex());
-		String solutions = "{" + solution + "}";
-
-		if (token.hasOtherSolutions())
-			solutions = new StringBuilder("")
-				.append("{")
-				.append(solution)
-				.append(",")
-				.append(String.join(",", token.getOtherSolutions()))
-				.append("}")
-				.toString();
-
+		String wordBase = token.getPrompt();
+		String solution = token.getPrimarySolution();
+		String solutions;
+		
+		switch(version) {
+			case V1: {
+				solutions = "{" + solution + "}";
+				
+				if (token.hasOtherSolutions())
+					solutions = new StringBuilder("")
+						.append("{")
+						.append(solution)
+						.append(",")
+						.append(String.join(",", token.getOtherSolutions()))
+						.append("}")
+						.toString();
+				
+				break;
+			}
+			case V2:
+			default: {
+				solutions = "[" + solution + "]";
+				
+				if (token.hasOtherSolutions()) {
+					String base = token.getPrompt();
+					List<String> otherSolutions = token.getOtherSolutions().stream()
+							.map(alternative -> base + alternative)
+							.collect(Collectors.toList());
+					solutions = solutions + " {" + String.join(",", otherSolutions) + "}";
+				}
+			}
+		}
+		
 		return wordBase + solutions;
 	}
+
 
 	/**
 	 * Converts the given CTestObject into a JCas.

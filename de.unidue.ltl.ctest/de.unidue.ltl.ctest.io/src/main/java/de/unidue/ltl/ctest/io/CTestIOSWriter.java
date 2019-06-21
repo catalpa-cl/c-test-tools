@@ -8,9 +8,20 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import de.unidue.ltl.ctest.core.CTestObject;
+import de.unidue.ltl.ctest.util.IOSModelVersion;
 import de.unidue.ltl.ctest.util.Transformation;
 
 public class CTestIOSWriter implements CTestWriter {
+	
+	private IOSModelVersion version;
+	
+	public CTestIOSWriter() {
+		this.version = IOSModelVersion.CURRENT;
+	}
+	
+	public CTestIOSWriter(IOSModelVersion version) {
+		this.version = version;
+	}
 	
 	@Override
 	public void write(CTestObject ctest, Path filePath) throws IOException {
@@ -24,8 +35,8 @@ public class CTestIOSWriter implements CTestWriter {
 		}
 		
 		String docText = ctest.getTokens().stream()
-				.map(Transformation::toIOSFormat)
-				.collect(Collectors.joining("\n"));
+				.map(token -> Transformation.toIOSFormat(token, version))
+				.collect(Collectors.joining(" "));
 		
 		Files.write(filePath, docText.getBytes());
 	}

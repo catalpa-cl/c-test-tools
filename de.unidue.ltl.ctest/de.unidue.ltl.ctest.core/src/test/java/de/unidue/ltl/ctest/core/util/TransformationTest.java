@@ -16,6 +16,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
 import de.unidue.ltl.ctest.type.Gap;
+import de.unidue.ltl.ctest.util.IOSModelVersion;
 import de.unidue.ltl.ctest.util.ModelVersion;
 import de.unidue.ltl.ctest.util.Transformation;
 
@@ -135,7 +136,8 @@ public class TransformationTest {
 		
 		CTestToken token = new CTestToken("this_should_work");
 		
-		assertEquals("this_should_work", Transformation.toIOSFormat(token));
+		assertEquals("this_should_work", Transformation.toIOSFormat(token, IOSModelVersion.V1));
+		assertEquals("this_should_work", Transformation.toIOSFormat(token, IOSModelVersion.V2));
 		
 		token.setId("0");
 		token.setGap(true);
@@ -144,7 +146,10 @@ public class TransformationTest {
 		token.setErrorRate(9000.1);
 		token.setPrediction(0.0);
 		
-		assertEquals("this_should_{work,great,splendid}", Transformation.toIOSFormat(token));
+		assertEquals("this_should_{work,great,splendid}", Transformation.toIOSFormat(token, IOSModelVersion.V1));
+		assertEquals("this_should_[work] {this_should_great,this_should_splendid}", Transformation.toIOSFormat(token, IOSModelVersion.V2));
+		
+		
 	}
 	
 	@Test

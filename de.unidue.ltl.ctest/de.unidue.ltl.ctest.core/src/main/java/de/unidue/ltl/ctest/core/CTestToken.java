@@ -113,6 +113,10 @@ public class CTestToken implements Serializable {
 	 * Sets the text of the token.
 	 */
 	public void setText(String text) {
+		if (text == null) {
+			text = "";
+		}
+		
 		this.text = text;
 	}
 
@@ -184,7 +188,7 @@ public class CTestToken implements Serializable {
 	 * @see GapType
 	 */
 	public void setGapType(GapType type) {
-			this.gapType = type;
+		this.gapType = type;
 	}
 	
 	/**
@@ -270,6 +274,9 @@ public class CTestToken implements Serializable {
 	 * @param otherSolutions a list of solutions. Each solution is a string that could fill the gapped part of the token, not null.
 	 */
 	public void setOtherSolutions(List<String> otherSolutions) {
+		if (otherSolutions == null) {
+			otherSolutions = new ArrayList<>();
+		}
 		this.otherSolutions = otherSolutions;
 	}
 
