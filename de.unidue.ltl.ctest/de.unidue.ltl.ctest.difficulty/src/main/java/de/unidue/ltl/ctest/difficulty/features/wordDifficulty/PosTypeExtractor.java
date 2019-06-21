@@ -17,10 +17,13 @@
  ******************************************************************************/
 package de.unidue.ltl.ctest.difficulty.features.wordDifficulty;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.uima.cas.Type;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.exception.TextClassificationException;
@@ -46,30 +49,32 @@ import de.unidue.ltl.ctest.difficulty.annotations.XTest;
 public class PosTypeExtractor
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
-{
-    public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException
-    {
-
-        Set<Feature> featList = new HashSet<Feature>();
-
-        //TODO: Check if still applicable
-        String[] postags = { "ADJ", "ADV", "ART", "CONJ", "NN", "NP", "PP", "PR", "V" };
-        
-        String solPos = "";
-        
+{	
+	
+	/**
+	 * List of POS Types that are checked by the extractor.
+	 * Each POS Type will result in its own feature.
+	 */
+	public static final List<String> POS_TYPES = Collections.unmodifiableList(Arrays.asList("ADJ", "ADV", "ART", "CONJ", "NN", "NP", "PP", "PR", "V"));
+	
+	/**
+	 * Extracts POS Type features, one for each supported POS Type.
+	 * 
+	 * @see #POS_TYPES
+	 */
+    public Set<Feature> extract(JCas jcas, TextClassificationTarget target) throws TextClassificationException {
+        Set<Feature> featureList = new HashSet<Feature>();
         List<POS> tags = JCasUtil.selectCovered(jcas, POS.class, target);
-        if (tags.size() > 0) {
-        	 solPos = tags.get(0).getType().getShortName();
-        }
-        else {
+        String targetPos = tags.size() > 0 ? tags.get(0).getPosValue() : "";
+        
+        if (targetPos.equals("")) {
         	System.out.println("No POS for target: " + target);
         }
         
-        for (String pos : postags) {
-            String featureName = "GapIs" + pos;
-            featList.add(new Feature(featureName, pos.equals(solPos), FeatureType.BOOLEAN));
+        for (String pos : POS_TYPES) {
+            featureList.add(new Feature("GapIs" + pos, pos.equals(targetPos), FeatureType.BOOLEAN));
         }
 
-        return featList;
+        return featureList;
     }
 }
