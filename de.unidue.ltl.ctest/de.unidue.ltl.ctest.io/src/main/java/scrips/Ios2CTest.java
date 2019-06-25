@@ -28,6 +28,7 @@ public class Ios2CTest {
 			if(file.isDirectory()) continue;
 			
 			CTestObject ctest = reader.read(file);
+			ctest.reindexGaps();
 			if (ctest.getGapCount() > gapCountTarget) {
 				System.out.println("WARNING: C-Test " + file.getName() + " does not contain the required number of gaps. Please fix.");
 			}

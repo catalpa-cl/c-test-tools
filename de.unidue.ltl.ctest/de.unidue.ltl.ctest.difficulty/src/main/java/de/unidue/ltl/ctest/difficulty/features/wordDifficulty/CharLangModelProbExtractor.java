@@ -88,11 +88,15 @@ public class CharLangModelProbExtractor
         
         List<Gap> gapsCovered = JCasUtil.selectCovered(Gap.class, classificationTarget);
         
-        if (gapsCovered.size() == 0) {
+        if (gapsCovered.size() == 0) {        	
         	featList = addLmScoreFeature(featList, FN_LM_PROB, 0);
-        	featList = addLmScoreFeature(featList, FN_LM_PROB_PREFIX, 0);
         	featList = addLmScoreFeature(featList, FN_LM_PROB_POSTFIX, 0);
         	featList = addLmScoreFeature(featList, FN_LM_PROB_SOLUTION, 0);
+        	switch(testType) {
+        		case ctest: { featList = addLmScoreFeature(featList, FN_LM_PROB_PREFIX, 0); break; }
+        		case xtest: { featList = addLmScoreFeature(featList, FN_LM_PROB_POSTFIX, 0); break; }
+        		default: break;
+        	}
         	return featList;
         }
         
