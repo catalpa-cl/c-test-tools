@@ -14,6 +14,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.unidue.ltl.ctest.type.Gap;
+import de.unidue.ltl.ctest.util.Transformation;
 
 //TODO: Rewrite in Version 0.0.2-SNAPSHOT: remove unnecessary properties etc.
 /**
@@ -32,6 +33,10 @@ public class CTestObject implements Serializable {
 	public static final double MEDIUM_CUTOFF = 0.6;
 	
 	private static final long serialVersionUID = 3L;
+	
+	public static CTestObject fromTokens(Iterable<CTestToken> tokens) {
+		return Transformation.toCTest(tokens);
+	}
 	
 	private List<CTestToken> tokens;
 	private String language;

@@ -1,8 +1,12 @@
 package de.unidue.ltl.ctest.gapscheme;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 import de.unidue.ltl.ctest.core.CTestObject;
+import de.unidue.ltl.ctest.core.CTestToken;
 import junit.framework.TestCase;
 
 public class CTestGeneratorTest extends TestCase {
@@ -71,5 +75,38 @@ public class CTestGeneratorTest extends TestCase {
 		String language = "it";
 		
 		System.out.println(ctb.generateCTest(text,language));
+	}
+	
+	@Test
+	public void testUpdate() throws Exception {
+		CTestGenerator ctb = new CTestGenerator();
+		List<CTestToken> tokens = Arrays.asList(new CTestToken[] {
+				new CTestToken("first", true),
+				new CTestToken("second", false),
+				new CTestToken("third", true),
+				new CTestToken("fourth", false),
+				new CTestToken("fifth", true),
+				new CTestToken("sixth"),
+				new CTestToken("seventh"),
+				new CTestToken("eighth"),
+				new CTestToken("nineth"),
+		});
+		
+		// set restrictions
+		for (CTestToken token : tokens.subList(5, tokens.size())) {
+			token.setCandidate(false);
+		}
+		
+		CTestObject ctest = CTestObject.fromTokens(ctb.updateGaps(tokens, true, 3));
+		assertEquals(ctest.getGapCount(), 3);
+		System.out.println(ctest);
+		
+		ctest = CTestObject.fromTokens(ctb.updateGaps(tokens, false, 3));
+		assertEquals(ctest.getGapCount(), 3);
+		System.out.println(ctest);
+		
+		ctest = CTestObject.fromTokens(ctb.updateGaps(tokens, false, 5));
+		assertEquals(ctest.getGapCount(), 4);
+		System.out.println(ctest);
 	}
 }

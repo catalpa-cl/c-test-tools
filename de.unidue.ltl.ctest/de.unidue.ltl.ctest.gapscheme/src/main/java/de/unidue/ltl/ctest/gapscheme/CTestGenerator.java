@@ -138,24 +138,68 @@ public class CTestGenerator {
 	}
 
 	/**
-	 * Updates the gap indices of the {@code CTestToken}s.
+	 * Regaps the given the {@code CTestToken}.
+	 * Will ignore candidate restrictions to reach target gap count.
 	 * 
 	 * @param tokens The tokens to be regapped.
 	 * @param gapFirst Whether or not the first token should be gapped.
+	 * @param targetGapCount The target number of gaps in the list of tokens.
 	 */
-	public List<CTestToken> updateGaps(List<CTestToken> tokens, boolean gapFirst) {
+	public List<CTestToken> updateGaps(List<CTestToken> tokens, boolean gapFirst, int targetGapCount) {
 		gapCandidates = gapFirst ? 0 : 1;
+		gapCount = 0;
+		int i = 0;
+		int lastGapIndex = 0;
 		
+		// add gaps
 		for (CTestToken token : tokens) {
 			if (token.isCandidate()) {
-				token.setGap(gapCandidates % gapInterval == 0);
+				//TODO: abstract to setGap Method
+				boolean isGap = gapCandidates % gapInterval == 0; 
+				token.setGap(isGap);
+				if (isGap) { 
+					gapCount++;
+					lastGapIndex = i;
+				};
 				gapCandidates++;
+				if (gapCount == targetGapCount) { break; };
+			}
+			i++;
+		}
+		
+		// add additional gaps if below target count, ignoring candidate status.
+		if (gapCount < targetGapCount) {
+			gapCandidates = 1;
+			for (CTestToken token : tokens.subList(lastGapIndex + 1, tokens.size())) {	
+				token.setCandidate(true);
+				boolean isGap = gapCandidates % gapInterval == 0; 
+				token.setGap(isGap);
+				if (isGap) { 
+					gapCount++;
+				};
+				gapCandidates++;
+				if (gapCount == targetGapCount) { break; };
 			}
 		}
 		
 		return tokens;
 	}
 
+	/**
+	 * Regaps the given the {@code CTestToken}.
+	 * 
+	 * @param tokens The tokens to be regapped.
+	 * @param gapFirst Whether or not the first token should be gapped.
+	 */
+	public List<CTestToken> updateGaps(List<CTestToken> tokens, boolean gapFirst) {
+		int targetCount = (int) tokens.stream()
+				.filter(token -> token.isCandidate())
+				.count();
+		if (!gapFirst) { targetCount--; };
+		targetCount /= 2;
+		return this.updateGaps(tokens, gapFirst, targetCount);
+	}
+	
 	/**
 	 * Returns the last <b><i>successfully</i></b> generated {@code CTestObject}.
 	 */	

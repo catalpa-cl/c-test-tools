@@ -53,6 +53,17 @@ public class CTestToken implements Serializable {
 		initialize(text, null, null);
 	}
 	
+	/**
+	 * Creates a new {@code CTestToken}, based on the given text with the given gap status.
+	 * 
+	 * @param text the text, representing the token. Should be a single word, not null.
+	 * @param gap  indicates whether the token should be gapped or not.
+	 */
+	public CTestToken(String text, boolean gap) {
+		this(text);
+		this.setGap(true);
+	}
+	
 
 	/**
 	 * Creates a gapped {@code CTestToken}, based on the given text.

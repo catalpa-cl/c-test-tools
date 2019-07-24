@@ -136,6 +136,15 @@ public class Transformation {
 	}
 
 	/**
+	 * Generates a new {@code CTestObject} from the given {@code CTestToken}s.
+	 */
+	public static CTestObject toCTest(Iterable<CTestToken> tokens) {
+		CTestObject ctest = new CTestObject();
+		ctest.addTokens(tokens);
+		return ctest;
+	}
+	
+	/**
 	 * Transforms the given token to a string in the C-Test File Format.
 	 * 
 	 * @param token the token to be converted.
