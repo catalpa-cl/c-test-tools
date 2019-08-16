@@ -32,7 +32,8 @@ public class CTestJACKReader implements CTestReader {
 	 * Capture group "gapId" captures the id of the gap.
 	 * Capture group "solution" captures a solution of the gap.
 	 */
-	public static final Pattern SOLUTION = Pattern.compile("'\\[pos=(?<gapId>\\d+)\\]','(?<solution>\\p{L}+?)'");
+	//FIXME: Broken for new format
+	public static final Pattern SOLUTION = Pattern.compile("'\\[pos=(?<gapId>\\d+)\\]'\\)?,'(?<solution>\\p{L}+?)'");
 	
 	/**
 	 * Regex, matching a gap in the source xml File.

@@ -31,5 +31,7 @@ public class CTestJACKReaderTest extends TestCase {
 		
 		assertEquals("geschwungen", geschwungen.getText());
 		assertEquals("nallt", geschwungen.getOtherSolutions().get(0));
+		
+		ctest = reader.read("src/test/resources/texts/ios/JACK/stage1.xml");
 	}
 }

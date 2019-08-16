@@ -17,7 +17,7 @@ public class Ios2CTest {
 
 	public static void main(String[] args) throws IOException {
 		CTestReader reader = new CTestIOSReader(IOSModelVersion.V2);
-		String path = "src/main/resources/temp/en/";
+		String path = "src/main/resources/temp/07042019/de/";
 		int gapCountTarget = 20;
 		
 		File[] files = new File(path).listFiles();

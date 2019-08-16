@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<exercise type="fillIn">
+
+<input> </input>
+
+
+<task> &lt;span style="font-size:120%">Iran breaks nuclear deal&lt;/span>
+
+Iran has broken the terms of the nuclear deal for the first time since it was signed in 2015 in a move that will put pressure on Europe to do more to help mitigate the effect of crippling US sanctions . The brea[fillIn groesse="5" parser="none"] of t[fillIn groesse="5" parser="none"] limits o[fillIn groesse="5" parser="none"] uranium stock[fillIn groesse="5" parser="none"] , warned o[fillIn groesse="5" parser="none"] in adv[fillIn groesse="5" parser="none"] by Iran , fol[fillIn groesse="5" parser="none"] the US withd[fillIn groesse="5" parser="none"] from t[fillIn groesse="5" parser="none"] deal last year a[fillIn groesse="5" parser="none"] frustration i[fillIn groesse="5" parser="none"] Tehran that EU sta[fillIn groesse="5" parser="none"] have be[fillIn groesse="5" parser="none"] unable t[fillIn groesse="5" parser="none"] do mo[fillIn groesse="5" parser="none"] to counter[fillIn groesse="5" parser="none"] the res[fillIn groesse="5" parser="none"] of US sanc[fillIn groesse="5" parser="none"] . European lea[fillIn groesse="5" parser="none"] urged Iran n[fillIn groesse="5" parser="none"] to breach the deal , including at a meeting on Friday . They will watch to see whether Tehran makes further breaches of the deal on 7 July , as it has threatened .
+
+
+
+&lt;span style= "color:#ff0000;">Denken Sie bitte daran, auf &lt;span style="font-weight:600;">'Einreichen'&lt;/span> zu klicken, bevor Sie zur n�chsten Aufgabe wechseln. Please don�t forget to click &lt;span style="font-weight:600;">'submit'&lt;/span> before you start the next task.&lt;/span> </task>
+
+<advice> </advice>
+
+<correctanswer>
+<option result="false"/>
+<message/>
+</correctanswer>
+
+<feedback>
+<option result="equals(trim('[pos=1]'),'ching')" points="5"/>
+<option result="equals(trim('[pos=2]'),'he')" points="5"/>
+<option result="equals(trim('[pos=3]'),'n')" points="5"/>
+<option result="equals(trim('[pos=4]'),'piles')" points="5"/>
+<option result="equals(trim('[pos=5]'),'f')" points="5"/>
+<option result="equals(trim('[pos=6]'),'ance')" points="5"/>
+<option result="equals(trim('[pos=7]'),'lows')" points="5"/>
+<option result="equals(trim('[pos=8]'),'rawal')" points="5"/>
+<option result="equals(trim('[pos=9]'),'he')" points="5"/>
+<option result="equals(trim('[pos=10]'),'nd')" points="5"/>
+<option result="equals(trim('[pos=11]'),'n')" points="5"/>
+<option result="equals(trim('[pos=12]'),'tes')" points="5"/>
+<option result="equals(trim('[pos=13]'),'en')" points="5"/>
+<option result="equals(trim('[pos=14]'),'o')" points="5"/>
+<option result="equals(trim('[pos=15]'),'re')" points="5"/>
+<option result="equals(trim('[pos=16]'),'balance')" points="5"/>
+<option result="equals(trim('[pos=17]'),'ults')" points="5"/>
+<option result="equals(trim('[pos=18]'),'tions')" points="5"/>
+<option result="equals(trim('[pos=19]'),'ders')" points="5"/>
+<option result="equals(trim('[pos=20]'),'ot')" points="5"/>
+</feedback>
+
+<output> </output>
+
+<skipmessage>Schade, dass Sie diesen Text �bersprungen haben.</skipmessage>
+
+</exercise>

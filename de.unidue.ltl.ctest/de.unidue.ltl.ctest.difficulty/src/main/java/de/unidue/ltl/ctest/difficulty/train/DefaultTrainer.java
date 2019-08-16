@@ -19,6 +19,7 @@ import org.dkpro.tc.ml.builder.MLBackend;
 import org.dkpro.tc.ml.experiment.ExperimentCrossValidation;
 import org.dkpro.tc.ml.experiment.builder.ExperimentType;
 import org.dkpro.tc.ml.model.PreTrainedModelProviderUnitMode;
+import org.dkpro.tc.ml.report.CrossValidationReport;
 import org.dkpro.tc.ml.weka.WekaAdapter;
 
 import de.unidue.ltl.ctest.difficulty.experiments.DKProTCModel;
@@ -82,8 +83,10 @@ public class DefaultTrainer implements ModelTrainer {
 		
 		getBuilder(experiment)
 			.experiment(cv, ExperimentType.CROSS_VALIDATION, CTEST + "Unit-" + numFolds + CV + getNameAndDateString(experiment))
+			.configureExperiment(ExperimentType.CROSS_VALIDATION, CTEST + "Unit-" + numFolds + CV + getNameAndDateString(experiment))
 			.numFolds(numFolds)
 			.dataReaderTrain(getCollectionReader(trainPath, reader))
+			.reports(new CrossValidationReport())
 			.run();
 	}
 	

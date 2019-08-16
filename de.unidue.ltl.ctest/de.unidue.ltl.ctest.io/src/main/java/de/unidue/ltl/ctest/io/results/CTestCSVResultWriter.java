@@ -56,7 +56,6 @@ public class CTestCSVResultWriter implements CTestResultWriter {
 	@Override
 	public void write(CTestObject ctest, List<TokenTestResult> results, File file) throws IOException {
 		this.write(ctest, results, file.toPath());
-		
 	}
 
 	@Override

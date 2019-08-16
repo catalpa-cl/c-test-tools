@@ -40,6 +40,7 @@ public class ExtendedExperimentBuilder extends ExperimentBuilder {
 	    	throw new IllegalArgumentException(INVALID_EXPERIMENT_TYPE_MESSAGE);
 	    }
 	    this.customExperiment = experiment;
+	    this.experiment = experiment;
 		super.experiment(type, experimentName);
 		return this;
 	}
