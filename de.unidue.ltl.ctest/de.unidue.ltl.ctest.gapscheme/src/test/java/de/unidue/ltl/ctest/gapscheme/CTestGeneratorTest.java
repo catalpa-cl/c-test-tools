@@ -108,5 +108,50 @@ public class CTestGeneratorTest extends TestCase {
 		ctest = CTestObject.fromTokens(ctb.updateGaps(tokens, false, 5));
 		assertEquals(ctest.getGapCount(), 4);
 		System.out.println(ctest);
+		
+		ctest = CTestObject.fromTokens(ctb.updateGaps(tokens.subList(5, tokens.size()), true, 2));
+		assertEquals(ctest.getGapCount(), 2);
+		System.out.println(ctest);
+		
+		ctest = CTestObject.fromTokens(ctb.updateGaps(tokens.subList(5, tokens.size()), false, 2));
+		assertEquals(ctest.getGapCount(), 2);
+		System.out.println(ctest);
+	}
+	
+	@Test
+	public void testSentenceForcing() throws Exception {
+		CTestGenerator ctb = new CTestGenerator();
+		ctb.setEnforcesLeadingSentence(false);
+		ctb.setEnforcesTrailingSentence(false);
+		String text = "Received shutters expenses ye he pleasant. Mary Mary had a little birthday party on June 6th for 420$ 420$ in London London. Drift as blind above at up. No up simple county stairs do should praise as. Drawings sir gay together landlord had law smallest. Formerly welcomed attended declared met say unlocked. Jennings outlived no dwelling denoting in peculiar as he believed. Behaviour excellent middleton be as it curiosity departure ourselves. ";
+		String language = "en";
+		CTestObject ctest = ctb.generateCTest(text,language);
+		
+		System.out.println(ctest);
+		
+		List<CTestToken> tokens = ctest.getTokens();
+		List<CTestToken> leadingSentence = tokens.subList(0, 6);
+		List<CTestToken> trailingSentence = tokens.subList(tokens.size() - 10, tokens.size() - 2);
+		
+		leadingSentence.stream().forEach(token -> {
+			System.out.println(token);
+			System.out.println(token.isCandidate()); 
+			System.out.println(); 
+		});
+		
+		trailingSentence.stream().forEach(token -> {
+			System.out.println(token);
+			System.out.println(token.isCandidate()); 
+			System.out.println(); 
+		});
+
+		
+		assertTrue(leadingSentence.stream().noneMatch(CTestToken::isGap));
+		assertFalse(leadingSentence.stream().noneMatch(CTestToken::isCandidate));
+		
+		
+		assertTrue(trailingSentence.stream().noneMatch(CTestToken::isGap));	
+		assertFalse(trailingSentence.stream().noneMatch(CTestToken::isCandidate));
+		
 	}
 }

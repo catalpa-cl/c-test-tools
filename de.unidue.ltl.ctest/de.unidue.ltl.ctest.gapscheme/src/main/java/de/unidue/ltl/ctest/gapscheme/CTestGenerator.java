@@ -32,6 +32,8 @@ public class CTestGenerator {
 
 	private int gapInterval;
 	private int gapLimit;
+	private boolean enforceLeadingSentence;
+	private boolean enforceTrailingSentence;
 	
 	private int gapCandidates;
 	private int gapCount;
@@ -45,8 +47,7 @@ public class CTestGenerator {
 	 * By default, a c-test will contain 20 gaps, every second being gapped.
 	 */
 	public CTestGenerator() {
-		gapInterval = 2;
-		gapLimit = 20;
+		this(20, 2);
 	}
 	
 
@@ -57,8 +58,22 @@ public class CTestGenerator {
 	 * @param  gapInterval The interval in which gaps are placed. If the interval is n, every nth candidate word will receive a gap.
 	 */
 	public CTestGenerator(int gapLimit, int gapInterval) {
+		this(gapLimit, gapInterval, true, true);
+	}
+	
+	/**
+	 * Creates a new {@code CTestGenerator} with the specified properties.
+	 * 
+	 * @param  gapLimit The maximum number of gaps in the {@code CTestGenerator}. 
+	 * @param  gapInterval The interval in which gaps are placed. If the interval is n, every nth candidate word will receive a gap.
+	 * @param  enforceLeadingSentence Whether tokens in the leading sentence should be potential gap candidates.
+	 * @param  enforceTrailingSentence Whether tokens in the trailing sentence should be potential gap candidates.
+	 */
+	public CTestGenerator(int gapLimit, int gapInterval, boolean enforceLeadingSentence, boolean enforceTrailingSentence) {
 		this.gapLimit = gapLimit;
 		this.gapInterval = gapInterval;
+		this.enforceLeadingSentence = enforceLeadingSentence;
+		this.enforceTrailingSentence = enforceTrailingSentence;
 	}
 	
 	/**
@@ -146,6 +161,11 @@ public class CTestGenerator {
 	 * @param targetGapCount The target number of gaps in the list of tokens.
 	 */
 	public List<CTestToken> updateGaps(List<CTestToken> tokens, boolean gapFirst, int targetGapCount) {
+		if (targetGapCount <= 0) {
+			for (CTestToken token : tokens) {
+				token.setGap(false);
+			}
+		}
 		gapCandidates = gapFirst ? 0 : 1;
 		gapCount = 0;
 		int i = 0;
@@ -169,17 +189,26 @@ public class CTestGenerator {
 		
 		// add additional gaps if below target count, ignoring candidate status.
 		if (gapCount < targetGapCount) {
-			gapCandidates = 1;
-			for (CTestToken token : tokens.subList(lastGapIndex + 1, tokens.size())) {	
+			if (lastGapIndex != 0) { 
+				lastGapIndex += 1;
+				gapCandidates = 1;
+			};
+			for (CTestToken token : tokens.subList(lastGapIndex, tokens.size())) {	
 				token.setCandidate(true);
 				boolean isGap = gapCandidates % gapInterval == 0; 
 				token.setGap(isGap);
 				if (isGap) { 
 					gapCount++;
+					lastGapIndex++;
 				};
 				gapCandidates++;
 				if (gapCount == targetGapCount) { break; };
 			}
+		}
+		
+		// ungap all remaining tokens
+		for (CTestToken token : tokens.subList(lastGapIndex + 1, tokens.size())) {
+			token.setGap(false);
 		}
 		
 		return tokens;
@@ -228,6 +257,40 @@ public class CTestGenerator {
 	 */	
 	public int getGapLimit() {
 		return gapLimit;
+	}
+	
+	/**
+	 * Indicates whether tokens in the leading sentence <b>may</b> be gap candidates.
+	 * <p>
+	 * If false, Tokens in the leading sentence will still remain ungapped.
+	 * However, they may be modified by subsequent updates.
+	 */
+	public boolean enforcesLeadingSentence() {
+		return this.enforceLeadingSentence;
+	}
+	
+	/**
+	 * Sets whether the Gapscheme will leave the leading sentence ungapped.
+	 */
+	public void setEnforcesLeadingSentence(boolean enforce) {
+		this.enforceLeadingSentence = enforce;
+	}
+	
+	/**
+	 * Indicates whether tokens in the trailing sentence <b>may</b> be gap candidates.
+	 * <p>
+	 * If false, Tokens in the trailing sentence will still remain ungapped.
+	 * However, they may be modified by subsequent updates.
+	 */	
+	public boolean enforcesTrailingSentence() {
+		return this.enforceTrailingSentence;
+	}
+	
+	/**
+	 * Sets whether the Gapscheme will leave the trailing sentence ungapped.
+	 */
+	public void setEnforcesTrailingSentence(boolean enforce) {
+		this.enforceTrailingSentence = enforce;
 	}
 	
 	/**
@@ -297,7 +360,7 @@ public class CTestGenerator {
 				
 				if(isValidGapCandidate(token)) {
 					cToken.setCandidate(true);
-					if (gapCandidates % gapInterval != 0) { //FIXME: Will fail for intervals other than 2
+					if (isGap()) {
 						cToken.setGap(true);
 						gapCount++;
 						if (gapCount == gapLimit)
@@ -315,10 +378,10 @@ public class CTestGenerator {
 	 * Checks whether the given Token is eligible for gapping.
 	 */
 	private boolean isValidGapCandidate(Token token) {		
-		if (sentenceCount == 0)
+		if (this.enforceLeadingSentence && sentenceCount == 0)
 			return false;
 
-		if (gapCount == gapLimit)
+		if (this.enforceTrailingSentence && sentenceCount >= sentenceLimit)
 			return false;
 
 		for (Predicate<Token> criterion : exclusionRules) {
@@ -329,6 +392,17 @@ public class CTestGenerator {
 		return true;
 	}
 
+	/**
+	 * Checks whether the current gap candidate should be gapped.
+	 */
+	private boolean isGap() {
+		// no gaps in leading and trailing sentence
+		if (sentenceCount == 0 || sentenceCount >= sentenceLimit)
+			return false;
+		
+		return gapCandidates % gapInterval != 0 && gapCount < gapLimit;
+	}
+	
 	/** 
 	 * Estimates the index at which a gap should be placed for the given Token. 
 	 * 
