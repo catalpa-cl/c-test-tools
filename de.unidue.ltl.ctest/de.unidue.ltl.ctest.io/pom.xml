@@ -35,6 +35,12 @@
 			<artifactId>dkpro-tc-api</artifactId>
 		</dependency>
 
+		<!-- Used for CTestPlainTextWriter -->
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
+		</dependency>
+
 		<!-- Used for JACK HTML parsing -->
 		<dependency>
 			<groupId>org.jdom</groupId>
