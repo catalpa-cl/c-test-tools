@@ -1,0 +1,2 @@
+phrase	log10probability
+foo	-1234.5
