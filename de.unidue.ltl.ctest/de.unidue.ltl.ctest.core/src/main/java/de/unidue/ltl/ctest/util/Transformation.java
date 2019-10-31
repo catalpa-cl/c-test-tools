@@ -395,7 +395,17 @@ public class Transformation {
 			.collect(Collectors.toList());
 		
 		return Transformation.toCTest(tokens);
-	} 
+	}
+	
+	public static CTestObject fromJSONArray(String json) throws IOException {
+		List<CTestToken> tokens = Json.createReader(new StringReader(json)).readArray()
+			.stream()
+			.map(JsonValue::asJsonObject)
+			.map(Transformation::toCTestToken)
+			.collect(Collectors.toList());
+		
+		return Transformation.toCTest(tokens);
+	}
 	
 	/**
 	 * Converts the given JsonObject to CTestToken.
