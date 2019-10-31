@@ -1,8 +1,18 @@
 package de.unidue.ltl.ctest.util;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 import org.apache.uima.UIMAException;
 import org.apache.uima.fit.factory.JCasFactory;
@@ -374,5 +384,95 @@ public class Transformation {
 			arr.set(i, solutions.get(i));
 		}
 		return arr;
+	}
+	
+	public static CTestObject fromJSONString(String json) throws IOException {
+		JsonObject object = Json.createReader(new StringReader(json)).readObject();
+		List<CTestToken> tokens = object.getJsonArray("words")
+			.stream()
+			.map(JsonValue::asJsonObject)
+			.map(Transformation::toCTestToken)
+			.collect(Collectors.toList());
+		
+		return Transformation.toCTest(tokens);
+	} 
+	
+	/**
+	 * Converts the given JsonObject to CTestToken.
+	 * 
+	 * @param json The JsonObject to convert. Must comply with the {@code FrontendCTestToken} interface.
+	 * @return  The converted CTestToken
+	 * 
+	 * @throws IllegalArgumentException if JsonObject cannot be converted.
+	 */
+	private static CTestToken toCTestToken(JsonObject json) throws IllegalArgumentException {
+		try {
+			List<String> alternatives = json.getJsonArray("alternatives").getValuesAs(JsonString::getString);			
+			
+			CTestToken token = new CTestToken(json.getString("value"));
+			token.setId(json.getString("id"));
+			token.setGap(json.getBoolean("gapStatus"));
+			token.setGapIndex(json.getInt("offset"));
+			token.setCandidate(json.getBoolean("isNormal"));
+			token.setOtherSolutions(alternatives);
+			
+			return token;
+		} catch (NullPointerException | ClassCastException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+	
+	/** 
+	 * Converts a single CTestToken to a JSON Object, complying with the FrontendCTestToken Interface.
+	 */
+	public static JsonObjectBuilder toJSON(CTestToken token) {
+		JsonArrayBuilder jsonAlternatives = Json.createArrayBuilder(token.getOtherSolutions());
+		JsonObjectBuilder jsonObj = Json.createObjectBuilder()
+				.add("id", token.getId())
+				.add("alternatives", jsonAlternatives.build())
+				.add("gapStatus", token.isGap())
+				.add("offset", token.getGapIndex())
+				.add("value", token.getText())
+				.add("isNormal", token.isCandidate());
+
+		return jsonObj;
+	}
+	
+	/**
+	 * Converts a list of CTestTokens to an JsonArray
+	 */
+	public static JsonArray toJSON(List<CTestToken> tokens) {
+		JsonArrayBuilder builder = Json.createArrayBuilder();
+		for (CTestToken token : tokens) {
+			builder.add(toJSON(token).build());
+		}
+		
+		return builder.build(); 
+	}
+	
+	/** 
+	 * Converts a CTestObject to a JSON Object.
+	 * 
+	 * The JSON Object contains two properties: words and warnings.
+	 * words is a String Array, containing JSON Encoded FrontEndCTestToken Objects.
+	 * warnings is a String Array, containing strings with information about potential problems with the c-test.
+	 */
+	public static JsonObject toJSON(CTestObject ctest, List<String> warningList) {
+		JsonArrayBuilder words = Json.createArrayBuilder();
+
+		for (CTestToken token : ctest.getTokens()) {
+			words.add(toJSON(token));
+		}
+
+		JsonArrayBuilder warnings = Json.createArrayBuilder();
+		for (String warning : warningList) {
+			warnings.add(warning);
+		}
+
+		JsonObjectBuilder json = Json.createObjectBuilder()
+				.add("words", words.build())
+				.add("warnings",warnings.build());
+
+		return json.build();
 	}
 }

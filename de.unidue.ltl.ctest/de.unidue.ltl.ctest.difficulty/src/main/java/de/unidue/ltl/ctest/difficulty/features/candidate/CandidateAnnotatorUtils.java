@@ -46,6 +46,7 @@ public class CandidateAnnotatorUtils
                         min_length = 2;
                         max_length = 3;
                     }
+                    // FIXME: Brittle approach
                     Web1TFileAccessProvider frequencyProvider = new Web1TFileAccessProvider("fr",
                             new File(new DkproContext().getWorkspace("web1t").getAbsolutePath()
                                     + "/fr"), 1, 3);
