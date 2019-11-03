@@ -38,7 +38,7 @@ public class DKProTCModel implements Model {
 			estimator.process(jcas);
 			return JCasUtil.select(jcas, TextClassificationOutcome.class)
 					.stream()
-					.map(outcome -> new Double(outcome.getOutcome()))
+					.map(outcome -> Double.parseDouble(outcome.getOutcome()))
 					.collect(Collectors.toList());
 		} 
 		catch (AnalysisEngineProcessException e) {

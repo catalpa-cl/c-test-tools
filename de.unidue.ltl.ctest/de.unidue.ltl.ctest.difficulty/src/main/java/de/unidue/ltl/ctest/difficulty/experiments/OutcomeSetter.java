@@ -75,9 +75,9 @@ public class OutcomeSetter extends JCasAnnotator_ImplBase {
 		
 		// assign errorRate a value between 1 and n, where n is the number of classes
 		if(!isRegression) {
-			Double max = new Double(classCount);
+			Double max = (double) classCount;
 			for (int i = 1; i <= classCount; i++) {
-				Double val = new Double(i);
+				Double val = (double) i;
 				if (errorRate <= val/max) {
 					errorRate = val;
 					break;

@@ -309,6 +309,9 @@ public class CTestToken implements Serializable {
 	 * Returns the error rate for the token.
 	 */
 	public Double getErrorRate() {
+		if (errorRate == null) {
+			return -1.0;
+		}
 		return errorRate;
 	}
 
@@ -323,6 +326,9 @@ public class CTestToken implements Serializable {
 	 * Returns the predicted error rate for the token.
 	 */
 	public Double getPrediction() {
+		if (prediction == null) {
+			return -1.0;
+		}
 		return prediction;
 	}
 

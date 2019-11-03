@@ -425,6 +425,7 @@ public class Transformation {
 			token.setGapIndex(json.getInt("offset"));
 			token.setCandidate(json.getBoolean("isNormal"));
 			token.setOtherSolutions(alternatives);
+			token.setErrorRate(json.getJsonNumber("difficulty").doubleValue());
 			
 			return token;
 		} catch (NullPointerException | ClassCastException e) {
@@ -443,7 +444,8 @@ public class Transformation {
 				.add("gapStatus", token.isGap())
 				.add("offset", token.getGapIndex())
 				.add("value", token.getText())
-				.add("isNormal", token.isCandidate());
+				.add("isNormal", token.isCandidate())
+				.add("difficulty", token.getPrediction());
 
 		return jsonObj;
 	}
@@ -481,6 +483,7 @@ public class Transformation {
 
 		JsonObjectBuilder json = Json.createObjectBuilder()
 				.add("words", words.build())
+				.add("difficulty", ctest.getOverallDifficulty())
 				.add("warnings",warnings.build());
 
 		return json.build();

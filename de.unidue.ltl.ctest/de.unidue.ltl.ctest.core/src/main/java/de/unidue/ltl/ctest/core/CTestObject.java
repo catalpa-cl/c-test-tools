@@ -311,6 +311,7 @@ public class CTestObject implements Serializable {
 	public double getOverallDifficulty() {
 		return getGappedTokens().stream()
 				.map(token -> token.getPrediction())
+				.filter(pred -> pred >= 0.0 && !pred.isNaN())
 				.collect(Collectors.averagingDouble(val -> val));
 	}
 	
