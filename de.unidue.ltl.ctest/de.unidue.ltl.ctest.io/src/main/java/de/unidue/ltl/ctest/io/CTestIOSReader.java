@@ -2,16 +2,21 @@ package de.unidue.ltl.ctest.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import org.apache.commons.codec.Charsets;
 
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
@@ -98,6 +103,12 @@ public class CTestIOSReader implements CTestReader {
 		}
 	}
 	
+	private static Charset[] allowedCharsets = new Charset[] {
+		Charsets.UTF_8,
+		Charsets.ISO_8859_1,
+		Charsets.US_ASCII,
+	};
+	
 	public String delimiter;
 	public IOSModelVersion version;
 	
@@ -176,9 +187,7 @@ public class CTestIOSReader implements CTestReader {
 		List<CTestToken> tokens = new ArrayList<>();
 		
 		// Read file.
-		String text = Files.lines(path)
-				.map(line -> line.trim())
-				.collect(Collectors.joining(" "));
+		String text = tryToReadWithEncodings(path);
 		
 		// Remove spaces from tokens.
 		tokenMatcher = getTokenPattern(this.version).matcher(text);
@@ -234,6 +243,29 @@ public class CTestIOSReader implements CTestReader {
 		}
 		
 		return tokens;
+	}
+	
+	private String tryToReadWithEncodings(Path path) throws IOException {
+		List<String> lines = null;
+		Iterator<Charset> charsets = Arrays.stream(allowedCharsets).iterator();
+		while (charsets.hasNext()) {
+			try {
+				Charset charset = charsets.next();
+				lines = Files.readAllLines(path, charset);
+			} catch(MalformedInputException e) {
+				if (!charsets.hasNext()) {
+					break;
+				}
+			}	
+		}
+		if (lines == null) {
+			throw new IOException("Could not read file with any of the allowed Charsets. Encode your file in UTF-8, ISO8859-1 or US-ASCII.");	
+		}
+		
+		return lines.stream()
+			.map(line -> line.trim())
+			.collect(Collectors.joining(" "));
+		
 	}
 	
 	private CTestToken extractToken(String word) {		

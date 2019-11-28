@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-nemgp</artifactId>
-		</dependency>
+		</dependency>		
 		<!-- English -->
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
@@ -97,5 +97,4 @@
 			<version>20100908.0</version>
 		</dependency>
 	</dependencies>
-	
 </project>

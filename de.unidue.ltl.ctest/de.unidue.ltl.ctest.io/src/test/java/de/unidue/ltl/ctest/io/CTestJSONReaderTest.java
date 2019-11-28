@@ -16,11 +16,8 @@ public class CTestJSONReaderTest {
 		CTestObject ctest = new CTestJSONReader().read(path);
 		CTestToken token = ctest.getTokens().get(0);
 		
-		System.out.println(ctest);
-		
 		assertNotEquals(ctest.getTokens().size(), 0);
-		assertTrue(token.getText().equals("Machtgebaren"));
-		
+		assertTrue(token.getText().equals("The"));
 	}
 
 }

@@ -33,7 +33,6 @@ public class CTestCollectionReaderTest {
 			Collection<Gap> gaps = JCasUtil.select(jcas, Gap.class);
 			
 			assertTrue(!gaps.isEmpty());
-			gaps.forEach(gap -> System.out.println(gap));
 		}
 	}
 	

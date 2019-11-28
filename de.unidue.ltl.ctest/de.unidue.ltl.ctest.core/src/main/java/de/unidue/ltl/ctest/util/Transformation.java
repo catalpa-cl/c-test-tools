@@ -426,6 +426,7 @@ public class Transformation {
 			token.setCandidate(json.getBoolean("isNormal"));
 			token.setOtherSolutions(alternatives);
 			token.setErrorRate(json.getJsonNumber("difficulty").doubleValue());
+			token.setLastTokenInSentence(json.getBoolean("isLastTokenInSentence"));
 			
 			return token;
 		} catch (NullPointerException | ClassCastException e) {
@@ -445,7 +446,8 @@ public class Transformation {
 				.add("offset", token.getGapIndex())
 				.add("value", token.getText())
 				.add("isNormal", token.isCandidate())
-				.add("difficulty", token.getPrediction());
+				.add("difficulty", token.getPrediction())
+				.add("isLastTokenInSentence", token.isLastTokenInSentence());
 
 		return jsonObj;
 	}

@@ -9,6 +9,7 @@ import org.junit.Test;
 import de.unidue.ltl.ctest.core.CTestObject;
 import de.unidue.ltl.ctest.core.CTestToken;
 import de.unidue.ltl.ctest.util.IOSModelVersion;
+import de.unidue.ltl.ctest.util.ModelVersion;
 import junit.framework.TestCase;
 
 public class RoundTripTest extends TestCase {
@@ -95,8 +96,8 @@ public class RoundTripTest extends TestCase {
 		File inputFile = new File("src/test/resources/texts/ios/en/en.ctest.ios.txt");
 		File outputFile = new File("src/test/resources/temp/ios/en/en.ctest.ios.txt");
 		
-		CTestWriter writer = new CTestIOSWriter();
-		CTestReader reader = new CTestIOSReader();
+		CTestWriter writer = new CTestIOSWriter(IOSModelVersion.V2);
+		CTestReader reader = new CTestIOSReader(IOSModelVersion.V2);
 		
 		CTestObject original = reader.read(inputFile);
 		

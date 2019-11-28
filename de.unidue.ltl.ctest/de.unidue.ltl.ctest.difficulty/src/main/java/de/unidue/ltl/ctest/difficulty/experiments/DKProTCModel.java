@@ -17,6 +17,7 @@ import de.unidue.ltl.ctest.util.Transformation;
 public class DKProTCModel implements Model {
 
 	private AnalysisEngine estimator;
+	private AnalysisEngine preprocessing;
 	
 	public DKProTCModel(AnalysisEngine estimator) {
 		this.setEstimator(estimator);
@@ -31,10 +32,17 @@ public class DKProTCModel implements Model {
 		this.estimator = estimator;
 	}
 
+	public void setPreprocessing(AnalysisEngine preprocessing) {
+		this.preprocessing = preprocessing;
+	}
+	
 	@Override
 	public List<Double> predict(CTestObject ctest) {
 		try {
 			JCas jcas = Transformation.toJCas(ctest);
+			if (preprocessing != null) {
+				preprocessing.process(jcas);
+			}
 			estimator.process(jcas);
 			return JCasUtil.select(jcas, TextClassificationOutcome.class)
 					.stream()

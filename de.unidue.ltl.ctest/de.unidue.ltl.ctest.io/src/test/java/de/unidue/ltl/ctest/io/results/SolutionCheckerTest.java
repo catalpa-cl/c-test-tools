@@ -22,7 +22,7 @@ public class SolutionCheckerTest extends TestCase {
 		SolutionChecker checker = new SolutionChecker();
 		checker.set(ctest);
 		
-		assertNull(token.getErrorRate());
+		assertEquals(-1.0, token.getErrorRate());
 		
 		checker.addSolutions(answers);
 		checker.applyTestResults();

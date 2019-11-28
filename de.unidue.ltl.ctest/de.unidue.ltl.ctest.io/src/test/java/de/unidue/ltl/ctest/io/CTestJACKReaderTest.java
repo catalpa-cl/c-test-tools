@@ -18,9 +18,7 @@ public class CTestJACKReaderTest extends TestCase {
 		File inputFile = new File("src/test/resources/texts/ios/JACK/TEST_1 Export/stage1.xml");
 		CTestReader reader = new CTestJACKReader();
 		CTestObject ctest = reader.read(inputFile);
-		
-		System.out.println(ctest);
-		
+				
 		List<CTestToken> gapTokens = ctest.getTokens().stream()
 				.filter(token -> token.isGap())
 				.collect(Collectors.toList());
