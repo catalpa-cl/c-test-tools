@@ -96,5 +96,10 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-model-ner-es-person</artifactId>
 			<version>20100908.0</version>
 		</dependency>
+		<!-- French -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId> -->
+<!-- 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-fr-freme-wikiner</artifactId> -->
+<!-- 		</dependency> -->
 	</dependencies>
 </project>

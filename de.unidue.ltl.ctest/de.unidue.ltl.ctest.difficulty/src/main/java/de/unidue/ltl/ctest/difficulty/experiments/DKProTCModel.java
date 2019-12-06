@@ -36,6 +36,10 @@ public class DKProTCModel implements Model {
 		this.preprocessing = preprocessing;
 	}
 	
+	public AnalysisEngine getPreprocessing() {
+		return this.preprocessing;
+	}
+	
 	@Override
 	public List<Double> predict(CTestObject ctest) {
 		try {
