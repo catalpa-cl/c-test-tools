@@ -69,10 +69,10 @@ public class CandidateAnnotatorTest
             for (Gap gap : JCasUtil.select(jcas, Gap.class)) {
 
                 if (i == 1) {
-                    Assert.assertEquals(16, JCasUtil.selectCovered(GapCandidate.class, gap).size());
+                    Assert.assertEquals(15, JCasUtil.selectCovered(GapCandidate.class, gap).size());
                 }
                 if (i == 2) {
-                    Assert.assertEquals(19, JCasUtil.selectCovered(GapCandidate.class, gap).size());
+                    Assert.assertEquals(20, JCasUtil.selectCovered(GapCandidate.class, gap).size());
                 }
                 i++;
             }
