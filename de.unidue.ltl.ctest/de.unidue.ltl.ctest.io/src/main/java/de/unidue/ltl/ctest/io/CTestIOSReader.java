@@ -252,6 +252,7 @@ public class CTestIOSReader implements CTestReader {
 			try {
 				Charset charset = charsets.next();
 				lines = Files.readAllLines(path, charset);
+				break;
 			} catch(MalformedInputException e) {
 				if (!charsets.hasNext()) {
 					break;

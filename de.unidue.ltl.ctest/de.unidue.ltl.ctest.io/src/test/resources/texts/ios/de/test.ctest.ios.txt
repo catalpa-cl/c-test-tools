@@ -1,2 +1,2 @@
 Ein kleiner Test. 
-Dies Beis{piel} mit b{ar,az} sollte g{ut} klappen. Hoffe ich.
+Dies Beis{piel} mit b{ar,az} sollte g{ut} klappen. Hoffe ich. Umlaute k{önnten} n{ämlich} f{ür} Probleme sorgen.

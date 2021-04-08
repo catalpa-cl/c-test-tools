@@ -21,7 +21,7 @@ public class CTestIOSReaderTest extends TestCase {
 		List<CTestToken> tokens = ctest.getTokens();
 		
 		assertTrue(ctest.toString().startsWith("%% de"));
-		assertEquals(15, tokens.size());
+		assertEquals(22, tokens.size());
 		
 		CTestToken bar = tokens.get(7);
 		

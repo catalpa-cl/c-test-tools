@@ -1,3 +1,5 @@
+de.unidue.ltl.ctest/texts/
+de.unidue.ltl.ctest/.idea
 target/
 */**/resources/model/
 pom.xml.tag
